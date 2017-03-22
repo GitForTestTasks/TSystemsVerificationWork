@@ -1,0 +1,11 @@
+# Java, Maven
+out/
+lib/
+build/
+target/
+*.jar
+*.war
+
+# IDE
+.idea/
+*.iml
