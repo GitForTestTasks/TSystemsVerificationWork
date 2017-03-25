@@ -63,7 +63,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dbo`.`roles` (
   `RoleId` BIGINT NOT NULL auto_increment,
-  `Name` VARCHAR(50) NOT NULL,
+  `Name` VARCHAR(50) NOT NULL unique,
   PRIMARY KEY (`RoleId`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
