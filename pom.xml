@@ -10,10 +10,10 @@
     <url>http://maven.apache.org</url>
     <properties>
         <jdk.version>1.8</jdk.version>
-        <hibernate.version>4.2.0.Final</hibernate.version>
-        <spring.version>4.1.1.RELEASE</spring.version>
-        <junit.version>4.11</junit.version>
-        <springsec.version>4.1.1.RELEASE</springsec.version>
+        <hibernate.version>5.2.9.Final</hibernate.version>
+        <spring.version>4.3.5.RELEASE</spring.version>
+        <junit.version>4.12</junit.version>
+        <springsec.version>4.2.2.RELEASE</springsec.version>
     </properties>
 
     <dependencies>
@@ -26,13 +26,19 @@
             <version>${springsec.version}</version>
         </dependency>
 
-        <!-- Unit Test -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+        <!-- -->
 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- Unit Test -->
 
         <dependency>
             <groupId>junit</groupId>
@@ -42,16 +48,11 @@
 
 
         <!-- ORM -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-entitymanager</artifactId>-->
+            <!--<version>${hibernate.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -72,7 +73,38 @@
         </dependency>
 
 
-        <!-- Spring Core -->
+        <!-- Spring  -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
