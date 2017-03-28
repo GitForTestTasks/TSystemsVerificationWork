@@ -45,8 +45,9 @@ CREATE TABLE IF NOT EXISTS `dbo`.`clients` (
   `FirstName` VARCHAR(50) NOT NULL,
   `LastName` VARCHAR(50) NOT NULL,
   `BirthDate` DATE NULL DEFAULT NULL,
-  `Email` VARCHAR(100) NOT NULL,
+  `Email` VARCHAR(100) NOT NULL unique,
   `Password` VARCHAR(80) NOT NULL,
+  `IsEnabled` BIT(1) NOT NULL,
   PRIMARY KEY (`ClientId`),
   INDEX `fk_clients_clientaddress1_idx` (`ClientAddressId` ASC),
   CONSTRAINT `fk_clients_clientaddress1`
@@ -73,10 +74,9 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `dbo`.`clientsroles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dbo`.`clientsroles` (
-  `ClientRoleId` BIGINT NOT NULL auto_increment,
   `ClientId` BIGINT NOT NULL,
   `RoleId` BIGINT NOT NULL,
-  PRIMARY KEY (`ClientRoleId`),
+  PRIMARY KEY (`ClientId`, `RoleId`),
   INDEX `fk_clientsroles_clients1_idx` (`ClientId` ASC),
   INDEX `fk_clientsroles_roles1_idx` (`RoleId` ASC),
   CONSTRAINT `fk_clientsroles_clients1`
@@ -101,8 +101,8 @@ CREATE TABLE IF NOT EXISTS `dbo`.`goods` (
   `Title` VARCHAR(100) NOT NULL,
   `Price` DECIMAL(18,4) NOT NULL,
   `Category` VARCHAR(15) NULL DEFAULT NULL,
-  `Ñharacteristics` VARCHAR(1000) NULL DEFAULT NULL,
-  `Weight` DECIMAL(5,3) NULL DEFAULT NULL,
+  `Characteristics` VARCHAR(1000) NULL DEFAULT NULL,
+  `Weight` DECIMAL(10,3) NULL DEFAULT NULL,
   `Size` VARCHAR(20) NULL DEFAULT NULL,
   `Count` INT(11) NOT NULL,
   PRIMARY KEY (`GoodId`))
@@ -144,11 +144,10 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `dbo`.`orderdetails`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `dbo`.`orderdetails` (
-  `OrderDetailId` BIGINT NOT NULL auto_increment,
   `OrderId` BIGINT NOT NULL,
   `GoodId` BIGINT NOT NULL,
   `Quantity` INT(11) NOT NULL,
-  PRIMARY KEY (`OrderDetailId`),
+  PRIMARY KEY (`OrderId`,`GoodId`),
   INDEX `fk_ordergoods_orders_idx` (`OrderId` ASC),
   INDEX `fk_ordergoods_goods1_idx` (`GoodId` ASC),
   CONSTRAINT `fk_ordergoods_goods1`

@@ -1,36 +1,34 @@
 package ru.tsystemsverificationwork.web.models;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Andrei on 3/25/2017.
- */
-//@MappedSuperclass
+@Embeddable
+@Component("orderDetailPk")
 public class OrderDetailPk implements Serializable {
-    private long orderId;
-    private long goodId;
 
-    @Column(name = "OrderId")
-    @Id
-    public long getOrderId() {
-        return orderId;
+    private Order order;
+
+    @ManyToOne
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    @Column(name = "GoodId")
-    @Id
-    public long getGoodId() {
-        return goodId;
+    private Good good;
+
+    @ManyToOne
+    public Good getGood() {
+        return good;
     }
 
-    public void setGoodId(long goodId) {
-        this.goodId = goodId;
+    public void setGood(Good good) {
+        this.good = good;
     }
 
     @Override
@@ -40,16 +38,14 @@ public class OrderDetailPk implements Serializable {
 
         OrderDetailPk that = (OrderDetailPk) o;
 
-        if (orderId != that.orderId) return false;
-        if (goodId != that.goodId) return false;
-
-        return true;
+        if (!order.equals(that.order)) return false;
+        return good.equals(that.good);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (orderId ^ (orderId >>> 32));
-        result = 31 * result + (int) (goodId ^ (goodId >>> 32));
+        int result = order.hashCode();
+        result = 31 * result + good.hashCode();
         return result;
     }
 }

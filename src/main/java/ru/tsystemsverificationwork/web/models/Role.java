@@ -23,7 +23,7 @@ public class Role {
 
     private List<Client> clientList;
 
-    @ManyToMany(mappedBy="roles", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy="roles", fetch = FetchType.LAZY)
     public List<Client> getClientList() {
         return clientList;
     }
@@ -31,6 +31,8 @@ public class Role {
     public void setClientList(List<Client> clientList) {
         this.clientList = clientList;
     }
+
+
 
     @Basic
     @Column(name = "Name", unique = true)
@@ -44,6 +46,9 @@ public class Role {
 
     public Role(String name) {
         this.name = name;
+    }
+
+    public Role() {
     }
 
     @Override

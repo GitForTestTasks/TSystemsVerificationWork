@@ -1,6 +1,11 @@
 package ru.tsystemsverificationwork.web.models;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -14,7 +19,7 @@ public class Good {
     private String title;
     private BigDecimal price;
     private String category;
-    private String сharacteristics;
+    private String characteristics;
     private BigDecimal weight;
     private String size;
     private int count;
@@ -26,7 +31,7 @@ public class Good {
         return goodId;
     }
 
-    private List<OrderDetail> orderDetail;
+//    private List<OrderDetail> orderDetail;
 
     public void setGoodId(long goodId) {
         this.goodId = goodId;
@@ -34,6 +39,8 @@ public class Good {
 
     @Basic
     @Column(name = "Title")
+    @NotBlank
+    @Size(min = 2, max = 100)
     public String getTitle() {
         return title;
     }
@@ -44,6 +51,7 @@ public class Good {
 
     @Basic
     @Column(name = "Price")
+    @NotBlank
     public BigDecimal getPrice() {
         return price;
     }
@@ -63,13 +71,13 @@ public class Good {
     }
 
     @Basic
-    @Column(name = "Сharacteristics")
-    public String getСharacteristics() {
-        return сharacteristics;
+    @Column(name = "Characteristics")
+    public String getCharacteristics() {
+        return characteristics;
     }
 
-    public void setСharacteristics(String сharacteristics) {
-        this.сharacteristics = сharacteristics;
+    public void setCharacteristics(String characteristics) {
+        this.characteristics = characteristics;
     }
 
     @Basic
@@ -94,6 +102,7 @@ public class Good {
 
     @Basic
     @Column(name = "Count")
+    @NotBlank
     public int getCount() {
         return count;
     }
@@ -102,18 +111,31 @@ public class Good {
         this.count = count;
     }
 
-//    @OneToMany(mappedBy = "goodId")
-    @OneToMany
-    @JoinColumn(name = "GoodId")
-    public List<OrderDetail> getOrderDetail() {
-        return orderDetail;
+////    @OneToMany(mappedBy = "goodId")
+//    @OneToMany(mappedBy = "orderDetailPk.good", fetch = FetchType.EAGER)
+////    @JoinColumn(name = "GoodId")
+//    public List<OrderDetail> getOrderDetail() {
+//        return orderDetail;
+//    }
+
+//    public void setOrderDetail(List<OrderDetail> orderDetail) {
+//        this.orderDetail = orderDetail;
+//    }
+
+    public Good(String title, BigDecimal price, String category, String characteristics,
+                BigDecimal weight, String size, int count) {
+        this.title = title;
+        this.price = price;
+        this.category = category;
+        this.characteristics = characteristics;
+        this.weight = weight;
+        this.size = size;
+        this.count = count;
+
     }
 
-    public void setOrderDetail(List<OrderDetail> orderDetail) {
-        this.orderDetail = orderDetail;
+    public Good() {
     }
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -127,7 +149,7 @@ public class Good {
         if (title != null ? !title.equals(good.title) : good.title != null) return false;
         if (price != null ? !price.equals(good.price) : good.price != null) return false;
         if (category != null ? !category.equals(good.category) : good.category != null) return false;
-        if (сharacteristics != null ? !сharacteristics.equals(good.сharacteristics) : good.сharacteristics != null)
+        if (characteristics != null ? !characteristics.equals(good.characteristics) : good.characteristics != null)
             return false;
         if (weight != null ? !weight.equals(good.weight) : good.weight != null) return false;
         if (size != null ? !size.equals(good.size) : good.size != null) return false;
@@ -141,10 +163,16 @@ public class Good {
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (сharacteristics != null ? сharacteristics.hashCode() : 0);
+        result = 31 * result + (characteristics != null ? characteristics.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + count;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                 goodId + "}";
     }
 }

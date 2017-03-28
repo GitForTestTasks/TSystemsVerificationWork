@@ -1,43 +1,53 @@
 package ru.tsystemsverificationwork.web.models;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @Entity
 @Table(name = "orderdetails")
-@IdClass(OrderDetailPk.class)
-public class OrderDetail {
+@AssociationOverrides({
+        @AssociationOverride(name = "orderDetailPk.order",
+                joinColumns = @JoinColumn(name = "OrderId")),
+        @AssociationOverride(name = "orderDetailPk.good",
+                joinColumns = @JoinColumn(name = "GoodId")) })
+public class OrderDetail implements Serializable {
 
     private int quantity;
 
-    private Order order;
 
-    private Good good;
 
-    private long orderId;
-    private long goodId;
+    private OrderDetailPk orderDetailPk;
 
-    @Id
-    @Column(name = "OrderId")
-    public long getOrderId() {
-        return orderId;
+    @EmbeddedId
+    public OrderDetailPk getOrderDetailPk() {
+        return orderDetailPk;
     }
 
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    @Id
-    @Column(name = "GoodId")
-    public long getGoodId() {
-        return goodId;
-    }
-
-    public void setGoodId(long goodId) {
-        this.goodId = goodId;
+    public void setOrderDetailPk(OrderDetailPk orderDetailPk) {
+        this.orderDetailPk = orderDetailPk;
     }
 
 
+    @Transient
+    public Order getOrder() {
+        return getOrderDetailPk().getOrder();
+    }
+
+    public void setOrder(Order order) {
+        getOrderDetailPk().setOrder(order);
+    }
+
+    @Transient
+    public Good getGood() {
+        return getOrderDetailPk().getGood();
+    }
+
+    public void setGood(Good good) {
+        getOrderDetailPk().setGood(good);
+    }
 
     @Basic
     @Column(name = "Quantity")

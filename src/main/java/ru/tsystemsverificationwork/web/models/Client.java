@@ -1,6 +1,13 @@
 package ru.tsystemsverificationwork.web.models;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.util.List;
 
@@ -13,6 +20,7 @@ public class Client {
     private Date birthDate;
     private String email;
     private String password;
+    private boolean isEnabled;
     private List<Role> roles;
     private List<Order> orders;
 
@@ -27,7 +35,7 @@ public class Client {
 
     private ClientAddress clientAddressId;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "ClientsRoles", joinColumns = {@JoinColumn(name = "ClientId", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "RoleId", nullable = false, updatable = false)})
     public List<Role> getRoles() {
@@ -44,6 +52,8 @@ public class Client {
 
     @Basic
     @Column(name = "FirstName")
+    @NotBlank
+    @Size(min = 2,max = 50)
     public String getFirstName() {
         return firstName;
     }
@@ -54,6 +64,8 @@ public class Client {
 
     @Basic
     @Column(name = "LastName")
+    @NotBlank
+    @Size(min = 2,max = 50)
     public String getLastName() {
         return lastName;
     }
@@ -64,6 +76,7 @@ public class Client {
 
     @Basic
     @Column(name = "BirthDate")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     public Date getBirthDate() {
         return birthDate;
     }
@@ -74,6 +87,8 @@ public class Client {
 
     @Basic
     @Column(name = "Email")
+    @Email
+    @NotBlank
     public String getEmail() {
         return email;
     }
@@ -84,6 +99,9 @@ public class Client {
 
     @Basic
     @Column(name = "Password")
+    @NotBlank
+//    @Size(min = 6, max = 20)
+//    @Pattern(regexp = "^\\S+$")
     public String getPassword() {
         return password;
     }
@@ -93,6 +111,15 @@ public class Client {
     }
 
 
+    @Basic
+    @Column(name = "IsEnabled", columnDefinition = "BIT default false")
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 
     @OneToOne
     @JoinColumn(name = "ClientAddressId")
@@ -121,6 +148,15 @@ public class Client {
         this.birthDate = birthDate;
         this.email = email;
         this.password = password;
+    }
+
+    public Client(String firstName, String lastName, Date birthDate, String email, String password, boolean isEnabled) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.email = email;
+        this.password = password;
+        this.isEnabled = isEnabled;
     }
 
     public Client() {

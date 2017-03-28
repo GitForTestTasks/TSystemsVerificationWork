@@ -5,6 +5,7 @@ build/
 target/
 *.jar
 *.war
+*.log
 
 # IDE
 .idea/

@@ -9,7 +9,7 @@ import java.util.List;
 public abstract class GenericDao<E> {
 
     @PersistenceContext
-    private EntityManager transactionManager;
+    EntityManager transactionManager;
 
     private Class< E > clazz;
 
@@ -17,7 +17,7 @@ public abstract class GenericDao<E> {
         transactionManager.persist(entity);
     }
 
-    public final void setClazz( Class< E > clazzToSet ){
+    public void setClazz( Class< E > clazzToSet ){
         this.clazz = clazzToSet;
     }
 

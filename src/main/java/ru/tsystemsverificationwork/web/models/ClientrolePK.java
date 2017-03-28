@@ -31,6 +31,9 @@ public class ClientrolePK implements Serializable {
         this.roleId = roleId;
     }
 
+    public ClientrolePK() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -116,8 +116,8 @@ public class Order {
     }
 
 //    @OneToMany(mappedBy = "orderId")
-    @OneToMany
-    @JoinColumn(name = "OrderId")
+    @OneToMany(mappedBy = "orderDetailPk.order")
+//    @JoinColumn(name = "OrderId")
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
