@@ -7,8 +7,9 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <security:authentication-manager>
-            <security:authentication-provider user-service-ref="loginService">
-            </security:authentication-provider>
+        <security:authentication-provider user-service-ref="loginService">
+            <security:password-encoder ref="passwordEncoder"/>
+        </security:authentication-provider>
         <security:authentication-provider>
             <security:user-service>
                 <security:user name="admin" authorities="admin"
@@ -21,19 +22,18 @@
 
     <security:http use-expressions="true">
         <security:csrf disabled="true"/>
-        <security:intercept-url pattern="/admin/creategood" access="isAuthenticated()"/>
-        <security:intercept-url pattern="/" access="permitAll"/>
-        <security:intercept-url pattern="/account/createuser" access="permitAll"/>
-        <security:intercept-url pattern="/account/accountcreated" access="permitAll"/>
-        <security:intercept-url pattern="/static/**" access="permitAll"/>
-        <security:intercept-url pattern="/account/logout" access="permitAll"/>
-        <security:intercept-url pattern="/error" access="permitAll"/>
-        <security:intercept-url pattern="/login" access="permitAll"/>
-        <security:intercept-url pattern="/**" access="denyAll"/>
+        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <security:intercept-url pattern="/**" access="permitAll"/>
         <security:form-login login-page="/login"
                              username-parameter="username"
                              password-parameter="password"/>
-        <security:logout logout-success-url="/account/logout"/>
+        <security:logout logout-url="/logout" logout-success-url="/logout"/>
+        <security:access-denied-handler error-page="/denied"/>
+        <security:remember-me user-service-ref="loginService"/>
+
     </security:http>
+    <security:global-method-security secured-annotations="enabled"/>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder"/>
 
 </beans>

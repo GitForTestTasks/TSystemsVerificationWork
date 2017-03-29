@@ -1,6 +1,7 @@
 package ru.tsystemsverificationwork.web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.models.Client;
@@ -15,6 +16,27 @@ public class ClientsDao extends GenericDao<Client> {
 
 //    @Autowired
 //    private RolesDao rolesDao;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+//
+//    public ClientsDao(PasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
+
+    @Override
+    public void create(Client entity) {
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        super.create(entity);
+    }
+
+    @Override
+    public void update(Client entity) {
+
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        transactionManager.find(Client.class, entity.getClientId());
+        transactionManager.merge( entity );
+    }
 
     public ClientsDao(){
         setClazz(Client.class);

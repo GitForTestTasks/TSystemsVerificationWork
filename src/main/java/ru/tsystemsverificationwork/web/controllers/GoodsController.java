@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.tsystemsverificationwork.web.models.Good;
 import ru.tsystemsverificationwork.web.services.GoodsService;
 
@@ -45,18 +46,25 @@ public class GoodsController {
         return "admin/goodcreated";
     }
 
-    @RequestMapping(value = "/goods/{pageid}", method = RequestMethod.GET)
-    public String getPaginatorGoods(Model model, @PathVariable int pageid) {
+    @RequestMapping(value = "/goods", method = RequestMethod.GET)
+    public String getPaginatorGoods(Model model, @RequestParam(required = false) Integer pageid,
+                                    @RequestParam(required = false) String brand,
+                                    @RequestParam(required = false) String colour) {
 
+        List<Good> goods;
+        if( brand != null || colour != null) {
+            goods = goodsService.search(brand, colour);
+            model.addAttribute("goods", goods);
+            return "goods";
+        }
 
-
-        List<Good> goods = goodsService.getGoodsPage(pageid, 10);
+        goods = goodsService.getGoodsPage(pageid, 10);
         int numberOfPages = (int) Math.ceil(goodsService.goodsSize()/10.0);
-
 
         model.addAttribute("goods", goods);
         model.addAttribute("numberOfPages", numberOfPages);
 
         return "goods";
     }
+
 }

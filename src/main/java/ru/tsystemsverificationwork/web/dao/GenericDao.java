@@ -29,8 +29,8 @@ public abstract class GenericDao<E> {
         return transactionManager.createQuery( "from " + clazz.getName() , clazz ).getResultList();
     }
 
-    public E update( E entity ){
-        return transactionManager.merge( entity );
+    public void update( E entity ){
+        transactionManager.merge( entity );
     }
 
     public void delete( E entity ){

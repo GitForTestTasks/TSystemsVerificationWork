@@ -31,17 +31,13 @@ public class LoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-
-        Logger log = Logger.getLogger(UserDetailsService.class.getName());
-        log.log(Level.WARNING,  email + "allo");
-
         Client user = clientsDao.getUserByEmail(email);
         if (user == null) {
             return null;
         }
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = buildSimpleGrantedAuthorities(user);
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), user.isEnabled(), true
+                user.getPassword(), true, true
                 , true, true, simpleGrantedAuthorities);
         return userDetails;
     }

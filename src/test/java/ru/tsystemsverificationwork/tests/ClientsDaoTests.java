@@ -21,7 +21,9 @@ import ru.tsystemsverificationwork.web.models.Client;
 import ru.tsystemsverificationwork.web.models.Role;
 
 //@ActiveProfiles("dev")
-@ContextConfiguration(locations = "classpath:datasource.xml")
+@ContextConfiguration(locations = {"classpath:datasource.xml","classpath:security-context.xml"
+,"classpath:service-context.xml"}
+)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ClientsDaoTests {
 
@@ -55,9 +57,11 @@ public class ClientsDaoTests {
 //        roles.add(new Role("ROLE_ADMIN"));
 
 
-        user4.setRoles(roles);
+        user2.setRoles(roles);
 
-        clientsDao.create(user4);
+
+//        user4 =  clientsDao.getUserByEmail(user3.getEmail());
+        clientsDao.create(user2);
 //        clientsDao.exists("asd");
 
 

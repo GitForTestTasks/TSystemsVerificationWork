@@ -1,40 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-16">
-    <title>Insert title here</title>
-</head>
-<body>
 
 <h2>Results</h2>
 
+<form method="get" action="${pageContext.request.contextPath}/goods" >
+    Brand:<br>
+    <input type="text" name="brand">
+    <br>
+    Colour:<br>
+    <input type="text" name="colour">
+    <INPUT class="button" type="submit" name="submit" value="search"></div>
+</form>
+
 <core:forEach var="row" items="${goods}">
+    <div class="good panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title title">${row.title}</h3>
+        </div>
+        <div class="panel-body">
 
-
-    <div class="good">
-        <div class="title">${row.title} </div>
-        <div class="price">${row.price}</div>
-        <div class="size">${row.size}</div>
-        <div class="category">${row.category}</div>
-        <div class="weight">${row.weight}</div>
-        <div class="characteristics">${row.characteristics}</div>
-        <div class="count">${row.count}</div>
+            <table class="table table-striped table-hover ">
+                <tbody>
+                <tr class="active">
+                    <td>${row.price}</td>
+                </tr>
+                <tr>
+                    <td>${row.size}</td>
+                </tr>
+                <tr class="active">
+                    <td>${row.category}</td>
+                </tr>
+                <tr>
+                    <td>${row.weight}</td>
+                </tr>
+                <tr class="active">
+                    <td>${row.count}</td>
+                </tr>
+                <tr>
+                    <td>${row.brand}</td>
+                </tr>
+                <tr class="active">
+                    <td>${row.colour}</td>
+                </tr>
+                <tr>
+                    <td><a class="buy" href="${pageContext.request.contextPath}/buygood?id=${row.goodId}">Add to
+                        cart</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-
 </core:forEach>
-
 
 <core:forEach begin="1" end="${numberOfPages}" var="val">
     <div class="pageNumbers">
-        <a href="${pageContext.request.contextPath}/goods/${val}">page: ${val}</a>
+        <a href="${pageContext.request.contextPath}/goods?pageid=${val}">page: ${val}</a>
     </div>
 </core:forEach>
 
-
-
-</body>
-</html>

@@ -11,9 +11,7 @@ import ru.tsystemsverificationwork.web.services.ClientsService;
 
 import javax.validation.Valid;
 
-/**
- * Created by Andrei on 3/28/2017.
- */
+
 @Controller
 public class LoginController {
 
@@ -30,13 +28,13 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/account/logout")
+    @RequestMapping(value = "/logout")
     public String logOut() {
 
-        return "account/logout";
+        return "logout";
     }
 
-    @RequestMapping(value = "/account/createuser", method = RequestMethod.GET)
+    @RequestMapping(value = "/account/createaccount", method = RequestMethod.GET)
     public String createAccount(Model model, Client client) {
 
 
@@ -45,7 +43,7 @@ public class LoginController {
         return "account/createaccount";
     }
 
-    @RequestMapping(value = "/account/createuser", method = RequestMethod.POST)
+    @RequestMapping(value = "/account/createaccount", method = RequestMethod.POST)
     public String createAccount(Model model, @Valid Client good, BindingResult bindingResult) {
 
         if(bindingResult.hasErrors()) {

@@ -8,12 +8,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "clients")
-public class Client {
+public class Client implements Serializable{
     private long clientId;
     private String firstName;
     private String lastName;
@@ -100,8 +101,8 @@ public class Client {
     @Basic
     @Column(name = "Password")
     @NotBlank
-//    @Size(min = 6, max = 20)
-//    @Pattern(regexp = "^\\S+$")
+    @Size(min = 6, max = 80)
+    @Pattern(regexp = "^\\S+$")
     public String getPassword() {
         return password;
     }
@@ -112,7 +113,7 @@ public class Client {
 
 
     @Basic
-    @Column(name = "IsEnabled", columnDefinition = "BIT default false")
+    @Column(name = "IsEnabled", columnDefinition = "BIT default true")
     public boolean isEnabled() {
         return isEnabled;
     }

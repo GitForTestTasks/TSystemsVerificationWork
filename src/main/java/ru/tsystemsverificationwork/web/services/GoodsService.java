@@ -1,6 +1,7 @@
 package ru.tsystemsverificationwork.web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import ru.tsystemsverificationwork.web.controllers.GoodsController;
 import ru.tsystemsverificationwork.web.dao.GoodsDao;
@@ -21,6 +22,7 @@ public class GoodsService {
         this.goodsDao = goodsDao;
     }
 
+    @Secured("ROLE_ADMIN")
     public void createGood(Good good) {
 
         goodsDao.create(good);
@@ -37,6 +39,10 @@ public class GoodsService {
 
         return goodsDao.getStrictedGoodsList(page*quantityOfElements, quantityOfElements);
 
+    }
+
+    public List<Good> search(String brand, String colour) {
+        return goodsDao.searchByBrandAndColour(brand, colour);
     }
 
     public Long goodsSize() {

@@ -1,11 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="forms">
-    <form:form id="details" name="register" method="post" action="${pageContext.request.contextPath}/account/createuser"
-               commandName="client">
+    <form:form id="details" name="profile" method="post" action="${pageContext.request.contextPath}/account/profile"
+               commandName="client" modelAttribute="client">
         <fieldset>
-            <legend>Create Account</legend>
+            <legend>Edit Account</legend>
             <div class="formsRow">
                 <div class="formsFields">First Name</div>
                 <div class="formsRow"><form:input path="firstName" required="true" type="text" name="firstName"/></div>
@@ -22,25 +23,27 @@
             </div>
             <div class="error"><form:errors path="birthDate"/></div>
             <div class="formsRow">
-                <div class="formsFields">E-mail</div>
-                <div class="formsRow"><form:input path="email" required="true" type="text" name="email"/></div>
-            </div>
-            <div class="error"><form:errors path="email"/></div>
-            <div class="formsRow">
                 <div class="formsFields">Password</div>
-                <div class="formsRow"><form:input id="password" path="password" required="true" type="password" name="password"/></div>
+                <div class="formsRow"><form:input id="password" path="password" required="true" type="password"
+                                                  name="password"/></div>
             </div>
             <div class="error"><form:errors path="password"/></div>
             <div class="formsRow">
                 <div class="formsFields">Confirm Password</div>
-                <div class="formsRow"><input id="confirmPassword" required type="password" name="confirmPassword"/></div>
+                <div class="formsRow"><input id="confirmPassword" required type="password" name="confirmPassword"/>
+                </div>
             </div>
+            <form:input id="email" path="email" type="hidden" name="email"/>
             <div id="matchpass"></div>
             <div class="formsRow">
                 <div class="formsFields">&nbsp;</div>
-                <div class="formsRow"><INPUT class="button" type="submit" name="submit" value="Create Account"></div>
+                <div class="formsRow"><INPUT class="button" type="submit" name="submit" value="Edit Account"></div>
             </div>
             <div class="formsRow"></div>
         </fieldset>
     </form:form>
 </div>
+
+<core:if test="${state}">
+    <h1>Success</h1>
+</core:if>

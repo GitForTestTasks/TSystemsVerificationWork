@@ -9,9 +9,6 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * Created by Andrei on 3/24/2017.
- */
 @Entity
 @Table(name = "goods")
 public class Good {
@@ -19,10 +16,39 @@ public class Good {
     private String title;
     private BigDecimal price;
     private String category;
-    private String characteristics;
+    private String brand;
+    private String colour;
+
     private BigDecimal weight;
     private String size;
     private int count;
+
+    @Basic
+    @Column(name = "Brand")
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    @Basic
+    @Column(name = "Colour")
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public Good(String title, BigDecimal price, String brand, String colour) {
+        this.title = title;
+        this.price = price;
+        this.brand = brand;
+        this.colour = colour;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +56,6 @@ public class Good {
     public long getGoodId() {
         return goodId;
     }
-
-//    private List<OrderDetail> orderDetail;
 
     public void setGoodId(long goodId) {
         this.goodId = goodId;
@@ -51,7 +75,7 @@ public class Good {
 
     @Basic
     @Column(name = "Price")
-    @NotBlank
+    @NotNull
     public BigDecimal getPrice() {
         return price;
     }
@@ -68,16 +92,6 @@ public class Good {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    @Basic
-    @Column(name = "Characteristics")
-    public String getCharacteristics() {
-        return characteristics;
-    }
-
-    public void setCharacteristics(String characteristics) {
-        this.characteristics = characteristics;
     }
 
     @Basic
@@ -102,7 +116,7 @@ public class Good {
 
     @Basic
     @Column(name = "Count")
-    @NotBlank
+    @NotNull
     public int getCount() {
         return count;
     }
@@ -111,30 +125,14 @@ public class Good {
         this.count = count;
     }
 
-////    @OneToMany(mappedBy = "goodId")
-//    @OneToMany(mappedBy = "orderDetailPk.good", fetch = FetchType.EAGER)
-////    @JoinColumn(name = "GoodId")
-//    public List<OrderDetail> getOrderDetail() {
-//        return orderDetail;
-//    }
-
-//    public void setOrderDetail(List<OrderDetail> orderDetail) {
-//        this.orderDetail = orderDetail;
-//    }
-
-    public Good(String title, BigDecimal price, String category, String characteristics,
-                BigDecimal weight, String size, int count) {
-        this.title = title;
-        this.price = price;
-        this.category = category;
-        this.characteristics = characteristics;
-        this.weight = weight;
-        this.size = size;
-        this.count = count;
-
+    public Good() {
     }
 
-    public Good() {
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                 goodId + "}";
     }
 
     @Override
@@ -146,33 +144,26 @@ public class Good {
 
         if (goodId != good.goodId) return false;
         if (count != good.count) return false;
-        if (title != null ? !title.equals(good.title) : good.title != null) return false;
-        if (price != null ? !price.equals(good.price) : good.price != null) return false;
+        if (!title.equals(good.title)) return false;
+        if (!price.equals(good.price)) return false;
         if (category != null ? !category.equals(good.category) : good.category != null) return false;
-        if (characteristics != null ? !characteristics.equals(good.characteristics) : good.characteristics != null)
-            return false;
+        if (brand != null ? !brand.equals(good.brand) : good.brand != null) return false;
+        if (colour != null ? !colour.equals(good.colour) : good.colour != null) return false;
         if (weight != null ? !weight.equals(good.weight) : good.weight != null) return false;
-        if (size != null ? !size.equals(good.size) : good.size != null) return false;
-
-        return true;
+        return size != null ? size.equals(good.size) : good.size == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (goodId ^ (goodId >>> 32));
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + title.hashCode();
+        result = 31 * result + price.hashCode();
         result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (characteristics != null ? characteristics.hashCode() : 0);
+        result = 31 * result + (brand != null ? brand.hashCode() : 0);
+        result = 31 * result + (colour != null ? colour.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + count;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Good{" +
-                 goodId + "}";
     }
 }
