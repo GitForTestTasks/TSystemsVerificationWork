@@ -16,3 +16,5 @@
 <sec:authorize access="hasRole('ROLE_ADMIN')">
     <p><a href="${pageContext.request.contextPath}/admin/admin">admin</a></p>
 </sec:authorize>
+
+<p><a href="${pageContext.request.contextPath}/goods?pageid=1">Catalogue</a></p>

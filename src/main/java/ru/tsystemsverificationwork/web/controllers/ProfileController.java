@@ -7,9 +7,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.tsystemsverificationwork.web.models.Client;
+import ru.tsystemsverificationwork.web.models.ClientAddress;
 import ru.tsystemsverificationwork.web.services.ProfileService;
 
 import javax.validation.Valid;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Controller
@@ -22,7 +25,7 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @RequestMapping(value = "/account/profile")
+    @RequestMapping(value = "/account/profile", method = RequestMethod.GET)
     public String viewProfile(Model model) {
 
 
@@ -40,4 +43,24 @@ public class ProfileController {
         return "account/profile";
     }
 
+    @RequestMapping(value = "/account/clientaddress", method = RequestMethod.GET)
+    public String editClientAddress(Model model) {
+
+        model.addAttribute("clientAddress", profileService.getClientAddress());
+
+        return "account/clientaddress";
+
+    }
+
+    @RequestMapping(value = "/account/clientaddress", method = RequestMethod.POST)
+    public String editClientAddress(Model model, @Valid ClientAddress clientAddress, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "account/clientaddress";
+        }
+        profileService.updateCliendAddress(clientAddress);
+        model.addAttribute("success", true);
+
+        return "account/clientaddress";
+    }
 }

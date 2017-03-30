@@ -5,24 +5,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.models.Client;
-import ru.tsystemsverificationwork.web.models.Role;
-
-import java.util.List;
-
 
 @Transactional
 @Component("clientsDao")
 public class ClientsDao extends GenericDao<Client> {
 
-//    @Autowired
-//    private RolesDao rolesDao;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-//
-//    public ClientsDao(PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
 
     @Override
     public void create(Client entity) {
@@ -35,10 +25,10 @@ public class ClientsDao extends GenericDao<Client> {
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         transactionManager.find(Client.class, entity.getClientId());
-        transactionManager.merge( entity );
+        transactionManager.merge(entity);
     }
 
-    public ClientsDao(){
+    public ClientsDao() {
         setClazz(Client.class);
     }
 
@@ -52,6 +42,11 @@ public class ClientsDao extends GenericDao<Client> {
 
         return transactionManager.createQuery("FROM Client AS r WHERE r.email = :email", Client.class).
                 setParameter("email", email).getSingleResult();
+    }
+
+    public void updateWithoutEncrypt(Client entity) {
+        transactionManager.find(Client.class, entity.getClientId());
+        transactionManager.merge(entity);
     }
 
 }

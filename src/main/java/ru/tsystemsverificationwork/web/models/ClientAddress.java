@@ -26,6 +26,8 @@ public class ClientAddress {
 
     private Client client;
 
+
+
     public void setClientAddressId(long clientAddressId) {
         this.clientAddressId = clientAddressId;
     }
@@ -91,7 +93,7 @@ public class ClientAddress {
     }
 
 //    @OneToMany(mappedBy = "clientAddressId")
-    @OneToMany
+    @OneToMany()
     @JoinColumn(name = "ClientAddressId")
     public List<Order> getOrders() {
         return orders;
@@ -101,9 +103,7 @@ public class ClientAddress {
         this.orders = orders;
     }
 
-//    @OneToOne(mappedBy = "clientAddressId")
-    @OneToOne
-    @JoinColumn(name = "ClientAddressId")
+    @OneToOne(cascade = {CascadeType.MERGE},mappedBy = "clientAddressId")
     public Client getClient() {
         return client;
     }

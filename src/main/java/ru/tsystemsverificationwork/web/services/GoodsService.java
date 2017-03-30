@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import ru.tsystemsverificationwork.web.controllers.GoodsController;
+import ru.tsystemsverificationwork.web.dao.CategoriesDao;
 import ru.tsystemsverificationwork.web.dao.GoodsDao;
 import ru.tsystemsverificationwork.web.models.Good;
 
@@ -16,15 +17,23 @@ public class GoodsService {
 
 
     private GoodsDao goodsDao;
+    private CategoriesDao categoriesDao;
+
 
     @Autowired
-    public GoodsService(GoodsDao goodsDao) {
+    public GoodsService(GoodsDao goodsDao, CategoriesDao categoriesDao) {
         this.goodsDao = goodsDao;
+        this.categoriesDao = categoriesDao;
     }
+
 
     @Secured("ROLE_ADMIN")
     public void createGood(Good good) {
 
+        if (categoriesDao.categoryExists(good.getCategory().getName())) {
+            good.setCategory(categoriesDao.findByName(good.getCategory().getName()));
+        }
+        
         goodsDao.create(good);
     }
 
@@ -33,11 +42,11 @@ public class GoodsService {
         Long size = goodsDao.size();
 
         page = page - 1;
-        if(page*quantityOfElements > size || page < 0)
+        if (page * quantityOfElements > size || page < 0)
             return new ArrayList<>();
 
 
-        return goodsDao.getStrictedGoodsList(page*quantityOfElements, quantityOfElements);
+        return goodsDao.getStrictedGoodsList(page * quantityOfElements, quantityOfElements);
 
     }
 
@@ -46,10 +55,6 @@ public class GoodsService {
     }
 
     public Long goodsSize() {
-        return  goodsDao.size();
+        return goodsDao.size();
     }
-
-
-
-
 }

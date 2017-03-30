@@ -66,10 +66,10 @@ public class ClientsDaoTests {
 
 
 
-
-        Logger log = Logger.getLogger(ClientsDaoTests.class.getName());
-        log.log(Level.WARNING,  user4.getEmail() );
-        log.log(Level.WARNING, clientsDao.getUserByEmail(user4.getEmail()).getEmail() + "asd");
+//
+//        Logger log = Logger.getLogger(ClientsDaoTests.class.getName());
+//        log.log(Level.WARNING,  user4.getEmail() );
+//        log.log(Level.WARNING, clientsDao.getUserByEmail(user4.getEmail()).getEmail() + "asd");
 
 
         assertTrue(true);

@@ -8,7 +8,7 @@
 
 <div class="forms well bs-component">
 
-    <form:form name="register" method="post" action="${pageContext.request.contextPath}/admin/creategood"
+    <form:form name="creategood" method="post" action="${pageContext.request.contextPath}/admin/creategood"
                commandName="good" cssClass="form-horizontal">
         <fieldset>
             <legend>Create good</legend>
@@ -36,7 +36,7 @@
             <div class="form-group">
                 <label for="inputCategory" class="col-lg-2 control-label">Category</label>
                 <div class="col-lg-10">
-                    <form:input cssClass="form-control" path="category" type="text" name="category"/>
+                    <form:input cssClass="form-control" required="true" path="category" type="text" name="category"/>
                 </div>
             </div>
             <div class="error form-group">

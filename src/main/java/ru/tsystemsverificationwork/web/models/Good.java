@@ -15,13 +15,22 @@ public class Good {
     private long goodId;
     private String title;
     private BigDecimal price;
-    private String category;
     private String brand;
     private String colour;
-
     private BigDecimal weight;
     private String size;
     private int count;
+    private Category category;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "CategoryId")
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Basic
     @Column(name = "Brand")
@@ -85,16 +94,6 @@ public class Good {
     }
 
     @Basic
-    @Column(name = "Category")
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    @Basic
     @Column(name = "Weight")
     public BigDecimal getWeight() {
         return weight;
@@ -146,7 +145,6 @@ public class Good {
         if (count != good.count) return false;
         if (!title.equals(good.title)) return false;
         if (!price.equals(good.price)) return false;
-        if (category != null ? !category.equals(good.category) : good.category != null) return false;
         if (brand != null ? !brand.equals(good.brand) : good.brand != null) return false;
         if (colour != null ? !colour.equals(good.colour) : good.colour != null) return false;
         if (weight != null ? !weight.equals(good.weight) : good.weight != null) return false;
@@ -158,7 +156,6 @@ public class Good {
         int result = (int) (goodId ^ (goodId >>> 32));
         result = 31 * result + title.hashCode();
         result = 31 * result + price.hashCode();
-        result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (brand != null ? brand.hashCode() : 0);
         result = 31 * result + (colour != null ? colour.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);

@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created by Andrei on 3/28/2017.
- */
 @Service("loginService")
 public class LoginService implements UserDetailsService {
 

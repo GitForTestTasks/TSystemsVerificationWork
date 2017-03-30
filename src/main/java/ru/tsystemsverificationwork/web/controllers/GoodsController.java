@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
+import ru.tsystemsverificationwork.web.editors.CategoryEditor;
+import ru.tsystemsverificationwork.web.models.Category;
 import ru.tsystemsverificationwork.web.models.Good;
 import ru.tsystemsverificationwork.web.services.GoodsService;
 
@@ -26,7 +26,13 @@ public class GoodsController {
         this.goodsService = goodsService;
     }
 
-    @RequestMapping(value="/admin/creategood", method= RequestMethod.GET)
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Category.class, new CategoryEditor());
+    }
+
+    @RequestMapping(value = "/admin/creategood", method = RequestMethod.GET)
     public String createGoodGet(Model model) {
 
         model.addAttribute("good", new Good());
@@ -34,11 +40,12 @@ public class GoodsController {
     }
 
 
-    @RequestMapping(value="/admin/creategood", method= RequestMethod.POST)
+
+    @RequestMapping(value = "/admin/creategood", method = RequestMethod.POST)
     public String createGood(Model model, @Valid Good good, BindingResult bindingResult) {
 
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "admin/creategood";
         }
 
@@ -52,14 +59,14 @@ public class GoodsController {
                                     @RequestParam(required = false) String colour) {
 
         List<Good> goods;
-        if( brand != null || colour != null) {
+        if (brand != null || colour != null) {
             goods = goodsService.search(brand, colour);
             model.addAttribute("goods", goods);
             return "goods";
         }
 
         goods = goodsService.getGoodsPage(pageid, 10);
-        int numberOfPages = (int) Math.ceil(goodsService.goodsSize()/10.0);
+        int numberOfPages = (int) Math.ceil(goodsService.goodsSize() / 10.0);
 
         model.addAttribute("goods", goods);
         model.addAttribute("numberOfPages", numberOfPages);

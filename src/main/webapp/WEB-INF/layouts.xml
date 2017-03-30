@@ -50,4 +50,19 @@
         <put-attribute name="content" value="/WEB-INF/jsps/account/profile.jsp"/>
         <put-attribute name="includes" value="/WEB-INF/jsps/account/createaccountscript.jsp"/>
     </definition>
+    <definition name="account/clientaddress" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/account/clientaddress.jsp"/>
+    </definition>
+    <definition name="admin/orders" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/orders.jsp"/>
+    </definition>
+    <definition name="admin/createcategory" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/createcategory.jsp"/>
+    </definition>
+    <definition name="admin/categories" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/categories.jsp"/>
+    </definition>
+    <definition name="unexpectederror" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/unexpectederror.jsp"/>
+    </definition>
 </tiles-definitions>

@@ -51,7 +51,6 @@
             </table>
         </div>
     </div>
-
 </core:forEach>
 
 <core:forEach begin="1" end="${numberOfPages}" var="val">

@@ -11,16 +11,22 @@ import java.nio.file.AccessDeniedException;
 public class ErrorHandler {
 
 
-    @ExceptionHandler(DataAccessException.class)
-    public String databaseExceptionHandler(DataAccessException ex) {
+//    @ExceptionHandler(DataAccessException.class)
+//    public String databaseExceptionHandler(DataAccessException ex) {
+//
+//        return "error";
+//    }
+//
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public String AccessDeniedHandler(AccessDeniedException ex) {
+//
+//        return "denied";
+//    }
 
-        return "error";
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public String AccessDeniedHandler(AccessDeniedException ex) {
-
-        return "denied";
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String AccessDeniedHandler(Exception ex) {
+//
+//        return "unexpectederror";
+//    }
 
 }

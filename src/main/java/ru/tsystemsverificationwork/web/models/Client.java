@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "clients")
-public class Client implements Serializable{
+public class Client implements Serializable {
     private long clientId;
     private String firstName;
     private String lastName;
@@ -54,7 +54,7 @@ public class Client implements Serializable{
     @Basic
     @Column(name = "FirstName")
     @NotBlank
-    @Size(min = 2,max = 50)
+    @Size(min = 2, max = 50)
     public String getFirstName() {
         return firstName;
     }
@@ -66,7 +66,7 @@ public class Client implements Serializable{
     @Basic
     @Column(name = "LastName")
     @NotBlank
-    @Size(min = 2,max = 50)
+    @Size(min = 2, max = 50)
     public String getLastName() {
         return lastName;
     }
@@ -122,7 +122,7 @@ public class Client implements Serializable{
         isEnabled = enabled;
     }
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "ClientAddressId")
     public ClientAddress getClientAddressId() {
         return clientAddressId;
@@ -132,7 +132,7 @@ public class Client implements Serializable{
         this.clientAddressId = clientAddressId;
     }
 
-//    @OneToMany(mappedBy = "clientId")
+    //    @OneToMany(mappedBy = "clientId")
     @OneToMany
     @JoinColumn(name = "ClientId")
     public List<Order> getOrders() {

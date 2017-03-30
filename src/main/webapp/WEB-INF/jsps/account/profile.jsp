@@ -44,6 +44,8 @@
     </form:form>
 </div>
 
+<a href="/account/clientaddress">Client address information</a>
+
 <core:if test="${state}">
     <h1>Success</h1>
 </core:if>

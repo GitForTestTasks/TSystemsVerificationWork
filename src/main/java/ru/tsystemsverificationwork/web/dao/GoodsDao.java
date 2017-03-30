@@ -31,10 +31,4 @@ public class GoodsDao extends GenericDao<Good> {
                 " AND r.colour LIKE :colour", Good.class).
                 setParameter("brand", "%" + brand + "%").setParameter("colour", "%" + colour + "%").getResultList();
     }
-
-//
-//    SELECT *  FROM `goods`
-//    WHERE `name` LIKE '%go%'
-//    AND `color` LIKE '%re%'
-//    AND `brand` LIKE '%i%'
 }

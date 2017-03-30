@@ -46,11 +46,11 @@ public class LoginController {
     @RequestMapping(value = "/account/createaccount", method = RequestMethod.POST)
     public String createAccount(Model model, @Valid Client good, BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "account/createaccount";
         }
 
-        if(clientsService.clientExists(good.getEmail())) {
+        if (clientsService.clientExists(good.getEmail())) {
             bindingResult.rejectValue("email", "DublicateEmail.client.email");
             return "account/createaccount";
         }

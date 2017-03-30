@@ -11,35 +11,34 @@ public abstract class GenericDao<E> {
     @PersistenceContext
     EntityManager transactionManager;
 
-    private Class< E > clazz;
+    private Class<E> clazz;
 
     public void create(E entity) {
         transactionManager.persist(entity);
     }
 
-    public void setClazz( Class< E > clazzToSet ){
+    public void setClazz(Class<E> clazzToSet) {
         this.clazz = clazzToSet;
     }
 
-    public E findOne( long id ){
-        return transactionManager.find( clazz, id );
+    public E findOne(long id) {
+        return transactionManager.find(clazz, id);
     }
 
-    public List< E > getAll(){
-        return transactionManager.createQuery( "from " + clazz.getName() , clazz ).getResultList();
+    public List<E> getAll() {
+        return transactionManager.createQuery("from " + clazz.getName(), clazz).getResultList();
     }
 
-    public void update( E entity ){
-        transactionManager.merge( entity );
+    public void update(E entity) {
+        transactionManager.merge(entity);
     }
 
-    public void delete( E entity ){
-        transactionManager.remove( entity );
+    public void delete(E entity) {
+        transactionManager.remove(entity);
     }
 
-    public void deleteById( long entityId ){
-        E entity = findOne( entityId );
-        delete( entity );
+    public void deleteById(long entityId) {
+        E entity = findOne(entityId);
+        delete(entity);
     }
-
 }
