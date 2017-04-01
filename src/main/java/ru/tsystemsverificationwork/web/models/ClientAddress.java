@@ -1,5 +1,8 @@
 package ru.tsystemsverificationwork.web.models;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -24,9 +27,18 @@ public class ClientAddress {
     private List<Order> orders;
 
 
-    private Client client;
+    private Client clientId;
+
+    @ManyToOne
+    @JoinColumn(name = "ClientId")
+    public Client getClientId() {
+        return clientId;
+    }
 
 
+    public void setClientId(Client clientId) {
+        this.clientId = clientId;
+    }
 
     public void setClientAddressId(long clientAddressId) {
         this.clientAddressId = clientAddressId;
@@ -93,7 +105,7 @@ public class ClientAddress {
     }
 
 //    @OneToMany(mappedBy = "clientAddressId")
-    @OneToMany()
+    @OneToMany
     @JoinColumn(name = "ClientAddressId")
     public List<Order> getOrders() {
         return orders;
@@ -103,14 +115,6 @@ public class ClientAddress {
         this.orders = orders;
     }
 
-    @OneToOne(cascade = {CascadeType.MERGE},mappedBy = "clientAddressId")
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -119,26 +123,21 @@ public class ClientAddress {
 
         ClientAddress that = (ClientAddress) o;
 
-        if (clientAddressId != that.clientAddressId) return false;
-        if (country != null ? !country.equals(that.country) : that.country != null) return false;
-        if (city != null ? !city.equals(that.city) : that.city != null) return false;
-        if (postIndex != null ? !postIndex.equals(that.postIndex) : that.postIndex != null) return false;
-        if (street != null ? !street.equals(that.street) : that.street != null) return false;
-        if (houseNumber != null ? !houseNumber.equals(that.houseNumber) : that.houseNumber != null) return false;
-        if (apartment != null ? !apartment.equals(that.apartment) : that.apartment != null) return false;
-
-        return true;
+        return clientAddressId == that.clientAddressId;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (clientAddressId ^ (clientAddressId >>> 32));
-        result = 31 * result + (country != null ? country.hashCode() : 0);
-        result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (postIndex != null ? postIndex.hashCode() : 0);
-        result = 31 * result + (street != null ? street.hashCode() : 0);
-        result = 31 * result + (houseNumber != null ? houseNumber.hashCode() : 0);
-        result = 31 * result + (apartment != null ? apartment.hashCode() : 0);
-        return result;
+        return (int) (clientAddressId ^ (clientAddressId >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return  "Country '" + country + '\'' +
+                ", City '" + city + '\'' +
+                ", Post Index " + postIndex +
+                ", Street '" + street + '\'' +
+                ", HouseNumber '" + houseNumber + '\'' +
+                ", apartment " + apartment;
     }
 }

@@ -1,18 +1,24 @@
 package ru.tsystemsverificationwork.web.models;
 
+import ru.tsystemsverificationwork.web.models.enums.DeliveryMethod;
+import ru.tsystemsverificationwork.web.models.enums.OrderStatus;
+import ru.tsystemsverificationwork.web.models.enums.PaymentMethod;
+import ru.tsystemsverificationwork.web.models.enums.PaymentStatus;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order implements Serializable {
     private long orderId;
-    private short paymentMethod;
-    private short deliveryMethod;
-    private boolean paymentStatus;
-    private short orderStatusId;
+    private PaymentMethod paymentMethod;
+    private DeliveryMethod deliveryMethod;
+    private PaymentStatus paymentStatus;
+    private OrderStatus orderStatus;
     private Timestamp dateOfCreation;
     private Timestamp dateOfSale;
 
@@ -35,45 +41,55 @@ public class Order {
         this.orderId = orderId;
     }
 
+
     @Basic
     @Column(name = "PaymentMethod")
-    public short getPaymentMethod() {
+    @Enumerated(EnumType.STRING)
+    public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(short paymentMethod) {
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
+
     @Basic
     @Column(name = "DeliveryMethod")
-    public short getDeliveryMethod() {
+    @Enumerated(EnumType.STRING)
+    public DeliveryMethod getDeliveryMethod() {
         return deliveryMethod;
     }
 
-    public void setDeliveryMethod(short deliveryMethod) {
+    public void setDeliveryMethod(DeliveryMethod deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
     }
 
+
     @Basic
     @Column(name = "PaymentStatus")
-    public boolean isPaymentStatus() {
+    @Enumerated(EnumType.STRING)
+    public PaymentStatus getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(boolean paymentStatus) {
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
+
     @Basic
-    @Column(name = "OrderStatusId")
-    public short getOrderStatusId() {
-        return orderStatusId;
+    @Column(name = "OrderStatus")
+    @Enumerated(EnumType.STRING)
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setOrderStatusId(short orderStatusId) {
-        this.orderStatusId = orderStatusId;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
     }
+
+
 
     @Basic
     @Column(name = "DateOfCreation")
@@ -95,7 +111,7 @@ public class Order {
         this.dateOfSale = dateOfSale;
     }
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "ClientId")
     public Client getClientId() {
         return clientId;
@@ -105,7 +121,7 @@ public class Order {
         this.clientId = clientId;
     }
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "ClientAddressId")
     public ClientAddress getClientAddressId() {
         return clientAddressId;
@@ -115,9 +131,7 @@ public class Order {
         this.clientAddressId = clientAddressId;
     }
 
-//    @OneToMany(mappedBy = "orderId")
     @OneToMany(mappedBy = "orderDetailPk.order")
-//    @JoinColumn(name = "OrderId")
     public List<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
@@ -125,6 +139,7 @@ public class Order {
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -137,22 +152,19 @@ public class Order {
         if (paymentMethod != order.paymentMethod) return false;
         if (deliveryMethod != order.deliveryMethod) return false;
         if (paymentStatus != order.paymentStatus) return false;
-        if (orderStatusId != order.orderStatusId) return false;
-        if (dateOfCreation != null ? !dateOfCreation.equals(order.dateOfCreation) : order.dateOfCreation != null)
-            return false;
-        if (dateOfSale != null ? !dateOfSale.equals(order.dateOfSale) : order.dateOfSale != null) return false;
-
-        return true;
+        if (orderStatus != order.orderStatus) return false;
+        if (!dateOfCreation.equals(order.dateOfCreation)) return false;
+        return dateOfSale != null ? dateOfSale.equals(order.dateOfSale) : order.dateOfSale == null;
     }
 
     @Override
     public int hashCode() {
         int result = (int) (orderId ^ (orderId >>> 32));
-        result = 31 * result + (int) paymentMethod;
-        result = 31 * result + (int) deliveryMethod;
-        result = 31 * result + (paymentStatus ? 1 : 0);
-        result = 31 * result + (int) orderStatusId;
-        result = 31 * result + (dateOfCreation != null ? dateOfCreation.hashCode() : 0);
+        result = 31 * result + paymentMethod.hashCode();
+        result = 31 * result + deliveryMethod.hashCode();
+        result = 31 * result + paymentStatus.hashCode();
+        result = 31 * result + orderStatus.hashCode();
+        result = 31 * result + dateOfCreation.hashCode();
         result = 31 * result + (dateOfSale != null ? dateOfSale.hashCode() : 0);
         return result;
     }

@@ -3,12 +3,14 @@ package ru.tsystemsverificationwork.web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.dao.ClientsDao;
 import ru.tsystemsverificationwork.web.models.Client;
 
 import java.util.List;
 
 @Service("clientsService")
+@Transactional
 public class ClientsService {
 
     private ClientsDao clientsDao;

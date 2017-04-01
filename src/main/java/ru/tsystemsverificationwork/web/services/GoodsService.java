@@ -3,6 +3,7 @@ package ru.tsystemsverificationwork.web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.controllers.GoodsController;
 import ru.tsystemsverificationwork.web.dao.CategoriesDao;
 import ru.tsystemsverificationwork.web.dao.GoodsDao;
@@ -13,6 +14,7 @@ import java.util.List;
 
 
 @Service("goodsService")
+@Transactional
 public class GoodsService {
 
 

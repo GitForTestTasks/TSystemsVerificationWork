@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "clients")
@@ -24,7 +25,16 @@ public class Client implements Serializable {
     private boolean isEnabled;
     private List<Role> roles;
     private List<Order> orders;
+    private Set<ClientAddress> clientAddresses;
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "clientId", cascade = CascadeType.MERGE)
+    public Set<ClientAddress> getClientAddresses() {
+        return clientAddresses;
+    }
+
+    public void setClientAddresses(Set<ClientAddress> clientAddresses) {
+        this.clientAddresses = clientAddresses;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +44,6 @@ public class Client implements Serializable {
     }
 
 
-    private ClientAddress clientAddressId;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "ClientsRoles", joinColumns = {@JoinColumn(name = "ClientId", nullable = false, updatable = false)},
@@ -122,15 +131,9 @@ public class Client implements Serializable {
         isEnabled = enabled;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "ClientAddressId")
-    public ClientAddress getClientAddressId() {
-        return clientAddressId;
-    }
 
-    public void setClientAddressId(ClientAddress clientAddressId) {
-        this.clientAddressId = clientAddressId;
-    }
+
+
 
     //    @OneToMany(mappedBy = "clientId")
     @OneToMany
@@ -164,8 +167,7 @@ public class Client implements Serializable {
     }
 
     public Client(long clientId, String firstName, String lastName, Date birthDate,
-                  String email, String password, List<Role> roles, List<Order> orders,
-                  ClientAddress clientAddressId) {
+                  String email, String password, List<Role> roles, List<Order> orders) {
         this.clientId = clientId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -174,7 +176,6 @@ public class Client implements Serializable {
         this.password = password;
         this.roles = roles;
         this.orders = orders;
-        this.clientAddressId = clientAddressId;
     }
 
     @Override

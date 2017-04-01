@@ -44,7 +44,7 @@
     </form:form>
 </div>
 
-<a href="/account/clientaddress">Client address information</a>
+<a href="${pageContext.request.contextPath}/account/clientaddresses">Client address information</a>
 
 <core:if test="${state}">
     <h1>Success</h1>

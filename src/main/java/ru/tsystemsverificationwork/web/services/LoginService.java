@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.dao.ClientsDao;
 import ru.tsystemsverificationwork.web.models.Client;
 import ru.tsystemsverificationwork.web.models.Role;
@@ -16,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service("loginService")
+@Transactional
 public class LoginService implements UserDetailsService {
 
     private ClientsDao clientsDao;

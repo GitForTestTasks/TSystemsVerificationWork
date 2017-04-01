@@ -6,7 +6,7 @@ import ru.tsystemsverificationwork.web.models.Category;
 
 import javax.transaction.Transactional;
 
-@Transactional
+//@Transactional
 @Component("categoriesDao")
 public class CategoriesDao extends GenericDao<Category> {
 

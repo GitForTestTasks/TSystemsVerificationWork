@@ -65,4 +65,13 @@
     <definition name="unexpectederror" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/unexpectederror.jsp"/>
     </definition>
+    <definition name="account/accountcreated" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/account/accountcreated.jsp"/>
+    </definition>
+    <definition name="cart" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/cart.jsp"/>
+    </definition>
+    <definition name="account/clientaddresses" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/account/clientaddresses.jsp"/>
+    </definition>
 </tiles-definitions>

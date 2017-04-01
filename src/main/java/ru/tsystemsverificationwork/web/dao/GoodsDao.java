@@ -7,7 +7,7 @@ import ru.tsystemsverificationwork.web.models.Good;
 import java.util.List;
 
 
-@Transactional
+//@Transactional
 @Component("goodsDao")
 public class GoodsDao extends GenericDao<Good> {
 

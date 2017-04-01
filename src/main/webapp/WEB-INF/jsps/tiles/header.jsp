@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<a href="${pageContext.request.contextPath}/cart">Cart ( ${cartSize} )</a>
 
 <sec:authorize access="isAuthenticated()">
     <p><a href="${pageContext.request.contextPath}/logout">logout</a></p>

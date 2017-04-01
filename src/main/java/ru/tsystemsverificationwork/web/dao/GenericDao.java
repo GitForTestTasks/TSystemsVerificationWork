@@ -5,7 +5,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
+//@Transactional
 public abstract class GenericDao<E> {
 
     @PersistenceContext

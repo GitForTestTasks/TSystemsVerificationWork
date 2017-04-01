@@ -2,7 +2,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="forms">
-    <form:form id="details" name="register" method="post" action="${pageContext.request.contextPath}/account/createuser"
+    <form:form id="details" name="register" method="post"
+               action="${pageContext.request.contextPath}/account/createaccount"
                commandName="client">
         <fieldset>
             <legend>Create Account</legend>
@@ -28,12 +29,14 @@
             <div class="error"><form:errors path="email"/></div>
             <div class="formsRow">
                 <div class="formsFields">Password</div>
-                <div class="formsRow"><form:input id="password" path="password" required="true" type="password" name="password"/></div>
+                <div class="formsRow"><form:input id="password" path="password" required="true" type="password"
+                                                  name="password"/></div>
             </div>
             <div class="error"><form:errors path="password"/></div>
             <div class="formsRow">
                 <div class="formsFields">Confirm Password</div>
-                <div class="formsRow"><input id="confirmPassword" required type="password" name="confirmPassword"/></div>
+                <div class="formsRow"><input id="confirmPassword" required type="password" name="confirmPassword"/>
+                </div>
             </div>
             <div id="matchpass"></div>
             <div class="formsRow">

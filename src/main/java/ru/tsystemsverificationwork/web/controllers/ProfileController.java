@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.tsystemsverificationwork.web.models.Client;
 import ru.tsystemsverificationwork.web.models.ClientAddress;
 import ru.tsystemsverificationwork.web.services.ProfileService;
@@ -44,12 +46,12 @@ public class ProfileController {
     }
 
     @RequestMapping(value = "/account/clientaddress", method = RequestMethod.GET)
-    public String editClientAddress(Model model) {
+    public String editClientAddress(Model model,
+                                    @RequestParam(required = false) Long clientAddressId) {
 
-        model.addAttribute("clientAddress", profileService.getClientAddress());
+        model.addAttribute("clientAddress", profileService.getCalledClientAddress(clientAddressId));
 
         return "account/clientaddress";
-
     }
 
     @RequestMapping(value = "/account/clientaddress", method = RequestMethod.POST)
@@ -58,9 +60,19 @@ public class ProfileController {
         if (bindingResult.hasErrors()) {
             return "account/clientaddress";
         }
+
         profileService.updateCliendAddress(clientAddress);
         model.addAttribute("success", true);
 
         return "account/clientaddress";
     }
+
+    @RequestMapping(value = "/account/clientaddresses", method = RequestMethod.GET)
+    public String showClientAddresses(Model model) {
+
+        model.addAttribute("addresses", profileService.getClientAddresses());
+
+        return "account/clientaddresses";
+    }
+
 }

@@ -129,12 +129,6 @@ public class Good {
 
 
     @Override
-    public String toString() {
-        return "Good{" +
-                 goodId + "}";
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -162,5 +156,19 @@ public class Good {
         result = 31 * result + (size != null ? size.hashCode() : 0);
         result = 31 * result + count;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                "title='" + title + '\'' +
+                ", price=" + price +
+                ", brand='" + brand + '\'' +
+                ", colour='" + colour + '\'' +
+                ", weight=" + weight +
+                ", size='" + size + '\'' +
+                ", count=" + count +
+                ", category=" + category +
+                '}';
     }
 }

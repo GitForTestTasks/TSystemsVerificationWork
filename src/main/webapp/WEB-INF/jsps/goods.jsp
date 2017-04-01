@@ -13,6 +13,11 @@
     <INPUT class="button" type="submit" name="submit" value="search"></div>
 </form>
 
+<core:forEach var="entry" items="${cart}">
+    Key: <core:out value="${entry.key}"/>
+    Value: <core:out value="${entry.value}"/>
+</core:forEach>
+
 <core:forEach var="row" items="${goods}">
     <div class="good panel panel-primary">
         <div class="panel-heading">
@@ -44,7 +49,7 @@
                     <td>${row.colour}</td>
                 </tr>
                 <tr>
-                    <td><a class="buy" href="${pageContext.request.contextPath}/buygood?id=${row.goodId}">Add to
+                    <td><a class="buy" href="${pageContext.request.contextPath}/buygood?goodId=${row.goodId}&quantity=1">Add to
                         cart</a></td>
                 </tr>
                 </tbody>

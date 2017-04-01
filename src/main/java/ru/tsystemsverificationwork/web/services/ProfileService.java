@@ -3,7 +3,6 @@ package ru.tsystemsverificationwork.web.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.dao.ClientAddressDao;
@@ -11,9 +10,14 @@ import ru.tsystemsverificationwork.web.dao.ClientsDao;
 import ru.tsystemsverificationwork.web.models.Client;
 import ru.tsystemsverificationwork.web.models.ClientAddress;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Service("profileService")
+//@Transactional
 public class ProfileService {
 
 
@@ -36,6 +40,10 @@ public class ProfileService {
     @Transactional
     public boolean updateInformation(Client client) {
 
+        if (client == null) {
+            return false;
+        }
+
         Client comparingClient = getCurrentUser();
         client.setRoles(comparingClient.getRoles());
 
@@ -45,35 +53,50 @@ public class ProfileService {
         return true;
     }
 
-    public ClientAddress getClientAddress() {
+    @Transactional
+    public Set<ClientAddress> getClientAddresses() {
 
-
-        ClientAddress clientAddress = getCurrentUser().getClientAddressId();
-
+        Set<ClientAddress> clientAddress = getCurrentUser().getClientAddresses();
 
         if (clientAddress == null) {
-            return new ClientAddress();
+            return new HashSet<>();
         } else return clientAddress;
     }
 
+    @Transactional
+    public ClientAddress getCalledClientAddress(Long clientAddressId) {
 
+        if (verificateRequestedAddress(clientAddressId)) {
+            return clientAddressDao.findOne(clientAddressId);
+        } else
+            return new ClientAddress();
+    }
+
+    private boolean verificateRequestedAddress(Long clientAddressId) {
+
+        if (clientAddressId == null || getCurrentUser().getClientAddresses() == null) {
+            return false;
+        }
+        ClientAddress clientAddress = new ClientAddress();
+        clientAddress.setClientAddressId(clientAddressId);
+
+        return getCurrentUser().getClientAddresses().contains(clientAddress);
+    }
+
+
+    @Transactional
     public void updateCliendAddress(ClientAddress clientAddress) {
 
-        ClientAddress found = clientAddressDao.findOne(clientAddress.getClientAddressId());
+        if (clientAddressDao.findOne(clientAddress.getClientAddressId()) == null) {
 
-        if (getCurrentUser().getClientAddressId() == null) {
-
-            Client client = getCurrentUser();
-            client.setClientAddressId(clientAddress);
-            clientsDao.updateWithoutEncrypt(client);
+            clientAddress.setClientId(getCurrentUser());
+            clientAddressDao.create(clientAddress);
 
         } else {
-
-            Client client = getCurrentUser();
-            clientAddress.setClientAddressId(getCurrentUser().getClientAddressId().getClientAddressId());
-            client.setClientAddressId(clientAddress);
-            clientsDao.updateWithoutEncrypt(client);
+            if(verificateRequestedAddress(clientAddress.getClientAddressId())) {
+                clientAddress.setClientId(getCurrentUser());
+                clientAddressDao.update(clientAddress);
+            }
         }
-
     }
 }

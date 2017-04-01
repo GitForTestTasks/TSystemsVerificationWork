@@ -40,6 +40,7 @@
                                                   name="apartment"/></div>
             </div>
             <div class="error"><form:errors path="apartment"/></div>
+            <form:input type="hidden" name="clientAddressId" path="clientAddressId"/>
             <div class="formsRow">
                 <div class="formsFields">&nbsp;</div>
                 <div class="formsRow"><INPUT class="button" type="submit" name="submit" value="Change"></div>

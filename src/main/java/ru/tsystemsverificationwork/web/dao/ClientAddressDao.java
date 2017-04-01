@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.models.ClientAddress;
 
 
-@Transactional
+//@Transactional
 @Component("clientAddressDao")
 public class ClientAddressDao extends GenericDao<ClientAddress> {
 

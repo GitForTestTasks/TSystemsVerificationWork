@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.tsystemsverificationwork.web.models.Order;
 
 
-@Transactional
+//@Transactional
 @Component("ordersDao")
 public class OrdersDao extends GenericDao<Order> {
 
