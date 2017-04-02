@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <a href="${pageContext.request.contextPath}/account/clientaddress"> Create new address </a>

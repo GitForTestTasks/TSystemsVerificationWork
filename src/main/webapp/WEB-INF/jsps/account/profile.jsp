@@ -24,8 +24,8 @@
             <div class="error"><form:errors path="birthDate"/></div>
             <div class="formsRow">
                 <div class="formsFields">Password</div>
-                <div class="formsRow"><form:input id="password" path="password" required="true" type="password"
-                                                  name="password"/></div>
+                <div class="formsRow"><input id="password" required type="password" name="password"/>
+                </div>
             </div>
             <div class="error"><form:errors path="password"/></div>
             <div class="formsRow">
@@ -34,6 +34,7 @@
                 </div>
             </div>
             <form:input id="email" path="email" type="hidden" name="email"/>
+
             <div id="matchpass"></div>
             <div class="formsRow">
                 <div class="formsFields">&nbsp;</div>
@@ -45,6 +46,8 @@
 </div>
 
 <a href="${pageContext.request.contextPath}/account/clientaddresses">Client address information</a>
+<a href="${pageContext.request.contextPath}/account/orders">My orders</a>
+
 
 <core:if test="${state}">
     <h1>Success</h1>

@@ -1,15 +1,11 @@
 package ru.tsystemsverificationwork.web.controllers;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystemsverificationwork.web.models.Good;
-import ru.tsystemsverificationwork.web.models.Order;
-import ru.tsystemsverificationwork.web.models.enums.PaymentMethod;
-import ru.tsystemsverificationwork.web.services.ShoppingCartService;
+import ru.tsystemsverificationwork.database.models.Order;
+import ru.tsystemsverificationwork.web.services.impl.ShoppingCartService;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -45,8 +41,6 @@ public class ShoppingCartController {
 
             Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
 
-            Logger log = Logger.getLogger(ShoppingCartController.class.getName());
-            log.log(Level.WARNING, cart.toString());
             cart.put(goodId, quantity);
             session.setAttribute("cart", cart);
             session.setAttribute("cartSize", cart.size());
@@ -72,19 +66,13 @@ public class ShoppingCartController {
             model.addAttribute("goods", shoppingCartService.showCartItems(
                     (Map<Integer, Integer>) session.getAttribute("cart"))
             );
+            model.addAttribute("order", new Order());
+            model.addAttribute("clientAddresses", shoppingCartService.retriveAllAddresses());
         }
-        model.addAttribute("order", new Order());
-        model.addAttribute("paymentMethod", PaymentMethod.values());
 
         return "cart";
     }
 
-    @RequestMapping(value = "/createorder")
-//    @Secured()
-    public String createOrder() {
 
-
-        return "account/orders";
-    }
 
 }

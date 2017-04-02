@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.tsystemsverificationwork.web.models.Client;
-import ru.tsystemsverificationwork.web.services.ClientsService;
+import ru.tsystemsverificationwork.database.models.Client;
+import ru.tsystemsverificationwork.web.services.impl.ClientsService;
 
 import javax.validation.Valid;
 

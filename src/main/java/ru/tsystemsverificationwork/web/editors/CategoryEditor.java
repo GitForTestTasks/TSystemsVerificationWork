@@ -1,6 +1,6 @@
 package ru.tsystemsverificationwork.web.editors;
 
-import ru.tsystemsverificationwork.web.models.Category;
+import ru.tsystemsverificationwork.database.models.Category;
 
 import java.beans.PropertyEditorSupport;
 

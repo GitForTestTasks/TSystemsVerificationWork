@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
@@ -15,10 +13,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.tsystemsverificationwork.web.dao.ClientsDao;
-import ru.tsystemsverificationwork.web.dao.RolesDao;
-import ru.tsystemsverificationwork.web.models.Client;
-import ru.tsystemsverificationwork.web.models.Role;
+import ru.tsystemsverificationwork.database.dao.impl.ClientsDao;
+import ru.tsystemsverificationwork.database.dao.impl.RolesDao;
+import ru.tsystemsverificationwork.database.models.Client;
+import ru.tsystemsverificationwork.database.models.Role;
 
 //@ActiveProfiles("dev")
 @ContextConfiguration(locations = {"classpath:datasource.xml","classpath:security-context.xml"

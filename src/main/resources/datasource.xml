@@ -7,11 +7,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/context/spring-context-4.3.xsd
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd http://www.springframework.org/schema/aop
-         http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/jee
-          http://www.springframework.org/schema/jee/spring-jee.xsd">
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- we can use annotations -->
     <context:annotation-config/>
@@ -19,14 +18,14 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- package to look for annotated classes -->
-    <context:component-scan base-package="ru.tsystemsverificationwork.web.dao"/>
+    <context:component-scan base-package="ru.tsystemsverificationwork.database.dao"/>
 
     <!-- we will manage transactions with annotations -->
     <tx:annotation-driven/>
 
     <bean id="myEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="ru.tsystemsverificationwork.web.models" />
+        <property name="packagesToScan" value="ru.tsystemsverificationwork.database.models" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>

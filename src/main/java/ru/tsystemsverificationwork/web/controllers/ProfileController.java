@@ -4,17 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.tsystemsverificationwork.web.models.Client;
-import ru.tsystemsverificationwork.web.models.ClientAddress;
-import ru.tsystemsverificationwork.web.services.ProfileService;
+import ru.tsystemsverificationwork.database.models.Client;
+import ru.tsystemsverificationwork.database.models.ClientAddress;
+import ru.tsystemsverificationwork.web.services.impl.ProfileService;
 
 import javax.validation.Valid;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 @Controller
@@ -32,6 +29,7 @@ public class ProfileController {
 
 
         Client client = profileService.getCurrentUser();
+//        client.setPassword("");
         model.addAttribute("client", client);
 
         return "account/profile";
@@ -39,6 +37,7 @@ public class ProfileController {
 
     @RequestMapping(value = "/account/profile", method = RequestMethod.POST)
     public String editProfile(Model model, @Valid Client client, BindingResult result) {
+
 
         profileService.updateInformation(client);
 

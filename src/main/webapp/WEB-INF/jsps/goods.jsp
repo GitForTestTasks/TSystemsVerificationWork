@@ -13,11 +13,6 @@
     <INPUT class="button" type="submit" name="submit" value="search"></div>
 </form>
 
-<core:forEach var="entry" items="${cart}">
-    Key: <core:out value="${entry.key}"/>
-    Value: <core:out value="${entry.value}"/>
-</core:forEach>
-
 <core:forEach var="row" items="${goods}">
     <div class="good panel panel-primary">
         <div class="panel-heading">

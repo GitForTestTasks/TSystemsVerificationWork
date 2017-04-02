@@ -8,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.tsystemsverificationwork.web.models.Category;
-import ru.tsystemsverificationwork.web.services.CategoriesService;
+import ru.tsystemsverificationwork.database.models.Category;
+import ru.tsystemsverificationwork.web.services.impl.CategoriesService;
 
 import javax.validation.Valid;
 import java.util.List;

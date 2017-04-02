@@ -7,7 +7,6 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>TSystemsVerificationWork</name>
-    <url>http://maven.apache.org</url>
     <properties>
         <jdk.version>1.8</jdk.version>
         <hibernate.version>5.2.9.Final</hibernate.version>
@@ -15,6 +14,7 @@
         <junit.version>4.12</junit.version>
         <springsec.version>4.2.2.RELEASE</springsec.version>
         <apache-tiles.version>3.0.7</apache-tiles.version>
+        <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
@@ -113,7 +113,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.4.1.Final</version>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
 

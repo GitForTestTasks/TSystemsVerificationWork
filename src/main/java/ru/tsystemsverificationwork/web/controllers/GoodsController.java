@@ -8,9 +8,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystemsverificationwork.web.editors.CategoryEditor;
-import ru.tsystemsverificationwork.web.models.Category;
-import ru.tsystemsverificationwork.web.models.Good;
-import ru.tsystemsverificationwork.web.services.GoodsService;
+import ru.tsystemsverificationwork.database.models.Category;
+import ru.tsystemsverificationwork.database.models.Good;
+import ru.tsystemsverificationwork.web.services.impl.GoodsService;
 
 import javax.validation.Valid;
 import java.util.List;
