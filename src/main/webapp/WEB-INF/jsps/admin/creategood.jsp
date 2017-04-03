@@ -76,7 +76,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inputBrand" class="col-lg-2 control-label">Category</label>
+                <label for="inputBrand" class="col-lg-2 control-label">Brand</label>
                 <div class="col-lg-10">
                     <form:input cssClass="form-control" path="brand" type="text" name="brand"/>
                 </div>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="form-group">
-                <label for="inputColour" class="col-lg-2 control-label">Category</label>
+                <label for="inputColour" class="col-lg-2 control-label">Colour</label>
                 <div class="col-lg-10">
                     <form:input cssClass="form-control" path="colour" type="text" name="colour"/>
                 </div>

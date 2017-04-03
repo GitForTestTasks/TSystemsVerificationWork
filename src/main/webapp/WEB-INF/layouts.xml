@@ -77,4 +77,16 @@
     <definition name="account/orders" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/account/orders.jsp"/>
     </definition>
+    <definition name="admin/editorder" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/editorder.jsp"/>
+    </definition>
+    <definition name="admin/toptengoods" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/toptengoods.jsp"/>
+    </definition>
+    <definition name="admin/toptenclients" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/toptenclients.jsp"/>
+    </definition>
+    <definition name="admin/income" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/admin/income.jsp"/>
+    </definition>
 </tiles-definitions>

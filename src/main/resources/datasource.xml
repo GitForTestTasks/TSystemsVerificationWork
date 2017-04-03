@@ -18,14 +18,14 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- package to look for annotated classes -->
-    <context:component-scan base-package="ru.tsystemsverificationwork.database.dao"/>
+    <context:component-scan base-package="ru.andrei.tsystemsverificationwork.database.dao"/>
 
     <!-- we will manage transactions with annotations -->
     <tx:annotation-driven/>
 
     <bean id="myEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="ru.tsystemsverificationwork.database.models" />
+        <property name="packagesToScan" value="ru.andrei.tsystemsverificationwork.database.models" />
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
         </property>
