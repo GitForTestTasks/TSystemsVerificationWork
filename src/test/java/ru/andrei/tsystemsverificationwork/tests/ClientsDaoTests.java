@@ -3,6 +3,8 @@ package ru.andrei.tsystemsverificationwork.tests;
 import static org.junit.Assert.assertTrue;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -41,15 +43,14 @@ public class ClientsDaoTests {
             new Date(0l), "IvanSidorov@andrei.ru", "smth");
     private Client user3 = new Client("Petya", "Ivanov",
             new Date(0l), "PetyaIvanov@andrei.ru", "smth");
-    private Client user4 = new Client("Pavel", "Dream",
-            new Date(0l), "PavelDream@andrei.ru", "smth", true);
+    private Client user4 = new Client("Pavel", "Antonov",
+            new Date(0l), "Pavel@andrei.ru", "smth", true);
     private Role role = new Role("ROLE_ADMIN");
 
 
     @Test
     public void testCreateRetrieve() {
 
-/*
         List<Role> roles = new ArrayList<>();
         roles.add(rolesDao.findByName("ROLE_ADMIN"));
 //        roles.add(new Role("ROLE_ADMIN"));
@@ -59,7 +60,6 @@ public class ClientsDaoTests {
 
 
         clientsDao.create(user2);
-*/
 
 
         assertTrue(true);

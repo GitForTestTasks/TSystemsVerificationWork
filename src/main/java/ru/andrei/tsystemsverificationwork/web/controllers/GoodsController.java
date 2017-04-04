@@ -1,18 +1,25 @@
 package ru.andrei.tsystemsverificationwork.web.controllers;
 
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.andrei.tsystemsverificationwork.database.models.Category;
 import ru.andrei.tsystemsverificationwork.web.editors.CategoryEditor;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.web.services.impl.GoodsService;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 @Controller
@@ -39,15 +46,51 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/admin/creategood", method = RequestMethod.POST)
-    public String createGood(Model model, @Valid Good good, BindingResult bindingResult) {
-
+    public String createGood(HttpSession session, Model model,
+                             @Valid Good good, BindingResult bindingResult,
+                             @RequestParam("file") MultipartFile file) {
 
         if (bindingResult.hasErrors()) {
             return "admin/creategood";
         }
 
+        if (!file.isEmpty()) {
+            String mimeType = session.getServletContext().getMimeType(file.getOriginalFilename());
+            if (!mimeType.startsWith("image/")) {
+                bindingResult.rejectValue("filePath", "FileIsNotImage.good.file");
+                return "admin/creategood";
+            }
+
+            try {
+                byte[] bytes = file.getBytes();
+
+                String rootPath = session.getServletContext().getRealPath("/");
+                File dir = new File(rootPath + File.separator + "WEB-INF" +
+                        File.separator + "resources" + File.separator + "images");
+                if (!dir.exists())
+                    dir.mkdirs();
+
+                String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+                String fileName = String.format("%s.%s", RandomStringUtils.randomAlphanumeric(20), extension);
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + fileName);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+
+                good.setFilePath(fileName);
+
+//                logger.info("Server File Location="
+//                        + serverFile.getAbsolutePath());
+            } catch (Exception e) {
+                return "You failed to upload " + e.getMessage();
+            }
+        }
+
         goodsService.createGood(good);
         return "admin/goodcreated";
+
     }
 
     @RequestMapping(value = "/goods", method = RequestMethod.GET)
@@ -62,7 +105,7 @@ public class GoodsController {
             return "goods";
         }
 
-        if(pageid == null) {
+        if (pageid == null) {
             prepareModel(model, 1);
             return "goods";
         }

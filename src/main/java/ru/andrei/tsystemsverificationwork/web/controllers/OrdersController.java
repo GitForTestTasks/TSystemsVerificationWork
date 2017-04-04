@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.andrei.tsystemsverificationwork.database.models.Order;
+import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
 import ru.andrei.tsystemsverificationwork.web.editors.ClientAddressEditor;
 import ru.andrei.tsystemsverificationwork.web.services.impl.OrdersService;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
@@ -52,6 +53,8 @@ public class OrdersController {
 
         ordersService.createOrder((Map<Integer, Integer>) session.getAttribute("cart"),
                 order.getPaymentMethod(), order.getDeliveryMethod(), order.getClientAddressId());
+
+
         session.setAttribute("cart", new HashMap<>());
         session.setAttribute("cartSize", 0);
         model.addAttribute("success", true);
@@ -65,6 +68,15 @@ public class OrdersController {
         model.addAttribute("orders", ordersService.getMyOrders());
 
         return "account/orders";
+    }
+
+    @RequestMapping(value = "/account/orderinfo")
+    public String orderIfno(Model model, @RequestParam(required = true) Long orderId) {
+
+        if (orderId != null || ordersService.verificateRequestedOrder(orderId))
+            returnEditOrderView(model, orderId);
+
+        return "account/orderinfo";
     }
 
     @RequestMapping(value = "/admin/orders", method = RequestMethod.GET)

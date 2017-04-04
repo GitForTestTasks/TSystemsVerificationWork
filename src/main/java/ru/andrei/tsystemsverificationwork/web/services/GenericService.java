@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
+import ru.andrei.tsystemsverificationwork.database.dao.impl.OrdersDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
@@ -22,6 +23,9 @@ public abstract class GenericService {
     @Autowired
     private GoodsDao goodsDao;
 
+    @Autowired
+    private OrdersDao ordersDao;
+
 
     public Client getCurrentUser() {
 
@@ -34,9 +38,8 @@ public abstract class GenericService {
         if(orderId == null || getCurrentUser().getOrders() == null) {
             return false;
         }
-        
 
-        return getCurrentUser().getOrders().contains()
+        return getCurrentUser().getOrders().contains(ordersDao.findOne(orderId));
     }
 
     public boolean verificateRequestedAddress(Long clientAddressId) {

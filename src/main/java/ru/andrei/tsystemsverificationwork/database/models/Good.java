@@ -1,6 +1,7 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,8 +18,19 @@ public class Good {
     private String colour;
     private BigDecimal weight;
     private String size;
+    private String filePath;
     private int count;
     private Category category;
+
+    @Basic
+    @Column(name = "FilePath")
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "CategoryId")
@@ -80,7 +92,6 @@ public class Good {
         this.title = title;
     }
 
-    @Basic
     @Column(name = "Price")
     @NotNull
     public BigDecimal getPrice() {
@@ -111,7 +122,6 @@ public class Good {
         this.size = size;
     }
 
-    @Basic
     @Column(name = "Count")
     @NotNull
     public int getCount() {
@@ -125,7 +135,6 @@ public class Good {
     public Good() {
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,25 +143,13 @@ public class Good {
         Good good = (Good) o;
 
         if (goodId != good.goodId) return false;
-        if (count != good.count) return false;
-        if (!title.equals(good.title)) return false;
-        if (!price.equals(good.price)) return false;
-        if (brand != null ? !brand.equals(good.brand) : good.brand != null) return false;
-        if (colour != null ? !colour.equals(good.colour) : good.colour != null) return false;
-        if (weight != null ? !weight.equals(good.weight) : good.weight != null) return false;
-        return size != null ? size.equals(good.size) : good.size == null;
+        return title.equals(good.title);
     }
 
     @Override
     public int hashCode() {
         int result = (int) (goodId ^ (goodId >>> 32));
         result = 31 * result + title.hashCode();
-        result = 31 * result + price.hashCode();
-        result = 31 * result + (brand != null ? brand.hashCode() : 0);
-        result = 31 * result + (colour != null ? colour.hashCode() : 0);
-        result = 31 * result + (weight != null ? weight.hashCode() : 0);
-        result = 31 * result + (size != null ? size.hashCode() : 0);
-        result = 31 * result + count;
         return result;
     }
 

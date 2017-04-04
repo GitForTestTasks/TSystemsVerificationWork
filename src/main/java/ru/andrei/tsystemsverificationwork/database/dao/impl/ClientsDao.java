@@ -3,10 +3,10 @@ package ru.andrei.tsystemsverificationwork.database.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.GenericDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
 import ru.andrei.tsystemsverificationwork.database.models.StatisticsClients;
-import ru.andrei.tsystemsverificationwork.database.models.StatisticsGood;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

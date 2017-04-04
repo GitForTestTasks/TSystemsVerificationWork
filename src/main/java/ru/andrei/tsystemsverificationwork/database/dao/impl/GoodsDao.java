@@ -5,11 +5,7 @@ import ru.andrei.tsystemsverificationwork.database.dao.GenericDao;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.database.models.StatisticsGoods;
 
-import javax.persistence.EntityResult;
-import javax.persistence.FieldResult;
-import javax.persistence.SqlResultSetMapping;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 

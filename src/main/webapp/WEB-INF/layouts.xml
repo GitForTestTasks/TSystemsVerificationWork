@@ -9,6 +9,7 @@
         <put-attribute name="header" value="/WEB-INF/jsps/tiles/header.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/jsps/tiles/footer.jsp"/>
         <put-attribute name="content" value="/WEB-INF/jsps/tiles/content.jsp"/>
+        <put-attribute name="includecss" value=""/>
         <put-attribute name="includes" value=""/>
     </definition>
 
@@ -20,8 +21,10 @@
     </definition>
     <definition name="login" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/login.jsp"/>
+        <put-attribute name="includecss" value="static/css/login.css"/>
     </definition>
     <definition name="admin/creategood" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="includecss" value="static/css/creategood.css"/>
         <put-attribute name="content" value="/WEB-INF/jsps/admin/creategood.jsp"/>
     </definition>
     <definition name="admin/goodcreated" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
@@ -88,5 +91,8 @@
     </definition>
     <definition name="admin/income" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/admin/income.jsp"/>
+    </definition>
+    <definition name="account/orderinfo" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/account/orderinfo.jsp"/>
     </definition>
 </tiles-definitions>

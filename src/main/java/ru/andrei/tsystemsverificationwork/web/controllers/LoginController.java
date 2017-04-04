@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
 import ru.andrei.tsystemsverificationwork.web.services.impl.ClientsService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 

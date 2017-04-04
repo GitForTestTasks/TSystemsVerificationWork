@@ -47,6 +47,7 @@
                     <td><a class="buy" href="${pageContext.request.contextPath}/buygood?goodId=${row.goodId}&quantity=1">Add to
                         cart</a></td>
                 </tr>
+                <img src="${pageContext.request.contextPath}/static/images/${row.filePath}"/>
                 </tbody>
             </table>
         </div>

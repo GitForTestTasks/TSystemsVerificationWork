@@ -8,5 +8,6 @@
             <input type="hidden" name="clientAddressId" value="${entry.orderId}"><br>
             <input type="submit" value="Pay">
         </form>
+        <a href="${pageContext.request.contextPath}/account/orderinfo?orderId=${entry.orderId}">View order</a>
     </core:if>
 </core:forEach>

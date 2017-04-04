@@ -2,6 +2,7 @@ package ru.andrei.tsystemsverificationwork.web.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("statisticsService")
+@Transactional
 public class StatisticsService extends GenericService {
 
     private GoodsDao goodsDao;

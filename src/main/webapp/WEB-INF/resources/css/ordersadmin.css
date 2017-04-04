@@ -1,0 +1,29 @@
+.aordershistory-wraper {
+    width: 1024px;
+    float: none;
+    margin: 0 auto;
+}
+
+.color-select-orders {
+    color: rgb(34, 34, 34);
+}
+
+.NOT_PAID {
+    background: #F2DEDE !important;
+}
+
+.AWAITING_SHIPMENT {
+    background: #FCF8E3 !important;
+}
+
+.SHIPPING {
+    background: #D9EDF7 !important;
+}
+
+.DELIVERED {
+    background: #DFF0D8 !important;
+}
+
+.PAID {
+    background: #DFF0D8 !important;
+}
