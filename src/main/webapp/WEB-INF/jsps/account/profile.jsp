@@ -2,53 +2,131 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="forms">
-    <form:form id="details" name="profile" method="post" action="${pageContext.request.contextPath}/account/profile"
-               commandName="client" modelAttribute="client">
-        <fieldset>
-            <legend>Edit Account</legend>
-            <div class="formsRow">
-                <div class="formsFields">First Name</div>
-                <div class="formsRow"><form:input path="firstName" required="true" type="text" name="firstName"/></div>
-            </div>
-            <div class="error"><form:errors path="firstName"/></div>
-            <div class="formsRow">
-                <div class="formsFields">Last Name</div>
-                <div class="formsRow"><form:input path="lastName" required="true" type="text" name="lastName"/></div>
-            </div>
-            <div class="error"><form:errors path="lastName"/></div>
-            <div class="formsRow">
-                <div class="formsFields">BirthDate</div>
-                <div class="formsRow"><form:input path="birthDate" type="text" name="birthDate"/></div>
-            </div>
-            <div class="error"><form:errors path="birthDate"/></div>
-            <div class="formsRow">
-                <div class="formsFields">Password</div>
-                <div class="formsRow"><input id="password" required type="password" name="password"/>
-                </div>
-            </div>
-            <div class="error"><form:errors path="password"/></div>
-            <div class="formsRow">
-                <div class="formsFields">Confirm Password</div>
-                <div class="formsRow"><input id="confirmPassword" required type="password" name="confirmPassword"/>
-                </div>
-            </div>
-            <form:input id="email" path="email" type="hidden" name="email"/>
-
-            <div id="matchpass"></div>
-            <div class="formsRow">
-                <div class="formsFields">&nbsp;</div>
-                <div class="formsRow"><INPUT class="button" type="submit" name="submit" value="Edit Account"></div>
-            </div>
-            <div class="formsRow"></div>
-        </fieldset>
-    </form:form>
-</div>
-
-<a href="${pageContext.request.contextPath}/account/clientaddresses">Client address information</a>
-<a href="${pageContext.request.contextPath}/account/orders">My orders</a>
-
-
 <core:if test="${state}">
-    <h1>Success</h1>
+    <h1 class="text-success">Success</h1>
 </core:if>
+
+<div class='col-lg-6 col-centered wraper-profile'>
+    <div class='well bs-component'>
+
+        <form:form class='form-horizontal' id='form-profile'
+                   name="client" method="post" action="${pageContext.request.contextPath}/account/profile"
+                   commandName="client" modelAttribute="client">
+
+            <fieldset>
+                <legend>
+                    Profie
+                </legend>
+
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'>
+                    </label>
+                    <div class='col-lg-10'>
+                        <form:input id="email" path="email" type="hidden" name="email"/>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'> Password </label>
+                    <div class='col-lg-10'>
+                        <input placeholder='Password'
+                               class='form-control'
+                               name='Password'
+                               required=''
+                               id="Password" required type="password" name="password"/>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'></label>
+                    <div class='col-lg-10'>
+                        <form:errors path="password"/>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'>
+                        Comfirm
+                    </label>
+                    <div class='col-lg-10'>
+                        <input class='form-control'
+                               placeholder='Comfirm Password'
+                               type='password'
+                               name='Comfirm'
+                               id='Comfirm'
+                               required=''/>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'></label>
+                    <div class='col-lg-10'>
+                    </div>
+                </div>
+
+
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'> First Name </label>
+                    <div class='col-lg-10'>
+                        <form:input placeholder='First Name'
+                                    cssClass="form-control"
+                                    path="firstName" required="true" type="text" name="firstName"/>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'></label>
+                    <div class='col-lg-10'>
+                        <form:errors path="firstName"/>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'> Last Name </label>
+                    <div class='col-lg-10'>
+                        <form:input cssClass='form-control'
+                                    placeholder='Last Name' path="lastName" required="true" type="text"
+                                    name="lastName"/>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'></label>
+                    <div class='col-lg-10'>
+                        <form:errors path="lastName"/>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'> Birth Date </label>
+                    <div class='col-lg-10'>
+                        <form:input
+                                cssClass='form-control'
+                                placeholder='Day.Month.Year'
+                                id='BirthDate'
+                                pattern='(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d'
+                                path="birthDate" type="text" name="birthDate"/>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class='col-lg-2 control-label'></label>
+                    <div class='col-lg-10'>
+                        <form:errors path="birthDate"/>
+                    </div>
+                </div>
+
+
+                <div class='form-group'>
+                    <div class='col-lg-10 col-lg-offset-2'>
+                        <a href='/' class='btn btn-default'>Cancel</a>
+                        <button type='submit' class='btn btn-primary'>Submit</button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form:form>
+    </div>
+
+    <link href='${pageContext.request.contextPath}/static/css/jquery-ui-1.12.1.custom.min.css' rel='stylesheet'
+          type='text/css'/>
+    <script src='${pageContext.request.contextPath}/static/script/jquery-ui-1.12.1.custom.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/profile.css'/>
+    <script src='${pageContext.request.contextPath}/static/script/profile.js'></script>
+
+</div>

@@ -11,15 +11,6 @@ import java.util.List;
 
 
 @Component("goodsDao")
-/*@SqlResultSetMapping(
-        name = "statisticsMapping",
-        entities = {
-                @EntityResult(
-                        entityClass = StatisricsGood.class,
-                        fields = {
-                                @FieldResult(name = "id", column = "id"),
-                                @FieldResult(name = "title", column = "title"),
-                                @FieldResult(name = "version", column = "version")})})*/
 public class GoodsDao extends GenericDao<Good> {
 
     public GoodsDao() {

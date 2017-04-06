@@ -56,10 +56,10 @@ public class ClientsDaoTests {
 //        roles.add(new Role("ROLE_ADMIN"));
 
 
-        user2.setRoles(roles);
+        user1.setRoles(roles);
 
 
-        clientsDao.create(user2);
+        clientsDao.create(user1);
 
 
         assertTrue(true);

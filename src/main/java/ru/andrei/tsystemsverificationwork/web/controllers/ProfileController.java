@@ -24,10 +24,6 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-//    @InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        binder.registerCustomEditor(Date.class, new DateEditor());
-//    }
 
     @RequestMapping(value = "/account/profile", method = RequestMethod.GET)
     public String viewProfile(Model model) {
