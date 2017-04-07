@@ -99,6 +99,6 @@
     <link href='${pageContext.request.contextPath}/static/css/jquery-ui-1.12.1.custom.min.css' rel='stylesheet'
           type='text/css'/>
     <script src='${pageContext.request.contextPath}/static/script/jquery-ui-1.12.1.custom.min.js'></script>
-    <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/orders.css'/>
+    <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/goods.css'/>
     <script src='${pageContext.request.contextPath}/static/script/orders.js'></script>
 </div>

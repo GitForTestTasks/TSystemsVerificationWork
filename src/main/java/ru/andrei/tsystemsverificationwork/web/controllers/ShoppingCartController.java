@@ -29,6 +29,7 @@ public class ShoppingCartController {
 
     @RequestMapping(value = "/renewcart")
     @ResponseBody
+    @SuppressWarnings("unchecked")
     public String renewCart(HttpSession session) {
         Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
 
@@ -39,19 +40,21 @@ public class ShoppingCartController {
     }
 
     @RequestMapping(value = "/buygood", method = RequestMethod.GET)
+    @SuppressWarnings("unchecked")
     public String addItemToCard(HttpSession session, @RequestParam Integer goodId,
                                 @RequestParam Integer quantity) {
 
         if (session.getAttribute("cart") == null) {
 
             Map<Integer, Integer> cart = new HashMap<>();
+            shoppingCartService.verifyQuantity(goodId, quantity);
             cart.put(goodId, quantity);
             session.setAttribute("cart", cart);
             session.setAttribute("cartSize", 1);
         } else {
 
             Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
-
+            shoppingCartService.verifyQuantity(goodId, quantity);
             cart.put(goodId, quantity);
             session.setAttribute("cart", cart);
             session.setAttribute("cartSize", cart.size());
@@ -61,6 +64,7 @@ public class ShoppingCartController {
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @SuppressWarnings("unchecked")
     public String shoppingCart(HttpSession session, Model model,
                                @RequestParam(required = false) Integer deleteItemFromCart,
                                HttpServletRequest request) {

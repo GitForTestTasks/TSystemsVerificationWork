@@ -19,6 +19,4 @@ public class OrderDetailsDao extends GenericDao<OrderDetail> {
                 "WHERE r.orderDetailPk.order.orderId = :orderId", OrderDetail.class)
                 .setParameter("orderId", orderId).getResultList();
     }
-
-
 }

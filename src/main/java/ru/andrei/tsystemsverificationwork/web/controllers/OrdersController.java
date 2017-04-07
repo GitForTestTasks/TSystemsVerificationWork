@@ -44,6 +44,7 @@ public class OrdersController {
     }
 
     @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    @SuppressWarnings("unchecked")
     public String createOrder(Model model, HttpSession session, @Valid Order order, BindingResult bindingResult) {
 
         if (session.getAttribute("cart") == null || order == null || order.getClientAddressId() == null
@@ -73,7 +74,7 @@ public class OrdersController {
     @RequestMapping(value = "/account/orderinfo")
     public String orderIfno(Model model, @RequestParam(required = true) Long orderId) {
 
-        if (orderId != null || ordersService.verificateRequestedOrder(orderId))
+        if (orderId != null && ordersService.verificateRequestedOrder(orderId))
             returnEditOrderView(model, orderId);
 
         return "account/orderinfo";
@@ -100,7 +101,7 @@ public class OrdersController {
     @RequestMapping(value = "/admin/editorder", method = RequestMethod.GET)
     public String editOrders(Model model, @RequestParam(required = false) Long orderId) {
 
-        returnEditOrderView(model,orderId);
+        returnEditOrderView(model, orderId);
 
         return "admin/editorder";
     }

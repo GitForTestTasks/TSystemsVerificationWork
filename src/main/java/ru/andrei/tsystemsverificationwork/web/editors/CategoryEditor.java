@@ -21,5 +21,4 @@ public class CategoryEditor extends PropertyEditorSupport {
             return "";
         } else return category.getName();
     }
-
 }

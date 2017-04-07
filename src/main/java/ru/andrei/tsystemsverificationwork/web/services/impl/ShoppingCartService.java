@@ -3,6 +3,9 @@ package ru.andrei.tsystemsverificationwork.web.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.andrei.tsystemsverificationwork.database.models.Good;
+import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
+import ru.andrei.tsystemsverificationwork.web.exceptions.impl.OutOfStockException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
@@ -31,4 +34,18 @@ public class ShoppingCartService extends GenericService {
         } else return clientAddresses;
     }
 
+    public boolean verifyQuantity(Integer goodId, Integer quantity) {
+
+        if (goodId == null || quantity == null)
+            return false;
+
+        Good check = goodsDao.findOne(goodId);
+        if (check == null) {
+            throw new ItemNotFoundException("We can not find product by supplied id.");
+        }
+
+        if (check.getCount() < quantity)
+            throw new OutOfStockException("We do not have enough quantity of product you are trying to buy.");
+        else return true;
+    }
 }

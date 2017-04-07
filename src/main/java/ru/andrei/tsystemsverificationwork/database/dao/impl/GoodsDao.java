@@ -36,7 +36,6 @@ public class GoodsDao extends GenericDao<Good> {
     }
 
 
-
     public List<StatisticsGoods> topTenGoods() {
 
         List<Object[]> results = transactionManager.createNativeQuery("SELECT " +

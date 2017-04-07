@@ -45,7 +45,8 @@
             </tbody>
         </table>
 
-        <a href="${pageContext.request.contextPath}/account/clientaddress">Create new Addresses</a>
+        <a class='btn btn-primary btn-xs address-btn address-btn-create'
+           href="${pageContext.request.contextPath}/account/clientaddress">Create new Addresses</a>
 
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/addresses.css'/>
     </div>

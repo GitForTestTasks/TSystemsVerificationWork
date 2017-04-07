@@ -147,10 +147,18 @@
 
         <h1 class="text-info">Total cost : <core:out value="${total}"/></h1>
 
+        <sec:authorize access="!isAuthenticated()">
+            <a href='${pageContext.request.contextPath}/login'
+               class='btn btn-primary btn-lg'>
+                Continue
+            </a>
+        </sec:authorize>
+
+
         <link href='${pageContext.request.contextPath}/static/css/jquery-ui-1.12.1.custom.min.css' rel='stylesheet'
               type='text/css'/>
         <script src='${pageContext.request.contextPath}/static/script/jquery-ui-1.12.1.custom.min.js'></script>
-        <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/orders.css'/>
+        <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/goods.css'/>
             <%--<script src='${pageContext.request.contextPath}/static/script/orders.js'></script>--%>
 
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/cart.css'/>

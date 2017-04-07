@@ -20,7 +20,7 @@
                     <td class='Name'>${row.name}</td>
                     <td class='btn-wraper' data='${row.categoryId}'>
                         <a href="${pageContext.request.contextPath}/admin/createcategory?delete=${row.categoryId}"
-                           class='btn btn-warning btn-xs categories-btn categories-btn-del'>
+                           class='btn btn-danger btn-xs categories-btn categories-btn-del'>
                             Delete
                         </a>
                         <a href="${pageContext.request.contextPath}/admin/createcategory?categoryId=${row.categoryId}"
@@ -34,7 +34,8 @@
 
             </tbody>
         </table>
-        <a href="${pageContext.request.contextPath}/admin/createcategory">Create new Category</a>
+        <a class='btn btn-primary btn-xs categories-btn categories-btn-create'
+           href="${pageContext.request.contextPath}/admin/createcategory">Create new Category</a>
     </div>
 </div>
 

@@ -96,4 +96,7 @@
     <definition name="account/orderinfo" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/account/orderinfo.jsp"/>
     </definition>
+    <definition name="error/genericerror" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
+        <put-attribute name="content" value="/WEB-INF/jsps/error/genericerror.jsp"/>
+    </definition>
 </tiles-definitions>
