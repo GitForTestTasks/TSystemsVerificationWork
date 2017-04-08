@@ -27,15 +27,25 @@ public class GoodsDao extends GenericDao<Good> {
         return (Long) transactionManager.createQuery("select count(GoodId) from Good").getSingleResult();
     }
 
-    public List<Good> searchByBrandAndColour(String brand, String colour) {
+    public List<Good> searchByBrandAndColour(String brand, String colour, String title,
+                                             BigDecimal minPrice, BigDecimal maxPrice) {
 
-        return transactionManager.createQuery("FROM Good AS r WHERE r.brand LIKE :brand" +
-                " AND r.colour LIKE :colour", Good.class)
+        return transactionManager.createQuery("FROM Good AS r " +
+                " WHERE r.brand LIKE :brand " +
+                " AND r.colour LIKE :colour " +
+                " AND r.title LIKE :title " +
+                " AND r.price >= :minPrice " +
+                " AND r.price <= :maxPrice ", Good.class)
                 .setParameter("brand", "%" + brand + "%")
-                .setParameter("colour", "%" + colour + "%").getResultList();
+                .setParameter("colour", "%" + colour + "%")
+                .setParameter("title", "%" + title + "%")
+                .setParameter("minPrice", minPrice)
+                .setParameter("maxPrice", maxPrice)
+                .getResultList();
     }
 
 
+    @SuppressWarnings("unchecked")
     public List<StatisticsGoods> topTenGoods() {
 
         List<Object[]> results = transactionManager.createNativeQuery("SELECT " +

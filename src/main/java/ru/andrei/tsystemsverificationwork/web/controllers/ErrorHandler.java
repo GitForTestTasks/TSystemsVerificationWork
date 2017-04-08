@@ -14,32 +14,32 @@ import java.nio.file.AccessDeniedException;
 @ControllerAdvice
 public class ErrorHandler {
 
-
-    @ExceptionHandler(DataAccessException.class)
-    public String databaseExceptionHandler(DataAccessException ex) {
-
-        return "error";
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public String AccessDeniedHandler(AccessDeniedException ex) {
-
-        return "denied";
-    }
-
-    @ExceptionHandler(Exception.class)
-    public String AccessDeniedHandler(Exception ex) {
-
-        return "unexpectederror";
-    }
-
-    @ExceptionHandler(GenericException.class)
-    public String verificationFailed(GenericException ex, Model model) {
-
-        model.addAttribute("errCode", ex.getErrCode());
-        model.addAttribute("errMsg", ex.getErrMsg());
-
-        return "error/genericerror";
-    }
+//
+//    @ExceptionHandler(DataAccessException.class)
+//    public String databaseExceptionHandler(DataAccessException ex) {
+//
+//        return "error";
+//    }
+//
+//    @ExceptionHandler(AccessDeniedException.class)
+//    public String AccessDeniedHandler(AccessDeniedException ex) {
+//
+//        return "denied";
+//    }
+//
+//    @ExceptionHandler(Exception.class)
+//    public String AccessDeniedHandler(Exception ex) {
+//
+//        return "unexpectederror";
+//    }
+//
+//    @ExceptionHandler(GenericException.class)
+//    public String verificationFailed(GenericException ex, Model model) {
+//
+//        model.addAttribute("errCode", ex.getErrCode());
+//        model.addAttribute("errMsg", ex.getErrMsg());
+//
+//        return "error/genericerror";
+//    }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientAddressDao;
+import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
@@ -31,7 +32,9 @@ public class ProfileService extends GenericService {
     public boolean updateInformation(Client client) {
 
         if (client == null) {
-            return false;
+
+            throw new IllegalArgumentException();
+//            return false;
         }
 
         Client comparingClient = getCurrentUser();
@@ -50,12 +53,15 @@ public class ProfileService extends GenericService {
         Set<ClientAddress> clientAddress = getCurrentUser().getClientAddresses();
 
         if (clientAddress == null) {
-            return new HashSet<>();
+            throw new ItemNotFoundException("Address is not found");
         } else return clientAddress;
 
     }
 
     public ClientAddress getCalledClientAddress(Long clientAddressId) {
+
+        if(clientAddressId == null || clientAddressId < 1)
+            throw new IllegalArgumentException();
 
         if (verificateRequestedAddress(clientAddressId)) {
             return clientAddressDao.findOne(clientAddressId);
@@ -64,6 +70,9 @@ public class ProfileService extends GenericService {
     }
 
     public void updateCliendAddress(ClientAddress clientAddress) {
+
+        if (clientAddress == null)
+            throw new IllegalArgumentException();
 
         if (clientAddressDao.findOne(clientAddress.getClientAddressId()) == null) {
 

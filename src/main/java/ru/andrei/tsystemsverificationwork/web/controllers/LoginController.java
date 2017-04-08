@@ -59,6 +59,4 @@ public class LoginController {
         clientsService.createAccount(good);
         return "account/accountcreated";
     }
-
-
 }

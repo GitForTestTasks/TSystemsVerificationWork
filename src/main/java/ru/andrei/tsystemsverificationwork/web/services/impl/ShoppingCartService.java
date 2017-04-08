@@ -36,8 +36,8 @@ public class ShoppingCartService extends GenericService {
 
     public boolean verifyQuantity(Integer goodId, Integer quantity) {
 
-        if (goodId == null || quantity == null)
-            return false;
+        if (goodId == null || quantity == null || goodId < 1 || quantity < 1)
+            throw new IllegalArgumentException();
 
         Good check = goodsDao.findOne(goodId);
         if (check == null) {

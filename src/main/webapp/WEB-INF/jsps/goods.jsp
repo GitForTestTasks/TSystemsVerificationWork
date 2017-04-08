@@ -2,11 +2,12 @@
          pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<div class='search-form-open-btn'>S e a r c h</div>
 <div class='wraper-home'>
-    <h1>Products catalog:</h1>
+    <h1 class="text-center text-primary">Catalogue</h1>
 
     <div class='search-form-close search-form-close-hiden'></div>
-    <div class='search-form-open-btn'>S e a r c h</div>
+
     <div class='search-form-wraper search-form-wraper-hiden'>
 
         <form method="get" action="${pageContext.request.contextPath}/goods" class='search-form form-horizontal'>
@@ -16,8 +17,6 @@
                    class='search-input form-control input-sm'/>
 
             <input type='text' name='title' id='Title' placeholder='Title' class='search-input form-control input-sm'/>
-
-            <input type='text' name='price' id='Price' placeholder='Price' class='search-input form-control input-sm'/>
 
             <input name='minPrice' class='spinner search-form-price ' placeholder='Min Price' value='' min='1'
                    max='1000000' pattern='^[ 0-9]+$'/>
@@ -29,17 +28,6 @@
 
             <input type='text' name='colour' id='Colour' placeholder='Colour'
                    class='search-input form-control input-sm'/>
-
-            <label class='search-form-lable'>Order by:</label>
-            <div class='search-form-selecnt-wraper'>
-                <select name='orderby' class='form-control input-sm search-form-selecnt' id='Orderby'>
-                    <option value="category">Category</option>
-                    <option value="title">Title</option>
-                    <option value="price">Price</option>
-                    <option value="brand">Brand</option>
-                    <option value="colour">Colour</option>
-                </select>
-            </div>
 
             <div class='search-form-btn-wraper'>
                 <input type='submit' value='search' class='btn btn-default btn-sm search-form-btn search-form-btn-ok'/>

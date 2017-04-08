@@ -96,11 +96,22 @@ public class GoodsController {
     @RequestMapping(value = "/goods", method = RequestMethod.GET)
     public String getPaginatorGoods(Model model, @RequestParam(required = false) Integer pageid,
                                     @RequestParam(required = false) String brand,
-                                    @RequestParam(required = false) String colour) {
+                                    @RequestParam(required = false) String colour,
+                                    @RequestParam(required = false) String title,
+                                    @RequestParam(required = false) Long minPrice,
+                                    @RequestParam(required = false) Long maxPrice) {
 
         List<Good> goods;
-        if (brand != null || colour != null) {
-            goods = goodsService.search(brand, colour);
+        if (brand != null || colour != null || title != null || minPrice != null ||
+                maxPrice != null) {
+
+            if(minPrice == null)
+                minPrice=0L;
+
+            if(maxPrice == null)
+                maxPrice = Long.MAX_VALUE;
+
+            goods = goodsService.search(brand, colour, title, minPrice, maxPrice);
             model.addAttribute("goods", goods);
             return "goods";
         }

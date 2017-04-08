@@ -20,21 +20,18 @@ public class ClientsService {
         this.clientsDao = clientsDao;
     }
 
-    public void setClientsDao(ClientsDao clientsDao) {
-        this.clientsDao = clientsDao;
-    }
-
-    public List<Client> getCurrent() {
-
-        return clientsDao.getAll();
-    }
-
     public void createAccount(Client client) {
+
+        if (client == null)
+            throw new IllegalArgumentException();
 
         clientsDao.create(client);
     }
 
     public boolean clientExists(String email) {
+
+        if (email == null || email.isEmpty())
+            throw new IllegalArgumentException();
 
         return clientsDao.emailExists(email);
     }

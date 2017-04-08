@@ -41,7 +41,7 @@ public class CategoriesController {
     public String createCategory(Model model, @RequestParam(required = false) Long categoryId,
                                  @RequestParam(required = false) Long delete) {
 
-        if(delete != null) {
+        if (delete != null) {
 
             categoriesService.categoryDelete(delete);
             List<Category> categories = categoriesService.getAllCategories();
@@ -49,8 +49,10 @@ public class CategoriesController {
             return "admin/categories";
         }
 
-
-        model.addAttribute("category", categoriesService.getCategoryById(categoryId));
+        if (categoryId == null)
+            model.addAttribute("category", new Category());
+        else
+            model.addAttribute("category", categoriesService.getCategoryById(categoryId));
 
         return "admin/createcategory";
     }

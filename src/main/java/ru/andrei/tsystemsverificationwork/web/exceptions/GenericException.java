@@ -3,8 +3,6 @@ package ru.andrei.tsystemsverificationwork.web.exceptions;
 
 public abstract class GenericException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
-
     private String errCode;
     private String errMsg;
 

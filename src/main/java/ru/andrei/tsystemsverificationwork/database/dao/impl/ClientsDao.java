@@ -55,6 +55,7 @@ public class ClientsDao extends GenericDao<Client> {
         transactionManager.merge(entity);
     }
 
+    @SuppressWarnings("unchecked")
     public List<StatisticsClients> topTenClients() {
 
         List<Object[]> results = transactionManager.createNativeQuery("SELECT `clients`.`Email`, " +

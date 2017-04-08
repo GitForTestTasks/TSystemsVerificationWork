@@ -1,6 +1,7 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientAddressDao;
@@ -9,6 +10,7 @@ import ru.andrei.tsystemsverificationwork.database.models.enums.DeliveryMethod;
 import ru.andrei.tsystemsverificationwork.database.models.enums.OrderStatus;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentStatus;
+import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.OrderDetailsDao;
@@ -47,10 +49,15 @@ public class OrdersService extends GenericService {
 
     public Map<Good, Integer> getRelatedGoods(Long orderId) {
 
-        if (orderId == null)
-            return new HashMap<>();
+        if (orderId == null || orderId < 1)
+            throw new IllegalArgumentException();
 
         List<OrderDetail> orderDetails = orderDetailsDao.getOrderDetailsById(orderId);
+
+        if (orderDetails == null || orderDetails.size() == 0)
+            throw new ItemNotFoundException("This order id does not have related items");
+
+
         Map<Good, Integer> resultMap = new HashMap<>();
 
         for (OrderDetail orderDetail : orderDetails) {
@@ -63,9 +70,12 @@ public class OrdersService extends GenericService {
 
     public Order getOrder(Long id) {
 
+        if (id == null || id < 1)
+            throw new IllegalArgumentException();
+
         Order order = ordersDao.findOne(id);
         if (order == null)
-            return new Order();
+            throw new ItemNotFoundException("Order not found");
         else return order;
     }
 
@@ -77,7 +87,12 @@ public class OrdersService extends GenericService {
         else return orders;
     }
 
+
+    @Secured("ROLE_ADMIN")
     public List<Order> getAdminPagedOrders(Integer page, Integer quantityOfElements) {
+
+        if (page == null || quantityOfElements == null || page < 1 || quantityOfElements < 1)
+            throw new IllegalArgumentException();
 
         Long size = ordersDao.size();
 
@@ -92,6 +107,10 @@ public class OrdersService extends GenericService {
 
     public boolean createOrder(Map<Integer, Integer> cart, PaymentMethod paymentMethod,
                                DeliveryMethod deliveryMethod, ClientAddress clientAddress) {
+
+        if (cart == null || paymentMethod == null || deliveryMethod == null || clientAddress == null
+                || cart.isEmpty())
+            throw new IllegalArgumentException();
 
         Order order = new Order();
         order.setPaymentMethod(paymentMethod);
@@ -121,15 +140,16 @@ public class OrdersService extends GenericService {
         return true;
     }
 
+    @Secured("ROLE_ADMIN")
     public boolean updateOrderStatus(OrderStatus orderStatus, Long orderId) {
 
-        if(orderStatus == null || orderId == null)
-            return false;
+        if (orderStatus == null || orderId == null || orderId < 1)
+            throw new IllegalArgumentException();
 
 
         Order order = ordersDao.findOne(orderId);
 
-        if(orderStatus != OrderStatus.NOT_PAID)
+        if (orderStatus != OrderStatus.NOT_PAID)
             order.setDateOfSale(new Timestamp(Calendar.getInstance().getTime().getTime()));
 
         order.setOrderStatus(orderStatus);
@@ -154,10 +174,12 @@ public class OrdersService extends GenericService {
 
     public ClientAddress getAddressByOrderId(Long orderId) {
 
+        if(orderId == null || orderId < 1)
+            throw new IllegalArgumentException();
+
         Order order = ordersDao.findOne(orderId);
         if (order == null)
-            return new ClientAddress();
+            throw new ItemNotFoundException("Address does not exist");
         else return order.getClientAddressId();
-
     }
 }

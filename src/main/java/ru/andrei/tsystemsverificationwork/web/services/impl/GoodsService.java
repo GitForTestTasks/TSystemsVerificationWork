@@ -8,6 +8,7 @@ import ru.andrei.tsystemsverificationwork.database.dao.impl.CategoriesDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +30,20 @@ public class GoodsService {
     @Secured("ROLE_ADMIN")
     public void createGood(Good good) {
 
+        if (good == null)
+            throw new IllegalArgumentException();
+
         if (categoriesDao.categoryExists(good.getCategory().getName())) {
             good.setCategory(categoriesDao.findByName(good.getCategory().getName()));
         }
-        
+
         goodsDao.create(good);
     }
 
     public List<Good> getGoodsPage(int page, int quantityOfElements) {
+
+        if (page <= 0 || quantityOfElements <= 0)
+            throw new IllegalArgumentException();
 
         Long size = goodsDao.size();
 
@@ -49,8 +56,13 @@ public class GoodsService {
 
     }
 
-    public List<Good> search(String brand, String colour) {
-        return goodsDao.searchByBrandAndColour(brand, colour);
+    public List<Good> search(String brand, String colour, String title, Long minPrice,
+                             Long maxPrice) {
+
+
+
+        return goodsDao.searchByBrandAndColour(brand, colour, title,
+                new BigDecimal(minPrice), new BigDecimal(maxPrice));
     }
 
     public Long goodsSize() {

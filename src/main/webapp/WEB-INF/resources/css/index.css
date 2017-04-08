@@ -34,14 +34,8 @@
     margin: 0 auto;
 }
 
-/*h1 {*/
-    /*text-align: center;*/
-/*}*/
-
-/*h2 {*/
-    /*text-align: center;*/
-/*}*/
-
-/*h3 {*/
-    /*text-align: center;*/
-/*}*/
+.wraper-home {
+    width: 1024px;
+    float: none;
+    margin: 0 auto;
+}
