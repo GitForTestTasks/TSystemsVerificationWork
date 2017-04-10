@@ -1,9 +1,9 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
-        import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotBlank;
 
-        import javax.persistence.*;
-        import java.util.List;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")

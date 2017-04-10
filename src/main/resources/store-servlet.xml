@@ -14,18 +14,10 @@
 
     <bean id="multipartResolver"
                 class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-
         <!-- setting maximum upload size -->
         <property name="maxUploadSize" value="100000" />
-
     </bean>
 
-
-    <!--<bean id="jspViewResolver"-->
-    <!--class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-    <!--<property name="prefix" value="/WEB-INF/jsps/"/>-->
-    <!--<property name="suffix" value=".jsp"/>-->
-    <!--</bean>-->
 
     <bean id="tilesViewResolver"
           class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">

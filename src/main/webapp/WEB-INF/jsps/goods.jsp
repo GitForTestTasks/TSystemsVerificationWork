@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class='search-form-open-btn'>S e a r c h</div>
 <div class='wraper-home'>
@@ -41,7 +42,15 @@
         <core:forEach var="row" items="${goods}">
             <div class='product'>
                 <div class='product-wraper-img'>
-                    <img class='product-img' src='${pageContext.request.contextPath}/static/images/${row.filePath}'/>
+
+                    <img class='product-img' src='
+                        <core:if test="${not empty row.filePath}">
+                        ${pageContext.request.contextPath}/static/images/${row.filePath}
+                        </core:if>
+                        <core:if test="${empty row.filePath}">
+                        ${pageContext.request.contextPath}/static/css/images/image-not-found.jpg
+                        </core:if>
+                    '/>
                 </div>
                 <div class='product-title'>
                     <core:out value="${row.title}"/>
@@ -61,10 +70,17 @@
                     <input class='spinner quantity-s' value='1' min='1' max='1000' pattern='^[ 0-9]+$'/>
                 </div>
                 <div class='product-btn'>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                    <a class='product-btn-change btn btn-warning btn-sm'
+                       href="${pageContext.request.contextPath}/admin/creategood?goodId=${row.goodId}">
+                        Change
+                    </a>
+                    </sec:authorize>
                     <div class='product-btn-add btn btn-primary btn-sm'
-                            data='${row.goodId}'
-                            url="${pageContext.request.contextPath}/buygood">
-                        Add to Cart</div>
+                         data='${row.goodId}'
+                         url="${pageContext.request.contextPath}/buygood">
+                        Add to Cart
+                    </div>
                     <div class='product-btn-detail btn btn-default btn-sm'>Product Detail</div>
                 </div>
             </div>

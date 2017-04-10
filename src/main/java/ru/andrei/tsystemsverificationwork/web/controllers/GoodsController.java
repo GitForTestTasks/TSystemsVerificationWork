@@ -39,9 +39,12 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/admin/creategood", method = RequestMethod.GET)
-    public String createGoodGet(Model model) {
+    public String createGoodGet(Model model, @RequestParam(required = false) Long goodId) {
 
-        model.addAttribute("good", new Good());
+        if (goodId == null)
+            model.addAttribute("good", new Good());
+        else
+            model.addAttribute("good", goodsService.getGoodById(goodId));
         return "admin/creategood";
     }
 
@@ -81,8 +84,6 @@ public class GoodsController {
 
                 good.setFilePath(fileName);
 
-//                logger.info("Server File Location="
-//                        + serverFile.getAbsolutePath());
             } catch (Exception e) {
                 return "You failed to upload " + e.getMessage();
             }
@@ -105,10 +106,10 @@ public class GoodsController {
         if (brand != null || colour != null || title != null || minPrice != null ||
                 maxPrice != null) {
 
-            if(minPrice == null)
-                minPrice=0L;
+            if (minPrice == null)
+                minPrice = 0L;
 
-            if(maxPrice == null)
+            if (maxPrice == null)
                 maxPrice = Long.MAX_VALUE;
 
             goods = goodsService.search(brand, colour, title, minPrice, maxPrice);

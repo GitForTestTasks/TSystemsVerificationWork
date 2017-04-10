@@ -17,11 +17,11 @@
         <apache-tiles.version>3.0.7</apache-tiles.version>
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
         <security-test.version>4.0.0.RELEASE</security-test.version>
+        <logback.version>1.2.3</logback.version>
     </properties>
 
 
     <dependencies>
-
 
         <!-- File upload -->
         <dependency>
@@ -76,7 +76,6 @@
 
 
         <!-- Apache Tiles -->
-
         <dependency>
             <groupId>org.apache.tiles</groupId>
             <artifactId>tiles-extras</artifactId>
@@ -122,8 +121,8 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.25</version>
         </dependency>
-        <!-- Unit Test -->
 
+        <!-- Unit Test -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -159,7 +158,6 @@
 
 
         <!-- Spring  -->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -188,6 +186,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -214,8 +218,18 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+
+
 
     </dependencies>
+
+
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
@@ -229,10 +243,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
-                    <includes>
-                        <include>**/*Tests.java</include>
-                        <include>**/*.java</include>
-                    </includes>
+                    <!--<includes>-->
+                        <!--<include>**/*Tests.java</include>-->
+                        <!--<include>**/*.java</include>-->
+                    <!--</includes>-->
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                 </configuration>

@@ -85,7 +85,6 @@ public class Order implements Serializable {
     }
 
 
-
     @Basic
     @Column(name = "DateOfCreation")
     public Timestamp getDateOfCreation() {
@@ -153,7 +152,7 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return  " Payment method = " + paymentMethod +
+        return " Payment method = " + paymentMethod +
                 " Delivery method = " + deliveryMethod +
                 " Payment status = " + paymentStatus +
                 " Order status = " + orderStatus +

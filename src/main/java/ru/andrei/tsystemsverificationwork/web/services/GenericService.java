@@ -38,7 +38,7 @@ public abstract class GenericService {
 
     public boolean verificateRequestedOrder(Long orderId) {
 
-        if(orderId == null || getCurrentUser().getOrders() == null) {
+        if (orderId == null || getCurrentUser().getOrders() == null) {
             return false;
         }
 

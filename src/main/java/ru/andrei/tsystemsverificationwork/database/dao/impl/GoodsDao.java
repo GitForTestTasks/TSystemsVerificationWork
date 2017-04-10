@@ -23,6 +23,13 @@ public class GoodsDao extends GenericDao<Good> {
                 .setFirstResult(startingValue).setMaxResults(quantityResults).getResultList();
     }
 
+    @Override
+    public void create(Good entity) {
+        if (transactionManager.contains(entity))
+            transactionManager.persist(entity);
+        else transactionManager.merge(entity);
+    }
+
     public Long size() {
         return (Long) transactionManager.createQuery("select count(GoodId) from Good").getSingleResult();
     }
@@ -59,7 +66,7 @@ public class GoodsDao extends GenericDao<Good> {
                 "GROUP BY `orderdetails`.`GoodId` " +
                 "ORDER BY `QuantitySum` DESC LIMIT 10;").getResultList();
 
-        if(results == null)
+        if (results == null)
             return new ArrayList<>();
 
         ArrayList<StatisticsGoods> statisticsGoods = new ArrayList<>();
@@ -80,7 +87,7 @@ public class GoodsDao extends GenericDao<Good> {
 
     public BigDecimal getIncome(String time) {
 
-        return  (BigDecimal) transactionManager.createNativeQuery("SELECT SUM(`goods`.`Price`) AS `total` " +
+        return (BigDecimal) transactionManager.createNativeQuery("SELECT SUM(`goods`.`Price`) AS `total` " +
                 "FROM `orders` " +
                 "LEFT JOIN `orderdetails` ON `orderdetails`.`OrderId` = `orders`.`OrderId` " +
                 "LEFT JOIN `goods` ON `goods`.`GoodId` = `orderdetails`.`GoodId` " +

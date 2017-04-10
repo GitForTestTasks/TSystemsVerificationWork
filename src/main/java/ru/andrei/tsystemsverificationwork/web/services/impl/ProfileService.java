@@ -60,7 +60,7 @@ public class ProfileService extends GenericService {
 
     public ClientAddress getCalledClientAddress(Long clientAddressId) {
 
-        if(clientAddressId == null || clientAddressId < 1)
+        if (clientAddressId == null || clientAddressId < 1)
             throw new IllegalArgumentException();
 
         if (verificateRequestedAddress(clientAddressId)) {
@@ -80,7 +80,7 @@ public class ProfileService extends GenericService {
             clientAddressDao.create(clientAddress);
 
         } else {
-            if(verificateRequestedAddress(clientAddress.getClientAddressId())) {
+            if (verificateRequestedAddress(clientAddress.getClientAddressId())) {
                 clientAddress.setClientId(getCurrentUser());
                 clientAddressDao.update(clientAddress);
             }

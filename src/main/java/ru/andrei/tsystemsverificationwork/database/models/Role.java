@@ -23,7 +23,7 @@ public class Role {
 
     private List<Client> clientList;
 
-    @ManyToMany(mappedBy="roles", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     public List<Client> getClientList() {
         return clientList;
     }
@@ -31,7 +31,6 @@ public class Role {
     public void setClientList(List<Client> clientList) {
         this.clientList = clientList;
     }
-
 
 
     @Basic

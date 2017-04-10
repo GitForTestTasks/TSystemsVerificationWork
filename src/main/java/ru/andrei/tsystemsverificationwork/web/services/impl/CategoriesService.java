@@ -39,14 +39,14 @@ public class CategoriesService {
 
         Category categoryCheck = categoriesDao.findOne(categoryId);
         if (categoryCheck == null) {
-            throw new ItemNotFoundException("Category with supplied id does not exist");
+            throw new ItemNotFoundException("Category with " + categoryId + " id does not exist");
         } else return categoryCheck;
     }
 
     @Secured("ROLE_ADMIN")
     public void createCategory(Category category) {
 
-        if(category == null)
+        if (category == null)
             throw new IllegalArgumentException();
 
         categoriesDao.update(category);
@@ -54,7 +54,7 @@ public class CategoriesService {
 
     public boolean categoryExists(String name) {
 
-        if(name == null || name.isEmpty())
+        if (name == null || name.isEmpty())
             throw new IllegalArgumentException();
 
         return categoriesDao.categoryExists(name);

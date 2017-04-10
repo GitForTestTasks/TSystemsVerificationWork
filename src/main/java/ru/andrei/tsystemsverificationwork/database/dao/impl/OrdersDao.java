@@ -20,7 +20,7 @@ public class OrdersDao extends GenericDao<Order> {
     public Order findOrder(Long clientId) {
 
         Logger log = Logger.getLogger(OrdersService.class.getName());
-        log.log(Level.WARNING,  clientId.toString() + " clientId" );
+        log.log(Level.WARNING, clientId.toString() + " clientId");
 
         return transactionManager.createQuery("FROM Order AS r WHERE r.clientId.clientId = :clientId " +
                 "ORDER BY r.dateOfCreation DESC", Order.class)

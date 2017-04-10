@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.andrei.tsystemsverificationwork.database.models.Order;
-import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
 import ru.andrei.tsystemsverificationwork.web.editors.ClientAddressEditor;
 import ru.andrei.tsystemsverificationwork.web.services.impl.OrdersService;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;

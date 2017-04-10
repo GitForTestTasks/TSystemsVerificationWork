@@ -26,6 +26,13 @@ public class GoodsService {
         this.categoriesDao = categoriesDao;
     }
 
+    public Good getGoodById(Long goodId) {
+
+        if(goodId == null || goodId < 1)
+            throw new IllegalArgumentException();
+
+        return goodsDao.findOne(goodId);
+    }
 
     @Secured("ROLE_ADMIN")
     public void createGood(Good good) {
@@ -58,7 +65,6 @@ public class GoodsService {
 
     public List<Good> search(String brand, String colour, String title, Long minPrice,
                              Long maxPrice) {
-
 
 
         return goodsDao.searchByBrandAndColour(brand, colour, title,

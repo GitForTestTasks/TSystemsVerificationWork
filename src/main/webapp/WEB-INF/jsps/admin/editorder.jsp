@@ -59,7 +59,7 @@
     </form:form>
 
 
-    <h4>Addres</h4>
+    <h4>Address</h4>
     <table class="table table-striped table-hover ">
         <thead>
         <tr>

@@ -12,7 +12,7 @@ import java.io.Serializable;
         @AssociationOverride(name = "orderDetailPk.order",
                 joinColumns = @JoinColumn(name = "OrderId")),
         @AssociationOverride(name = "orderDetailPk.good",
-                joinColumns = @JoinColumn(name = "GoodId")) })
+                joinColumns = @JoinColumn(name = "GoodId"))})
 public class OrderDetail implements Serializable {
 
     private int quantity;

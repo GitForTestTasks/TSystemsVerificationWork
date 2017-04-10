@@ -69,7 +69,7 @@ public class ClientsDao extends GenericDao<Client> {
                 "GROUP BY `clients`.`ClientId` " +
                 "HAVING `total` is not null limit 10;").getResultList();
 
-        if(results == null)
+        if (results == null)
             return new ArrayList<>();
 
         ArrayList<StatisticsClients> statisticsClientss = new ArrayList<>();

@@ -41,11 +41,11 @@ public class ShoppingCartService extends GenericService {
 
         Good check = goodsDao.findOne(goodId);
         if (check == null) {
-            throw new ItemNotFoundException("We can not find product by supplied id.");
+            throw new ItemNotFoundException("We can not find product with " + goodId + " id.");
         }
 
         if (check.getCount() < quantity)
-            throw new OutOfStockException("We do not have enough quantity of product you are trying to buy.");
+            throw new OutOfStockException("We do not have quantity " + quantity + " of product " + goodId + " id");
         else return true;
     }
 }

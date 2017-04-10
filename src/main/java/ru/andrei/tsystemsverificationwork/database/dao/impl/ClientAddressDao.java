@@ -5,11 +5,10 @@ import ru.andrei.tsystemsverificationwork.database.dao.GenericDao;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 
 
-
 @Component("clientAddressDao")
 public class ClientAddressDao extends GenericDao<ClientAddress> {
 
-    public ClientAddressDao(){
+    public ClientAddressDao() {
         setClazz(ClientAddress.class);
     }
 }

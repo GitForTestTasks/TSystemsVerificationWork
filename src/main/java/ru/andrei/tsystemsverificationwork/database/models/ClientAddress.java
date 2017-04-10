@@ -129,7 +129,7 @@ public class ClientAddress {
 
     @Override
     public String toString() {
-        return  "Country " + country  +
+        return "Country " + country +
                 ", City " + city +
                 ", Post Index " + postIndex +
                 ", Street " + street +

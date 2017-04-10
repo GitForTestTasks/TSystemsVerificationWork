@@ -55,7 +55,7 @@ public class OrdersService extends GenericService {
         List<OrderDetail> orderDetails = orderDetailsDao.getOrderDetailsById(orderId);
 
         if (orderDetails == null || orderDetails.size() == 0)
-            throw new ItemNotFoundException("This order id does not have related items");
+            throw new ItemNotFoundException("Order " + orderId + " does not have related items");
 
 
         Map<Good, Integer> resultMap = new HashMap<>();
@@ -174,7 +174,7 @@ public class OrdersService extends GenericService {
 
     public ClientAddress getAddressByOrderId(Long orderId) {
 
-        if(orderId == null || orderId < 1)
+        if (orderId == null || orderId < 1)
             throw new IllegalArgumentException();
 
         Order order = ordersDao.findOne(orderId);

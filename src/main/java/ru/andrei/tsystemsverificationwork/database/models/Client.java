@@ -96,7 +96,7 @@ public class Client implements Serializable {
 
     @Basic
     @Column(name = "Email")
-//    @ValidEmail
+    @ValidEmail
     @NotBlank
     public String getEmail() {
         return email;

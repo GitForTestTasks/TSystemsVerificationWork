@@ -8,8 +8,9 @@
                    action="${pageContext.request.contextPath}/admin/creategood"
                    commandName="good" cssClass="form-horizontal" id='form-add_product'>
             <fieldset>
+                <form:input path="goodId" type="hidden" name="title"/>
                 <legend>
-                    Add Product
+                    Product
                 </legend>
                 <div class='form-group'>
                     <label class='col-lg-2 control-label'>

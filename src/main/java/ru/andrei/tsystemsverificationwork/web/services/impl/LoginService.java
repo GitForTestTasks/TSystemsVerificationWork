@@ -1,5 +1,7 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,7 @@ import java.util.List;
 @Transactional
 public class LoginService implements UserDetailsService {
 
+    private static final Logger log = LoggerFactory.getLogger(LoginService.class);
     private ClientsDao clientsDao;
 
     @Autowired
@@ -32,6 +35,8 @@ public class LoginService implements UserDetailsService {
         if (user == null) {
             return null;
         }
+        log.info("User " + user.getEmail() + " has logged in");
+
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = buildSimpleGrantedAuthorities(user);
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), true, true
