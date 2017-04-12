@@ -1,6 +1,8 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import java.util.List;
 @Transactional
 public class ClientsService extends GenericService {
 
+    private static final Logger log = LoggerFactory.getLogger(ClientsService.class);
     private ClientsDao clientsDao;
 
     @Autowired
@@ -26,6 +29,7 @@ public class ClientsService extends GenericService {
         if (client == null)
             throw new IllegalArgumentException();
 
+        log.info("Account " + client.getEmail() + " has been created");
         clientsDao.create(client);
     }
 

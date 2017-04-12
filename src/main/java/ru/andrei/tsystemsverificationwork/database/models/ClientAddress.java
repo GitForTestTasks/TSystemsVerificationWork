@@ -1,6 +1,9 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "clientAddress")
@@ -19,9 +22,6 @@ public class ClientAddress {
     public long getClientAddressId() {
         return clientAddressId;
     }
-
-//    private List<Order> orders;
-
 
     private Client clientId;
 
@@ -62,6 +62,7 @@ public class ClientAddress {
 
     @Basic
     @Column(name = "PostIndex")
+    @Min(0)
     public Integer getPostIndex() {
         return postIndex;
     }
@@ -82,6 +83,7 @@ public class ClientAddress {
 
     @Basic
     @Column(name = "HouseNumber")
+    @Min(1)
     public String getHouseNumber() {
         return houseNumber;
     }
@@ -92,6 +94,7 @@ public class ClientAddress {
 
     @Basic
     @Column(name = "Apartment")
+    @Min(1)
     public Integer getApartment() {
         return apartment;
     }
@@ -99,18 +102,6 @@ public class ClientAddress {
     public void setApartment(Integer apartment) {
         this.apartment = apartment;
     }
-
-//    @OneToMany(mappedBy = "clientAddressId")
-//    @OneToMany
-//    @JoinColumn(name = "ClientAddressId")
-//    public List<Order> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<Order> orders) {
-//        this.orders = orders;
-//    }
-
 
     @Override
     public boolean equals(Object o) {

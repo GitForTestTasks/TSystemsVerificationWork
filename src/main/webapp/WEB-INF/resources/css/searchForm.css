@@ -38,9 +38,10 @@
 }
 
 .search-form-selecnt-wraper {
-    width: 150px;
+    width: 143px;
     display: inline-block;
     margin-left: 27px;
+    padding-bottom: 10px;
 }
 
 .search-form-selecnt {

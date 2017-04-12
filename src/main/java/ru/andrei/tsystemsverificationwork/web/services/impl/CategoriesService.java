@@ -1,6 +1,8 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.List;
 @Transactional
 public class CategoriesService {
 
+    private static final Logger log = LoggerFactory.getLogger(CategoriesService.class);
     private CategoriesDao categoriesDao;
 
     @Autowired
@@ -49,6 +52,7 @@ public class CategoriesService {
         if (category == null)
             throw new IllegalArgumentException();
 
+        log.info("Changes for category " + category.getName() + " submitted");
         categoriesDao.update(category);
     }
 
@@ -63,5 +67,6 @@ public class CategoriesService {
     public void categoryDelete(Long categoryId) {
 
         categoriesDao.delete(categoriesDao.findOne(categoryId));
+        log.info("Categody with id " + categoryId + " has been deleted");
     }
 }

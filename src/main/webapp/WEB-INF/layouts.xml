@@ -47,7 +47,6 @@
     </definition>
     <definition name="account/createaccount" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/account/createaccount.jsp"/>
-        <put-attribute name="includes" value="/WEB-INF/jsps/account/createaccountscript.jsp"/>
     </definition>
     <definition name="account/profile" extends="store.base" template="/WEB-INF/jsps/tiles/default.jsp">
         <put-attribute name="content" value="/WEB-INF/jsps/account/profile.jsp"/>

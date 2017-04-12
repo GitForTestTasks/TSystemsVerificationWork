@@ -3,9 +3,14 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<core:if test="${cartSize < 1}">
+    <h1 class="text-center text-warning">Cart is empty, please add some products to your cart</h1>
+    <a href="${pageContext.request.contextPath}/goods">
+        <button class='btn btn-primary btn-lg center-block'>Add products</button>
+    </a>
+</core:if>
+
 <core:if test="${cartSize > 0}">
-
-
     <div class='cart-wraper'>
         <core:if test="${success}">
             <h1 class="text-success">Success</h1>

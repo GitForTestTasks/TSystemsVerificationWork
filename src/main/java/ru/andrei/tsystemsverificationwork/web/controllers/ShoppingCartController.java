@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.andrei.tsystemsverificationwork.database.models.Order;
+import ru.andrei.tsystemsverificationwork.web.services.impl.ProfileService;
 import ru.andrei.tsystemsverificationwork.web.services.impl.ShoppingCartService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import java.util.Map;
 public class ShoppingCartController {
 
     private ShoppingCartService shoppingCartService;
+    private static final Logger log = LoggerFactory.getLogger(ShoppingCartController.class);
 
     @Autowired
     public ShoppingCartController(ShoppingCartService shoppingCartService) {
@@ -40,6 +42,11 @@ public class ShoppingCartController {
         return Integer.toString(cart.size());
     }
 
+    private void verifyQuantityAndLog(Integer goodId, Integer quantity) {
+        shoppingCartService.verifyQuantity(goodId, quantity);
+        log.info("Item id " + goodId + " is added to cart, quantity: " + quantity);
+    }
+
     @RequestMapping(value = "/buygood", method = RequestMethod.GET)
     @SuppressWarnings("unchecked")
     public String addItemToCard(HttpSession session, @RequestParam Integer goodId,
@@ -48,14 +55,14 @@ public class ShoppingCartController {
         if (session.getAttribute("cart") == null) {
 
             Map<Integer, Integer> cart = new HashMap<>();
-            shoppingCartService.verifyQuantity(goodId, quantity);
+            verifyQuantityAndLog(goodId, quantity);
             cart.put(goodId, quantity);
             session.setAttribute("cart", cart);
             session.setAttribute("cartSize", 1);
         } else {
 
             Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute("cart");
-            shoppingCartService.verifyQuantity(goodId, quantity);
+            verifyQuantityAndLog(goodId, quantity);
             cart.put(goodId, quantity);
             session.setAttribute("cart", cart);
             session.setAttribute("cartSize", cart.size());
@@ -77,9 +84,10 @@ public class ShoppingCartController {
             session.setAttribute("cartSize", cart.size());
         }
 
-        if (session.getAttribute("cart") == null)
+        if (session.getAttribute("cart") == null) {
+            model.addAttribute("cartSize", 0);
             return "cart";
-        else {
+        } else {
             model.addAttribute("goods", shoppingCartService.showCartItems(
                     (Map<Integer, Integer>) session.getAttribute("cart"))
             );

@@ -1,5 +1,7 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class OrdersService extends GenericService {
     private OrdersDao ordersDao;
     private GoodsDao goodsDao;
     private ClientAddressDao clientAddressDao;
+    private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
 
 
     @Autowired
@@ -168,8 +171,11 @@ public class OrdersService extends GenericService {
             orderDetail.setOrder(order);
             orderDetail.setGood(iterated.getKey());
             orderDetail.setQuantity(iterated.getValue());
+            log.info("Customer ordered " + iterated.getKey().getTitle() + " to order " + order.getOrderId());
             orderDetailsDao.create(orderDetail);
         }
+
+        log.info("Order with id " + order.getOrderId() + " has been created");
     }
 
     public ClientAddress getAddressByOrderId(Long orderId) {

@@ -26,7 +26,7 @@
                     </span></a></li>
 
                 <sec:authorize access="isAuthenticated()">
-                    <li><a href='${pageContext.request.contextPath}/account/orders'>You Orders</a></li>
+                    <li><a href='${pageContext.request.contextPath}/account/orders'>Your Orders</a></li>
                     <li><a href='${pageContext.request.contextPath}/account/profile'>Profile</a></li>
                     <li><a href='${pageContext.request.contextPath}/account/clientaddresses'>Addresses</a></li>
                     <li><a href='${pageContext.request.contextPath}/logout'>Logout</a></li>

@@ -47,7 +47,10 @@ public class ProfileController {
     public String editClientAddress(Model model,
                                     @RequestParam(required = false) Long clientAddressId) {
 
-        model.addAttribute("clientAddress", profileService.getCalledClientAddress(clientAddressId));
+        if (clientAddressId == null)
+            model.addAttribute("clientAddress", new ClientAddress());
+        else
+            model.addAttribute("clientAddress", profileService.getCalledClientAddress(clientAddressId));
 
         return "account/clientaddress";
     }

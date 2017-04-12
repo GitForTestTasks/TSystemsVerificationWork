@@ -1,8 +1,6 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
-/**
- * Created by Andrei on 4/3/2017.
- */
+
 public class StatisticsGoods {
 
     private String title;

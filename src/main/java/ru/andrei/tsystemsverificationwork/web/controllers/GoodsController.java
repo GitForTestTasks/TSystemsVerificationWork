@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.andrei.tsystemsverificationwork.database.models.Category;
 import ru.andrei.tsystemsverificationwork.web.editors.CategoryEditor;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
+import ru.andrei.tsystemsverificationwork.web.services.impl.CategoriesService;
 import ru.andrei.tsystemsverificationwork.web.services.impl.GoodsService;
 
 import javax.servlet.http.HttpSession;
@@ -25,13 +26,17 @@ import java.util.List;
 @Controller
 public class GoodsController {
 
-    private double GOODS_PER_PAGE = 10.0;
+    private final static double GOODS_PER_PAGE = 10.0;
     private GoodsService goodsService;
+    private CategoriesService categoriesService;
+
 
     @Autowired
-    public GoodsController(GoodsService goodsService) {
+    public GoodsController(GoodsService goodsService, CategoriesService categoriesService) {
         this.goodsService = goodsService;
+        this.categoriesService = categoriesService;
     }
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -85,7 +90,8 @@ public class GoodsController {
                 good.setFilePath(fileName);
 
             } catch (Exception e) {
-                return "You failed to upload " + e.getMessage();
+                bindingResult.rejectValue("filePath", "Failed to upload file");
+                return "admin/creategood";
             }
         }
 
@@ -100,11 +106,13 @@ public class GoodsController {
                                     @RequestParam(required = false) String colour,
                                     @RequestParam(required = false) String title,
                                     @RequestParam(required = false) Long minPrice,
-                                    @RequestParam(required = false) Long maxPrice) {
+                                    @RequestParam(required = false) Long maxPrice,
+                                    @RequestParam(required = false) String category) {
 
         List<Good> goods;
+        model.addAttribute("categories", categoriesService.getAllCategories());
         if (brand != null || colour != null || title != null || minPrice != null ||
-                maxPrice != null) {
+                maxPrice != null || category != null) {
 
             if (minPrice == null)
                 minPrice = 0L;
@@ -112,7 +120,7 @@ public class GoodsController {
             if (maxPrice == null)
                 maxPrice = Long.MAX_VALUE;
 
-            goods = goodsService.search(brand, colour, title, minPrice, maxPrice);
+            goods = goodsService.search(brand, colour, title, minPrice, maxPrice, category);
             model.addAttribute("goods", goods);
             return "goods";
         }

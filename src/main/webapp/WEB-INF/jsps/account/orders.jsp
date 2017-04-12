@@ -3,7 +3,7 @@
 
 
 <div class='orders-wraper'>
-    <h1>You Orders</h1>
+    <h1>Your Orders</h1>
     <table class='table table-striped table-hover'>
         <thead>
         <tr>

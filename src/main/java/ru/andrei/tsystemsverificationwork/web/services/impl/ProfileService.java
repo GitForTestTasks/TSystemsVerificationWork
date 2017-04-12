@@ -1,5 +1,7 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +12,6 @@ import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -21,6 +22,7 @@ public class ProfileService extends GenericService {
 
     private ClientAddressDao clientAddressDao;
     private ClientsDao clientsDao;
+    private static final Logger log = LoggerFactory.getLogger(ProfileService.class);
 
     @Autowired
     public ProfileService(ClientAddressDao clientAddressDao, ClientsDao clientsDao) {
@@ -34,16 +36,14 @@ public class ProfileService extends GenericService {
         if (client == null) {
 
             throw new IllegalArgumentException();
-//            return false;
         }
 
         Client comparingClient = getCurrentUser();
         client.setRoles(comparingClient.getRoles());
-
         client.setClientId(comparingClient.getClientId());
         client.setOrders(comparingClient.getOrders());
-
         clientsDao.update(client);
+        log.info("Client " + getCurrentUser().getEmail() + " updated his information");
 
         return true;
     }
@@ -85,5 +85,7 @@ public class ProfileService extends GenericService {
                 clientAddressDao.update(clientAddress);
             }
         }
+
+        log.info("User " + getCurrentUser().getEmail() + " updated his address");
     }
 }

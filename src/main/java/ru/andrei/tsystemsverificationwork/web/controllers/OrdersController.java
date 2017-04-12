@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 public class OrdersController {
 
-    private final double ORDERS_PER_PAGE = 10.0;
+    private final static double ORDERS_PER_PAGE = 10.0;
 
     private OrdersService ordersService;
 
@@ -57,9 +57,9 @@ public class OrdersController {
 
         session.setAttribute("cart", new HashMap<>());
         session.setAttribute("cartSize", 0);
-        model.addAttribute("success", true);
+        model.addAttribute("orders", ordersService.getMyOrders());
 
-        return "cart";
+        return "account/orders";
     }
 
     @RequestMapping(value = "/account/orders", method = RequestMethod.GET)

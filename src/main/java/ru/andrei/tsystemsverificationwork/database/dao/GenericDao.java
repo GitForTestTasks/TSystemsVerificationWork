@@ -2,7 +2,6 @@ package ru.andrei.tsystemsverificationwork.database.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 public abstract class GenericDao<E> {

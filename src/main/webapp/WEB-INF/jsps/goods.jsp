@@ -14,8 +14,20 @@
         <form method="get" action="${pageContext.request.contextPath}/goods" class='search-form form-horizontal'>
             <h4>Search form</h4>
 
-            <input type='text' name='category' id='Category' placeholder='Category'
-                   class='search-input form-control input-sm'/>
+            <%--<input type='text' name='category' id='Category' placeholder='Category'--%>
+                   <%--class='search-input form-control input-sm'/>--%>
+            <label class="search-form-lable">Categories:</label>
+            <div class="search-form-selecnt-wraper">
+                <select id="category" name="category" class="form-control input-sm search-form-select">
+                    <option value="">All</option>
+                    <core:forEach var="row" items="${categories}">
+                        <option value="${row.name}">${row.name}</option>
+                    </core:forEach>
+                </select>
+            </div>
+
+
+
 
             <input type='text' name='title' id='Title' placeholder='Title' class='search-input form-control input-sm'/>
 

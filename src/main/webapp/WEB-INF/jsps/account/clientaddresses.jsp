@@ -46,7 +46,7 @@
         </table>
 
         <a class='btn btn-primary btn-xs address-btn address-btn-create'
-           href="${pageContext.request.contextPath}/account/clientaddress">Create new Addresses</a>
+           href="${pageContext.request.contextPath}/account/clientaddress">Create new address</a>
 
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/addresses.css'/>
     </div>
