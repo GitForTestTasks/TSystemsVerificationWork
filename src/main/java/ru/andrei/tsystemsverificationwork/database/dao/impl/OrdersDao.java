@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+/**
+ * Dao object of Order entity
+ */
 @Component("ordersDao")
 public class OrdersDao extends GenericDao<Order> {
 
@@ -17,6 +19,11 @@ public class OrdersDao extends GenericDao<Order> {
         setClazz(Order.class);
     }
 
+    /**
+     * Finds order by id
+     * @param clientId id to find order
+     * @return Order object found
+     */
     public Order findOrder(Long clientId) {
 
         Logger log = Logger.getLogger(OrdersService.class.getName());

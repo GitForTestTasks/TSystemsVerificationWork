@@ -23,7 +23,6 @@ import java.util.Map;
 public class OrdersController {
 
     private final static double ORDERS_PER_PAGE = 10.0;
-
     private OrdersService ordersService;
 
     @Autowired
@@ -46,10 +45,14 @@ public class OrdersController {
     @SuppressWarnings("unchecked")
     public String createOrder(Model model, HttpSession session, @Valid Order order, BindingResult bindingResult) {
 
-        if (session.getAttribute("cart") == null || order == null || order.getClientAddressId() == null
+
+        if (session.getAttribute("cart") == null || order == null
                 || bindingResult.hasErrors()) {
             return "cart";
         }
+
+        if(order.getClientAddressId() == null)
+            return "account/clientaddresses";
 
         ordersService.createOrder((Map<Integer, Integer>) session.getAttribute("cart"),
                 order.getPaymentMethod(), order.getDeliveryMethod(), order.getClientAddressId());

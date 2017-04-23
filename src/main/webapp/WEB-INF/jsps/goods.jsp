@@ -14,8 +14,6 @@
         <form method="get" action="${pageContext.request.contextPath}/goods" class='search-form form-horizontal'>
             <h4>Search form</h4>
 
-            <%--<input type='text' name='category' id='Category' placeholder='Category'--%>
-                   <%--class='search-input form-control input-sm'/>--%>
             <label class="search-form-lable">Categories:</label>
             <div class="search-form-selecnt-wraper">
                 <select id="category" name="category" class="form-control input-sm search-form-select">
@@ -25,8 +23,6 @@
                     </core:forEach>
                 </select>
             </div>
-
-
 
 
             <input type='text' name='title' id='Title' placeholder='Title' class='search-input form-control input-sm'/>
@@ -57,7 +53,7 @@
 
                     <img class='product-img' src='
                         <core:if test="${not empty row.filePath}">
-                        ${pageContext.request.contextPath}/static/images/${row.filePath}
+                        ${pageContext.request.contextPath}/images/${row.filePath}
                         </core:if>
                         <core:if test="${empty row.filePath}">
                         ${pageContext.request.contextPath}/static/css/images/image-not-found.jpg
@@ -68,25 +64,41 @@
                     <core:out value="${row.title}"/>
                 </div>
                 <div class='product-description'>
-                    <core:out value="${row.brand}"/>
-                    <core:out value="${row.category}"/>
-                    <core:out value="${row.colour}"/>
-                    <core:out value="${row.count}"/>
-                    <core:out value="${row.size}"/>
-                    <core:out value="${row.weight}"/>
+                    <core:if test="${not empty row.brand}">
+                        <div class="text-primary">Brand: ${row.brand}</div>
+                    </core:if>
+                    <core:if test="${not empty row.category}">
+                        <div class="text-primary" >Category: ${row.category}</div>
+                    </core:if>
+                    <core:if test="${not empty row.colour}">
+                        <div class="text-primary">Colour: ${row.colour}</div>
+                    </core:if>
+                    <div class="text-primary">Left: ${row.count}</div>
+                    <core:if test="${not empty row.size}">
+                        <div class="text-primary">Size: ${row.size}</div>
+                    </core:if>
+                    <core:if test="${not empty row.weight}">
+                    <div class="text-primary">Weight: ${row.weight}</div>
+                    </core:if>
                 </div>
                 <div class='product-price'>
                     <core:out value="${row.price}"/>
                 </div>
                 <div class='product-quantity'>
-                    <input class='spinner quantity-s' value='1' min='1' max='1000' pattern='^[ 0-9]+$'/>
+                    <input class='spinner quantity-s' value='1' min='1' max='${row.count}' pattern='^[ 0-9]+$'/>
                 </div>
                 <div class='product-btn'>
                     <sec:authorize access="hasRole('ROLE_ADMIN')">
-                    <a class='product-btn-change btn btn-warning btn-sm'
-                       href="${pageContext.request.contextPath}/admin/creategood?goodId=${row.goodId}">
-                        Change
-                    </a>
+                        <a class='product-btn-delete btn btn-danger btn-sm'
+                           href="${pageContext.request.contextPath}/admin/deletegood?goodId=${row.goodId}">
+                            Delete
+                        </a>
+                    </sec:authorize>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <a class='product-btn-change btn btn-warning btn-sm'
+                           href="${pageContext.request.contextPath}/admin/creategood?goodId=${row.goodId}">
+                            Edit
+                        </a>
                     </sec:authorize>
                     <div class='product-btn-add btn btn-primary btn-sm'
                          data='${row.goodId}'

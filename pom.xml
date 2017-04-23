@@ -18,10 +18,50 @@
         <hibernate-validator.version>5.4.1.Final</hibernate-validator.version>
         <security-test.version>4.0.0.RELEASE</security-test.version>
         <logback.version>1.2.3</logback.version>
+        <activemq.version>5.14.4</activemq.version>
+
+        <version.jboss.bom>10.1.0.Final</version.jboss.bom>
+
     </properties>
 
-
     <dependencies>
+
+        <dependency>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+        <!--JAX-WS-->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-rt</artifactId>
+            <version>2.2.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jvnet.jax-ws-commons.spring</groupId>
+            <artifactId>jaxws-spring</artifactId>
+            <version>1.9</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.xml.stream.buffer</groupId>
+                    <artifactId>streambuffer</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jvnet.staxex</groupId>
+                    <artifactId>stax-ex</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- File upload -->
         <dependency>
@@ -248,11 +288,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.6.1</version>
                 <configuration>
-
-                    <!--<includes>-->
-                    <!--<include>**/*Tests.java</include>-->
-                    <!--<include>**/*.java</include>-->
-                    <!--</includes>-->
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                 </configuration>
@@ -264,12 +299,14 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <url>http://localhost:12354/</url>
+                    <url>http://127.0.0.1:8080/manager/text</url>
+                    <server>tomcat7</server>
                     <path>/</path>
+                    <username>tomcat</username>
+                    <password>tomcat</password>
+                    <update>true</update>
                 </configuration>
             </plugin>
-
         </plugins>
-
     </build>
 </project>

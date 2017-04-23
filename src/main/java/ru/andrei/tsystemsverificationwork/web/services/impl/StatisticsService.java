@@ -12,6 +12,7 @@ import ru.andrei.tsystemsverificationwork.database.models.StatisticsGoods;
 import ru.andrei.tsystemsverificationwork.database.models.enums.TimeValues;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 
+import javax.jms.JMSException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,23 +21,49 @@ import java.util.List;
 @Transactional
 public class StatisticsService extends GenericService {
 
+    private JmsService jmsService;
     private GoodsDao goodsDao;
     private ClientsDao clientsDao;
+    private static List<StatisticsGoods> statisticsGoods = null;
 
     @Autowired
-    public StatisticsService(GoodsDao goodsDao, ClientsDao clientsDao) {
+    public StatisticsService(JmsService jmsService, GoodsDao goodsDao, ClientsDao clientsDao) {
+        this.jmsService = jmsService;
         this.goodsDao = goodsDao;
         this.clientsDao = clientsDao;
     }
 
+    public void forceUpdate() {
+
+        try {
+            jmsService.submit("update");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        statisticsGoods = goodsDao.topTenGoods();
+    }
+
+    public void checkIfUpdateNeeded(Long goodId) {
+
+        for (StatisticsGoods goods : statisticsGoods) {
+
+            if (goods.getGoodId().equals(goodId)) {
+                forceUpdate();
+                break;
+            }
+        }
+    }
 
     public List<StatisticsGoods> topTenGoods() {
 
-        List<StatisticsGoods> goods = goodsDao.topTenGoods();
-        if (goods == null)
+        if (statisticsGoods == null)
+            forceUpdate();
+
+        if (statisticsGoods == null)
             return new ArrayList<>();
         else
-            return goods;
+            return statisticsGoods;
     }
 
     public List<StatisticsClients> topTenClients() {

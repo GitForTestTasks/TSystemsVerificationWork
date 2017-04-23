@@ -4,10 +4,7 @@
     height: 391px;
     display: inline-block;
     text-align: center;
-
     margin: 15px 5px;
-
-
 }
 
 .product-wraper-img {
@@ -15,7 +12,7 @@
 }
 
 .product-img {
-    width: 130px;
+    width: auto;
     height: 130px;
     margin-top: 5px;
 }
@@ -39,7 +36,6 @@
     text-overflow: ellipsis;
     margin-bottom: 10px;
     text-align: justify;
-    word-spacing: -0.5ex;
 }
 
 .product-price {

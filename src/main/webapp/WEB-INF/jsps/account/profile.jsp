@@ -15,7 +15,7 @@
 
             <fieldset>
                 <legend>
-                    Profie
+                    Profile
                 </legend>
 
                 <div class='form-group'>

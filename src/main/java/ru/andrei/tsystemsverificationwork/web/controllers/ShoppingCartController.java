@@ -47,7 +47,7 @@ public class ShoppingCartController {
         log.info("Item id " + goodId + " is added to cart, quantity: " + quantity);
     }
 
-    @RequestMapping(value = "/buygood", method = RequestMethod.GET)
+    @RequestMapping(value = "/buygood", method = RequestMethod.POST)
     @SuppressWarnings("unchecked")
     public String addItemToCard(HttpSession session, @RequestParam Integer goodId,
                                 @RequestParam Integer quantity) {

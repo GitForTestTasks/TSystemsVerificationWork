@@ -10,9 +10,30 @@
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/bootstrap.min.css'/>
         <script src='${pageContext.request.contextPath}/static/script/jquery-3.2.0.min.js'></script>
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/index.css'/>
-        <script src='${pageContext.request.contextPath}/static/script/index.js'></script>
-        <!--->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/<tiles:getAsString name="includecss"/>"/>
+        <script>
+
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $('.loading').hide()
+                    $('.loading').remove()
+                }, 500)
+
+                setInterval(function () {
+
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/renewcart',
+                        data: {},
+                        type: 'GET',
+                        success: function (msg) {
+                            $('.cart-size').html(msg)
+                        }
+                    })
+
+                }, 1000)
+
+            })
+        </script>
 
     </head>
     <body>

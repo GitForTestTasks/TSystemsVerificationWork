@@ -97,7 +97,7 @@
 
                         <div class='form-group'>
                             <div class='col-lg-10 col-lg-offset-2'>
-                                <button type='submit' class='btn btn-primary'>Create Order</button>
+                                <button type='submit' class='btn btn-primary'>Continue</button>
                             </div>
                         </div>
 
@@ -112,18 +112,34 @@
                 <div class='product'>
                     <div class='product-wraper-img'>
                         <img class='product-img'
-                             src='${pageContext.request.contextPath}/static/images/${entry.key.filePath}'/>
+                             src='
+                        <core:if test="${not empty entry.key.filePath}">
+                        ${pageContext.request.contextPath}/images/${entry.key.filePath}
+                        </core:if>
+                        <core:if test="${empty entry.key.filePath}">
+                        ${pageContext.request.contextPath}/static/css/images/image-not-found.jpg
+                        </core:if>'/>
                     </div>
                     <div class='product-title'>
                         <core:out value="${entry.key.title}"/>
                     </div>
                     <div class='product-description'>
-                        <core:out value="${entry.key.brand}"/>
-                        <core:out value="${entry.key.category}"/>
-                        <core:out value="${entry.key.colour}"/>
-                        <core:out value="${entry.key.count}"/>
-                        <core:out value="${entry.key.size}"/>
-                        <core:out value="${entry.key.weight}"/>
+                        <core:if test="${not empty entry.key.brand}">
+                            <div class="text-primary">Brand: ${entry.key.brand}</div>
+                        </core:if>
+                        <core:if test="${not empty entry.key.category}">
+                            <div class="text-primary" >Category: ${entry.key.category}</div>
+                        </core:if>
+                        <core:if test="${not empty entry.key.colour}">
+                            <div class="text-primary">Colour: ${entry.key.colour}</div>
+                        </core:if>
+                        <div class="text-primary">Left: ${entry.key.count}</div>
+                        <core:if test="${not empty entry.key.size}">
+                            <div class="text-primary">Size: ${entry.key.size}</div>
+                        </core:if>
+                        <core:if test="${not empty entry.key.weight}">
+                            <div class="text-primary">Weight: ${entry.key.weight}</div>
+                        </core:if>
                     </div>
                     <div class='product-price'>
                         <core:out value="${entry.key.price}"/>
@@ -164,8 +180,6 @@
               type='text/css'/>
         <script src='${pageContext.request.contextPath}/static/script/jquery-ui-1.12.1.custom.min.js'></script>
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/goods.css'/>
-            <%--<script src='${pageContext.request.contextPath}/static/script/orders.js'></script>--%>
-
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/cart.css'/>
         <script src='${pageContext.request.contextPath}/static/script/cart.js'></script>
 

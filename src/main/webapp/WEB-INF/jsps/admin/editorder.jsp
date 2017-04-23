@@ -46,7 +46,9 @@
                 <label class="col-lg-2 control-label">Selects</label>
                 <div class="col-lg-10">
                     <form:select path="orderStatus" multiple="false" cssClass="form-control">
-                        <form:options/>
+                        <form:option value="AWAITING_SHIPMENT"/>
+                        <form:option value="DELIVERED"/>
+                        <form:option value="SHIPPING"/>
                     </form:select>
                 </div>
             </div>

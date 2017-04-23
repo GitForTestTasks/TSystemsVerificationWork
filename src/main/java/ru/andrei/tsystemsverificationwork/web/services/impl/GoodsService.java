@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.CategoriesDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
-import ru.andrei.tsystemsverificationwork.database.models.Category;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 
 import java.math.BigDecimal;
@@ -39,6 +38,17 @@ public class GoodsService {
     }
 
     @Secured("ROLE_ADMIN")
+    public void deleteGood(Long goodId) {
+
+        if (goodId == null || goodId < 1)
+            throw new IllegalArgumentException();
+
+        Good good = goodsDao.findOne(goodId);
+        goodsDao.delete(good);
+        log.info("Good id " + good.getGoodId() + " " + good.getTitle() + " has been marked as deleted");
+    }
+
+    @Secured("ROLE_ADMIN")
     public void createGood(Good good) {
 
         if (good == null)
@@ -63,16 +73,14 @@ public class GoodsService {
         if (page * quantityOfElements > size || page < 0)
             return new ArrayList<>();
 
-
         return goodsDao.getStrictedGoodsList(page * quantityOfElements, quantityOfElements);
-
     }
 
     public List<Good> search(String brand, String colour, String title, Long minPrice,
                              Long maxPrice, String category) {
 
         if (category == null || category.isEmpty())
-            return  goodsDao.searchByFormDefaultCategory(brand, colour, title,
+            return goodsDao.searchByFormDefaultCategory(brand, colour, title,
                     new BigDecimal(minPrice), new BigDecimal(maxPrice));
 
         return goodsDao.searchByForm(brand, colour, title,

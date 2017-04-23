@@ -13,6 +13,7 @@ import ru.andrei.tsystemsverificationwork.database.models.enums.OrderStatus;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentStatus;
 import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
+import ru.andrei.tsystemsverificationwork.web.exceptions.impl.OutOfStockException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.OrderDetailsDao;
@@ -31,18 +32,19 @@ public class OrdersService extends GenericService {
 
     private OrderDetailsDao orderDetailsDao;
     private OrdersDao ordersDao;
-    private GoodsDao goodsDao;
     private ClientAddressDao clientAddressDao;
+    private GoodsDao goodsDao;
+    private StatisticsService statisticsService;
     private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
 
-
     @Autowired
-    public OrdersService(OrderDetailsDao orderDetailsDao, OrdersDao ordersDao,
-                         GoodsDao goodsDao, ClientAddressDao clientAddressDao) {
+    public OrdersService(OrderDetailsDao orderDetailsDao, OrdersDao ordersDao, ClientAddressDao clientAddressDao,
+                         GoodsDao goodsDao, StatisticsService statisticsService) {
         this.orderDetailsDao = orderDetailsDao;
         this.ordersDao = ordersDao;
-        this.goodsDao = goodsDao;
         this.clientAddressDao = clientAddressDao;
+        this.goodsDao = goodsDao;
+        this.statisticsService = statisticsService;
     }
 
     public Long orderSize() {
@@ -90,7 +92,6 @@ public class OrdersService extends GenericService {
         else return orders;
     }
 
-
     @Secured("ROLE_ADMIN")
     public List<Order> getAdminPagedOrders(Integer page, Integer quantityOfElements) {
 
@@ -107,7 +108,6 @@ public class OrdersService extends GenericService {
         return ordersDao.getPagedOrders(page * quantityOfElements, quantityOfElements);
     }
 
-
     public boolean createOrder(Map<Integer, Integer> cart, PaymentMethod paymentMethod,
                                DeliveryMethod deliveryMethod, ClientAddress clientAddress) {
 
@@ -119,8 +119,6 @@ public class OrdersService extends GenericService {
         order.setPaymentMethod(paymentMethod);
         order.setDeliveryMethod(deliveryMethod);
         order.setDateOfCreation(new Timestamp(Calendar.getInstance().getTime().getTime()));
-
-
         order.setClientId(getCurrentUser());
         order.setPaymentStatus(PaymentStatus.NOT_PAID);
         order.setOrderStatus(OrderStatus.NOT_PAID);
@@ -130,17 +128,34 @@ public class OrdersService extends GenericService {
             clientAddress = clientAddressDao.findOne(checkClientId);
         } else return false;
 
-
         order.setClientAddressId(clientAddress);
         ordersDao.create(order);
 
-
         Map<Good, Integer> orderDetails = showCartItems(cart);
-
 
         createOrderDetails(orderDetails);
 
         return true;
+    }
+
+    private synchronized void reserveGoods(Map<Good, Integer> goods) {
+
+        for (Map.Entry<Good, Integer> entry : goods.entrySet()) {
+
+            Good good = entry.getKey();
+            int count = good.getCount();
+            int quantityBought = entry.getValue();
+
+            if (count >= quantityBought)
+                count = count - quantityBought;
+            else
+                throw new OutOfStockException("We cannot reserve more than " + good.getCount() + " but required was " +
+                        + quantityBought + " for item " + good.getTitle());
+
+            good.setCount(count);
+            goodsDao.update(good);
+            log.info(quantityBought + " of " + good.getTitle() + " have been reserved, " + good.getCount() + " left");
+        }
     }
 
     @Secured("ROLE_ADMIN")
@@ -149,11 +164,12 @@ public class OrdersService extends GenericService {
         if (orderStatus == null || orderId == null || orderId < 1)
             throw new IllegalArgumentException();
 
-
         Order order = ordersDao.findOne(orderId);
 
-        if (orderStatus != OrderStatus.NOT_PAID)
-            order.setDateOfSale(new Timestamp(Calendar.getInstance().getTime().getTime()));
+        if (orderStatus != OrderStatus.NOT_PAID && order.getOrderStatus() == OrderStatus.NOT_PAID) {
+            reserveGoods(getRelatedGoods(orderId));
+            statisticsService.forceUpdate();
+        }
 
         order.setOrderStatus(orderStatus);
         ordersDao.update(order);

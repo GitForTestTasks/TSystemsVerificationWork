@@ -1,5 +1,7 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,6 +12,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "goods")
+@SQLDelete(sql="UPDATE goods SET IsGoodDeleted = '1' WHERE GoodId = ?")
 public class Good {
     private long goodId;
     private String title;
@@ -21,6 +24,17 @@ public class Good {
     private String filePath;
     private int count;
     private Category category;
+    private char isGoodDeleted;
+
+    @Basic
+    @Column(name = "IsGoodDeleted")
+    public char getIsGoodDeleted() {
+        return isGoodDeleted;
+    }
+
+    public void setIsGoodDeleted(char isDeleted) {
+        this.isGoodDeleted = isDeleted;
+    }
 
     @Basic
     @Column(name = "FilePath")

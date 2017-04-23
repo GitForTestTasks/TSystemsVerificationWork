@@ -12,20 +12,34 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dao object of Client entity
+ */
 @Component("clientsDao")
 @Transactional
 public class ClientsDao extends GenericDao<Client> {
 
-
+    /**
+     * Password encoder of spring security
+     */
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Creates client with encrypted password
+     * This method should be used to initially create of Client object
+     * @param entity Client object to add to the database
+     */
     @Override
     public void create(Client entity) {
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         super.create(entity);
     }
 
+    /**
+     * Updates Client object in database
+     * @param entity new version of Client object to update
+     */
     @Override
     public void update(Client entity) {
 
@@ -38,23 +52,33 @@ public class ClientsDao extends GenericDao<Client> {
         setClazz(Client.class);
     }
 
+    /**
+     * Returns if client with submitted e-mail address exists
+     * @param emailSubmitted string value of e-mail to find
+     * @return true if client exists
+     */
     public boolean emailExists(String emailSubmitted) {
 
         return transactionManager.createQuery("FROM Client AS r WHERE r.email = :emailSubmitted", Client.class).
                 setParameter("emailSubmitted", emailSubmitted).getResultList().size() > 0;
     }
 
+    /**
+     * Finds client object by e-mail address
+     * @param email string value of e-mail to find
+     * @return Client object found or null if not
+     */
     public Client getUserByEmail(String email) {
 
         return transactionManager.createQuery("FROM Client AS r WHERE r.email = :email", Client.class).
                 setParameter("email", email).getSingleResult();
     }
 
-    public void updateWithoutEncrypt(Client entity) {
-        transactionManager.find(Client.class, entity.getClientId());
-        transactionManager.merge(entity);
-    }
-
+    /**
+     * Returns list of StatisticsClients objects which represents
+     * statistics of top ten clients
+     * @return list of top ten clients
+     */
     @SuppressWarnings("unchecked")
     public List<StatisticsClients> topTenClients() {
 

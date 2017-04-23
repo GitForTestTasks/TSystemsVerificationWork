@@ -26,17 +26,15 @@ import java.util.List;
 @Controller
 public class GoodsController {
 
-    private final static double GOODS_PER_PAGE = 10.0;
+    private final static double GOODS_PER_PAGE = 8.0;
     private GoodsService goodsService;
     private CategoriesService categoriesService;
-
 
     @Autowired
     public GoodsController(GoodsService goodsService, CategoriesService categoriesService) {
         this.goodsService = goodsService;
         this.categoriesService = categoriesService;
     }
-
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -51,6 +49,16 @@ public class GoodsController {
         else
             model.addAttribute("good", goodsService.getGoodById(goodId));
         return "admin/creategood";
+    }
+
+    @RequestMapping(value = "/admin/deletegood", method = RequestMethod.GET)
+    public String deleteGood(Model model, @RequestParam(required = false) Long goodId) {
+
+        if (goodId != null)
+            goodsService.deleteGood(goodId);
+
+        prepareModel(model, 1);
+        return "goods";
     }
 
     @RequestMapping(value = "/admin/creategood", method = RequestMethod.POST)
@@ -73,8 +81,7 @@ public class GoodsController {
                 byte[] bytes = file.getBytes();
 
                 String rootPath = session.getServletContext().getRealPath("/");
-                File dir = new File(rootPath + File.separator + "WEB-INF" +
-                        File.separator + "resources" + File.separator + "images");
+                File dir = new File(rootPath + File.separator + "images");
                 if (!dir.exists())
                     dir.mkdirs();
 

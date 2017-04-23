@@ -42,15 +42,10 @@ $(document).ready(function () {
                 goodId: product_id,
                 quantity: count
             },
-            type: 'GET',
+            type: 'POST',
             success: function (msg) {
             }
         })
     })
 
-    $('.product-btn-detail').on('click', function () {
-        var parent = $(this).parent()
-        var product_id = parent.find('.product-btn-add').attr('data')
-        alert(product_id)
-    })
 })

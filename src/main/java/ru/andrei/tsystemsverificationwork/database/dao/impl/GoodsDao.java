@@ -6,10 +6,13 @@ import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.database.models.StatisticsGoods;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Dao object of Good entity
+ */
 @Component("goodsDao")
 public class GoodsDao extends GenericDao<Good> {
 
@@ -17,12 +20,22 @@ public class GoodsDao extends GenericDao<Good> {
         setClazz(Good.class);
     }
 
+    /**
+     * Returns stricted list of non-deleted Goods to be paged on front-end
+     * @param startingValue from what position we are going to start search
+     * @param quantityResults returned list size
+     * @return list of Good objects
+     */
     public List<Good> getStrictedGoodsList(int startingValue, int quantityResults) {
 
-        return transactionManager.createQuery("FROM Good", Good.class)
+        return transactionManager.createQuery("FROM Good AS r WHERE r.isGoodDeleted LIKE '0'", Good.class)
                 .setFirstResult(startingValue).setMaxResults(quantityResults).getResultList();
     }
 
+    /**
+     * Adds or updates Good object to database
+     * @param entity Good object to be updated or created
+     */
     @Override
     public void create(Good entity) {
         if (transactionManager.contains(entity))
@@ -30,10 +43,25 @@ public class GoodsDao extends GenericDao<Good> {
         else transactionManager.merge(entity);
     }
 
+    /**
+     * Returns number of non-deleted goods
+     * @return Long number of goods
+     */
     public Long size() {
-        return (Long) transactionManager.createQuery("select count(GoodId) from Good").getSingleResult();
+        return (Long) transactionManager.createQuery("select count(GoodId) from Good" +
+                " AS r WHERE r.isGoodDeleted LIKE '0'").getSingleResult();
     }
 
+    /**
+     * Returns list of Goods searched by presented parameters
+     * @param brand brand of good
+     * @param colour colour of good
+     * @param title name of good
+     * @param minPrice minimal price to search
+     * @param maxPrice maximal price to search
+     * @param category category to find
+     * @return list of goods searched
+     */
     public List<Good> searchByForm(String brand, String colour, String title,
                                              BigDecimal minPrice, BigDecimal maxPrice, String category) {
 
@@ -43,7 +71,8 @@ public class GoodsDao extends GenericDao<Good> {
                 " AND r.colour LIKE :colour " +
                 " AND r.title LIKE :title " +
                 " AND r.price >= :minPrice " +
-                " AND r.price <= :maxPrice ", Good.class)
+                " AND r.price <= :maxPrice " +
+                " AND r.isGoodDeleted LIKE '0'", Good.class)
                 .setParameter("category", category)
                 .setParameter("brand", "%" + brand + "%")
                 .setParameter("colour", "%" + colour + "%")
@@ -53,18 +82,22 @@ public class GoodsDao extends GenericDao<Good> {
                 .getResultList();
     }
 
-
+    /**
+     * Returns list of DTO statisticsgoods represent top ten goods
+     * @return list of StatisticsGoods objects
+     */
     @SuppressWarnings("unchecked")
     public List<StatisticsGoods> topTenGoods() {
 
         List<Object[]> results = transactionManager.createNativeQuery("SELECT " +
                 "`goods`.`Title`, " +
                 "SUM(`orderdetails`.`Quantity`) as `QuantitySum`, " +
-                "`goods`.`count` " +
+                "`goods`.`count`, `goods`.`GoodId`, `goods`.`Price` " +
                 "FROM `goods` " +
                 "LEFT JOIN `orderdetails` ON `goods`.`GoodId` = `orderdetails`.`GoodId` " +
                 "LEFT JOIN `orders` ON `orders`.`OrderId` = `orderdetails`.`OrderId` " +
                 "WHERE `orders`.`OrderStatus` != 'NOT_PAID' " +
+                "AND `goods`.`IsGoodDeleted` = '0' " +
                 "GROUP BY `orderdetails`.`GoodId` " +
                 "ORDER BY `QuantitySum` DESC LIMIT 10;").getResultList();
 
@@ -79,6 +112,8 @@ public class GoodsDao extends GenericDao<Good> {
             statisticsGood.setTitle((String) record[0]);
             statisticsGood.setQuantitySum(((BigDecimal) record[1]).longValue());
             statisticsGood.setCount((Integer) record[2]);
+            statisticsGood.setGoodId(((BigInteger) record[3]).longValue());
+            statisticsGood.setPrice((BigDecimal) record[4]);
 
             statisticsGoods.add(statisticsGood);
 
@@ -87,6 +122,11 @@ public class GoodsDao extends GenericDao<Good> {
         return statisticsGoods;
     }
 
+    /**
+     * Returns income recently earned
+     * @param time time interval earning
+     * @return bigdecimal value of income
+     */
     public BigDecimal getIncome(String time) {
 
         return (BigDecimal) transactionManager.createNativeQuery("SELECT SUM(`goods`.`Price`) AS `total` " +
@@ -97,6 +137,15 @@ public class GoodsDao extends GenericDao<Good> {
                 "AND `orders`.`DateOfSale`  >= NOW() - INTERVAL 1 " + time).getSingleResult();
     }
 
+    /**
+     * Returns list of Goods searched by presented parameters
+     * @param brand brand of good
+     * @param colour colour of good
+     * @param title name of good
+     * @param minPrice minimal price to search
+     * @param maxPrice maximal price to search
+     * @return list of goods searched
+     */
     public List<Good> searchByFormDefaultCategory(String brand, String colour, String title,
                                    BigDecimal minPrice, BigDecimal maxPrice) {
 
@@ -105,7 +154,8 @@ public class GoodsDao extends GenericDao<Good> {
                 " AND r.colour LIKE :colour " +
                 " AND r.title LIKE :title " +
                 " AND r.price >= :minPrice " +
-                " AND r.price <= :maxPrice ", Good.class)
+                " AND r.price <= :maxPrice " +
+                " AND r.isGoodDeleted LIKE '0'", Good.class)
                 .setParameter("brand", "%" + brand + "%")
                 .setParameter("colour", "%" + colour + "%")
                 .setParameter("title", "%" + title + "%")
