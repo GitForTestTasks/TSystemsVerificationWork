@@ -4,6 +4,9 @@ import ru.andrei.tsystemsverificationwork.database.models.Category;
 
 import java.beans.PropertyEditorSupport;
 
+/**
+ * String to category.name mapper
+ */
 public class CategoryEditor extends PropertyEditorSupport {
 
     @Override

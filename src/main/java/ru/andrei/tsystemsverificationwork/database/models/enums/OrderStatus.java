@@ -1,6 +1,8 @@
 package ru.andrei.tsystemsverificationwork.database.models.enums;
 
-
+/**
+ * Enum of order status
+ */
 public enum OrderStatus {
     NOT_PAID,
     AWAITING_SHIPMENT,

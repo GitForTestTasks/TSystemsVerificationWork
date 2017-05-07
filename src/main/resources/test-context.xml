@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <bean id="connectionFactory" lazy-init="true"/>
+    <bean id="queue" lazy-init="true"/>
+    <!--<jee:jndi-lookup id="connectionFactory" lazy-init="true" jndi-name="java:/ConnectionFactory" />-->
+    <!--<jee:jndi-lookup id="queue" lazy-init="true" jndi-name="java:/jms/queue/statistics" />-->
+</beans>

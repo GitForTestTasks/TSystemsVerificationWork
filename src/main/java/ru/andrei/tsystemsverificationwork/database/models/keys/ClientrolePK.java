@@ -4,10 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-
+/**
+ * Composite primary key of Client entity
+ */
 public class ClientrolePK implements Serializable {
     private long clientId;
     private long roleId;
+
+    public ClientrolePK() { //No argument constructor required for hibernate framework
+    }
 
     @Column(name = "ClientId")
     @Id
@@ -29,20 +34,16 @@ public class ClientrolePK implements Serializable {
         this.roleId = roleId;
     }
 
-    public ClientrolePK() {
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         ClientrolePK that = (ClientrolePK) o;
 
-        if (clientId != that.clientId) return false;
-        if (roleId != that.roleId) return false;
-
-        return true;
+        return clientId == that.clientId && roleId == that.roleId;
     }
 
     @Override

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="DEV_HOME" value="c:/logs" />
+    <property name="DEV_HOME" value="c:/logs"/>
 
     <appender name="FILE-AUDIT"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${DEV_HOME}/store-log.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [ %-5level] %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} %-5level %msg%n
             </Pattern>
         </encoder>
 
@@ -25,11 +25,11 @@
     </appender>
 
     <logger name="ru.andrei.tsystemsverificationwork" level="debug" additivity="false">
-        <appender-ref ref="FILE-AUDIT" />
+        <appender-ref ref="FILE-AUDIT"/>
     </logger>
 
     <root level="error">
-        <appender-ref ref="FILE-AUDIT" />
+        <appender-ref ref="FILE-AUDIT"/>
     </root>
 
 </configuration>

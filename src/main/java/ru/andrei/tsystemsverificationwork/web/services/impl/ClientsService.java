@@ -10,13 +10,20 @@ import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 
-import java.util.List;
-
+/**
+ * Service responsible for users
+ */
 @Service("clientsService")
 @Transactional
 public class ClientsService extends GenericService {
 
+    /**
+     * Slf4j logger
+     */
     private static final Logger log = LoggerFactory.getLogger(ClientsService.class);
+    /**
+     * Dao of client entity
+     */
     private ClientsDao clientsDao;
 
     @Autowired
@@ -24,6 +31,11 @@ public class ClientsService extends GenericService {
         this.clientsDao = clientsDao;
     }
 
+    /**
+     * Creates an account
+     *
+     * @param client user is going to be created
+     */
     public void createAccount(Client client) {
 
         if (client == null)
@@ -33,6 +45,12 @@ public class ClientsService extends GenericService {
         clientsDao.create(client);
     }
 
+    /**
+     * Checks if user exists
+     *
+     * @param email e-mail of user to be found
+     * @return boolean value of result
+     */
     public boolean clientExists(String email) {
 
         if (email == null || email.isEmpty())

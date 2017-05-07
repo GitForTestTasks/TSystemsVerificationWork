@@ -15,6 +15,7 @@
             classpath:datasource.xml
             classpath:service-context.xml
             classpath:security-context.xml
+            classpath:jndi-lookups.xml
         </param-value>
     </context-param>
 
@@ -64,6 +65,8 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <session-config><session-timeout>60</session-timeout></session-config>
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
 
 </web-app>

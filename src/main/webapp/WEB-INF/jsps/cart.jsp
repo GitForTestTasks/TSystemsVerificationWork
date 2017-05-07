@@ -128,7 +128,7 @@
                             <div class="text-primary">Brand: ${entry.key.brand}</div>
                         </core:if>
                         <core:if test="${not empty entry.key.category}">
-                            <div class="text-primary" >Category: ${entry.key.category}</div>
+                            <div class="text-primary">Category: ${entry.key.category}</div>
                         </core:if>
                         <core:if test="${not empty entry.key.colour}">
                             <div class="text-primary">Colour: ${entry.key.colour}</div>

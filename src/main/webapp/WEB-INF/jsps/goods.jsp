@@ -68,7 +68,7 @@
                         <div class="text-primary">Brand: ${row.brand}</div>
                     </core:if>
                     <core:if test="${not empty row.category}">
-                        <div class="text-primary" >Category: ${row.category}</div>
+                        <div class="text-primary">Category: ${row.category}</div>
                     </core:if>
                     <core:if test="${not empty row.colour}">
                         <div class="text-primary">Colour: ${row.colour}</div>
@@ -78,7 +78,7 @@
                         <div class="text-primary">Size: ${row.size}</div>
                     </core:if>
                     <core:if test="${not empty row.weight}">
-                    <div class="text-primary">Weight: ${row.weight}</div>
+                        <div class="text-primary">Weight: ${row.weight}</div>
                     </core:if>
                 </div>
                 <div class='product-price'>

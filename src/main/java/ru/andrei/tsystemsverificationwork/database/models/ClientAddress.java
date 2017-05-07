@@ -2,12 +2,14 @@ package ru.andrei.tsystemsverificationwork.database.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.io.Serializable;
 
+/**
+ * Entity of clientaddress table
+ */
 @Entity
 @Table(name = "clientAddress")
-public class ClientAddress {
+public class ClientAddress implements Serializable {
     private long clientAddressId;
     private String country;
     private String city;
@@ -105,8 +107,10 @@ public class ClientAddress {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         ClientAddress that = (ClientAddress) o;
 

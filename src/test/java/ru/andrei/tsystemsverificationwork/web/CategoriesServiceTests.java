@@ -23,9 +23,6 @@ public class CategoriesServiceTests {
     @Autowired
     private CategoriesService categoriesService;
 
-    public CategoriesServiceTests() {
-    }
-
     @Test
     public void testNullAllCategories() {
 

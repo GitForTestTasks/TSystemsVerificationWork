@@ -5,15 +5,13 @@
        xmlns:ws="http://jax-ws.dev.java.net/spring/core"
        xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
        xmlns:context="http://www.springframework.org/schema/context"
-
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
             http://jax-ws.dev.java.net/spring/core http://jax-ws.java.net/spring/core.xsd
-            http://jax-ws.dev.java.net/spring/servlet http://jax-ws.java.net/spring/servlet.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
-    <!--<bean id="jmsFactory" class="org.apache.activemq.ActiveMQConnectionFactory">-->
-        <!--<property name="brokerURL" value="tcp://localhost:61616"/>-->
-    <!--</bean>-->
+            http://jax-ws.dev.java.net/spring/servlet http://jax-ws.java.net/spring/servlet.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config/>
     <context:component-scan base-package="ru.andrei.tsystemsverificationwork.web.services">
@@ -26,8 +24,9 @@
         </wss:service>
     </wss:binding>
 
+
     <bean id="topGoodsWs" class="ru.andrei.tsystemsverificationwork.web.services.impl.TopGoodsWs">
-        <property name="statisticsService" ref="statisticsService" />
+        <property name="statisticsService" ref="statisticsService"/>
     </bean>
 
 </beans>

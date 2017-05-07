@@ -1,0 +1,5 @@
+projectKey=TsystemsVerificationProject
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/TsystemsVerificationProject
+ceTaskId=AVve7FzLud_9a5XhnS3j
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVve7FzLud_9a5XhnS3j

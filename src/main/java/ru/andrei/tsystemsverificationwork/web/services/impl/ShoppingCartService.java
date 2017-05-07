@@ -3,21 +3,22 @@ package ru.andrei.tsystemsverificationwork.web.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
 import ru.andrei.tsystemsverificationwork.web.exceptions.impl.OutOfStockException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
-import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
-import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 
-import java.util.HashSet;
-import java.util.Set;
-
-
+/**
+ * Business logic of shopping cart
+ */
 @Service("shoppingCartService")
 @Transactional
 public class ShoppingCartService extends GenericService {
 
+    /**
+     * Good's Dao
+     */
     private GoodsDao goodsDao;
 
     @Autowired
@@ -25,15 +26,13 @@ public class ShoppingCartService extends GenericService {
         this.goodsDao = goodsDao;
     }
 
-    public Set<ClientAddress> retriveAllAddresses() {
-
-        Set<ClientAddress> clientAddresses = getCurrentUser().getClientAddresses();
-
-        if (clientAddresses == null) {
-            return new HashSet<>();
-        } else return clientAddresses;
-    }
-
+    /**
+     * Checks if whether goods are out of stock or not.
+     *
+     * @param goodId   good's id
+     * @param quantity quantity bought
+     * @return boolean value of result
+     */
     public boolean verifyQuantity(Integer goodId, Integer quantity) {
 
         if (goodId == null || quantity == null || goodId < 1 || quantity < 1)

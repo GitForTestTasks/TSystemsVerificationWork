@@ -22,7 +22,8 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Returns stricted list of non-deleted Goods to be paged on front-end
-     * @param startingValue from what position we are going to start search
+     *
+     * @param startingValue   from what position we are going to start search
      * @param quantityResults returned list size
      * @return list of Good objects
      */
@@ -34,6 +35,7 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Adds or updates Good object to database
+     *
      * @param entity Good object to be updated or created
      */
     @Override
@@ -45,6 +47,7 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Returns number of non-deleted goods
+     *
      * @return Long number of goods
      */
     public Long size() {
@@ -54,16 +57,17 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Returns list of Goods searched by presented parameters
-     * @param brand brand of good
-     * @param colour colour of good
-     * @param title name of good
+     *
+     * @param brand    brand of good
+     * @param colour   colour of good
+     * @param title    name of good
      * @param minPrice minimal price to search
      * @param maxPrice maximal price to search
      * @param category category to find
      * @return list of goods searched
      */
     public List<Good> searchByForm(String brand, String colour, String title,
-                                             BigDecimal minPrice, BigDecimal maxPrice, String category) {
+                                   BigDecimal minPrice, BigDecimal maxPrice, String category) {
 
         return transactionManager.createQuery("FROM Good AS r " +
                 " WHERE r.brand LIKE :brand " +
@@ -84,6 +88,7 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Returns list of DTO statisticsgoods represent top ten goods
+     *
      * @return list of StatisticsGoods objects
      */
     @SuppressWarnings("unchecked")
@@ -106,7 +111,7 @@ public class GoodsDao extends GenericDao<Good> {
 
         ArrayList<StatisticsGoods> statisticsGoods = new ArrayList<>();
 
-        results.forEach((record) -> {
+        results.forEach(record -> {
 
             StatisticsGoods statisticsGood = new StatisticsGoods();
             statisticsGood.setTitle((String) record[0]);
@@ -124,6 +129,7 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Returns income recently earned
+     *
      * @param time time interval earning
      * @return bigdecimal value of income
      */
@@ -139,15 +145,16 @@ public class GoodsDao extends GenericDao<Good> {
 
     /**
      * Returns list of Goods searched by presented parameters
-     * @param brand brand of good
-     * @param colour colour of good
-     * @param title name of good
+     *
+     * @param brand    brand of good
+     * @param colour   colour of good
+     * @param title    name of good
      * @param minPrice minimal price to search
      * @param maxPrice maximal price to search
      * @return list of goods searched
      */
     public List<Good> searchByFormDefaultCategory(String brand, String colour, String title,
-                                   BigDecimal minPrice, BigDecimal maxPrice) {
+                                                  BigDecimal minPrice, BigDecimal maxPrice) {
 
         return transactionManager.createQuery("FROM Good AS r " +
                 " WHERE r.brand LIKE :brand " +

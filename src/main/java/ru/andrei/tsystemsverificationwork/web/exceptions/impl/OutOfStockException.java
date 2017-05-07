@@ -2,12 +2,14 @@ package ru.andrei.tsystemsverificationwork.web.exceptions.impl;
 
 import ru.andrei.tsystemsverificationwork.web.exceptions.GenericException;
 
-
+/**
+ * Out of stock exception
+ */
 public class OutOfStockException extends GenericException {
 
-    private static final String exceptionCode = "Out of stock";
+    private static final String EXCEPTION_CODE = "Out of stock";
 
     public OutOfStockException(String errMsg) {
-        super(exceptionCode, errMsg);
+        super(EXCEPTION_CODE, errMsg);
     }
 }

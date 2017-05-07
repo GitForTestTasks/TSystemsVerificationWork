@@ -5,7 +5,9 @@ import ru.andrei.tsystemsverificationwork.database.models.keys.OrderDetailPk;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
+/**
+ * Entity of orderdetails table
+ */
 @Entity
 @Table(name = "orderdetails")
 @AssociationOverrides({

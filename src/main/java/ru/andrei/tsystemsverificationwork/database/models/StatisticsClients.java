@@ -1,17 +1,18 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class StatisticsClients {
+/**
+ * DTO of users statistics
+ */
+public class StatisticsClients implements Serializable {
 
     private String email;
     private String firstName;
     private String lastName;
     private BigDecimal total;
-
-    public StatisticsClients() {
-    }
 
     public String getEmail() {
         return email;

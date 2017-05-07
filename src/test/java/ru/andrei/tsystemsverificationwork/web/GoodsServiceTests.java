@@ -9,7 +9,6 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
 import ru.andrei.tsystemsverificationwork.web.services.impl.GoodsService;
 
 import static junit.framework.TestCase.assertNotNull;

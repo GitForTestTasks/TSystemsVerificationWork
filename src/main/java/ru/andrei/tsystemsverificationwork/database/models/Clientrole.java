@@ -4,6 +4,9 @@ import ru.andrei.tsystemsverificationwork.database.models.keys.ClientrolePK;
 
 import javax.persistence.*;
 
+/**
+ * Entity of clientsroles table
+ */
 @Entity
 @Table(name = "clientsroles")
 @IdClass(ClientrolePK.class)
@@ -33,15 +36,14 @@ public class Clientrole {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Clientrole that = (Clientrole) o;
 
-        if (clientId != that.clientId) return false;
-        if (roleId != that.roleId) return false;
-
-        return true;
+        return clientId == that.clientId && roleId == that.roleId;
     }
 
     @Override

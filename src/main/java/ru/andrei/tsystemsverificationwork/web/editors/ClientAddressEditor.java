@@ -4,7 +4,9 @@ import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 
 import java.beans.PropertyEditorSupport;
 
-
+/**
+ * String to ClientAddress.clientAddressId mapper
+ */
 public class ClientAddressEditor extends PropertyEditorSupport {
 
     @Override

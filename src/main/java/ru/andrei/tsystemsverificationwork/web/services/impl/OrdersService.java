@@ -7,7 +7,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientAddressDao;
+import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
+import ru.andrei.tsystemsverificationwork.database.dao.impl.OrderDetailsDao;
+import ru.andrei.tsystemsverificationwork.database.dao.impl.OrdersDao;
+import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
+import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.database.models.Order;
+import ru.andrei.tsystemsverificationwork.database.models.OrderDetail;
 import ru.andrei.tsystemsverificationwork.database.models.enums.DeliveryMethod;
 import ru.andrei.tsystemsverificationwork.database.models.enums.OrderStatus;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
@@ -15,26 +21,40 @@ import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentStatus;
 import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
 import ru.andrei.tsystemsverificationwork.web.exceptions.impl.OutOfStockException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
-import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
-import ru.andrei.tsystemsverificationwork.database.dao.impl.OrderDetailsDao;
-import ru.andrei.tsystemsverificationwork.database.dao.impl.OrdersDao;
-import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
-import ru.andrei.tsystemsverificationwork.database.models.Good;
-import ru.andrei.tsystemsverificationwork.database.models.OrderDetail;
 
 import java.sql.Timestamp;
 import java.util.*;
 
-
+/**
+ * Orders business logic
+ */
 @Transactional
 @Service("ordersService")
 public class OrdersService extends GenericService {
 
+    /**
+     * Dao of OrderDetails entity
+     */
     private OrderDetailsDao orderDetailsDao;
+    /**
+     * Order's Dao
+     */
     private OrdersDao ordersDao;
+    /**
+     * Dao of client's addresses
+     */
     private ClientAddressDao clientAddressDao;
+    /**
+     * Good's Dao
+     */
     private GoodsDao goodsDao;
+    /**
+     * Business logic of statistics
+     */
     private StatisticsService statisticsService;
+    /**
+     * Slf4j logger
+     */
     private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
 
     @Autowired
@@ -47,11 +67,22 @@ public class OrdersService extends GenericService {
         this.statisticsService = statisticsService;
     }
 
+    /**
+     * Returns number of orders
+     *
+     * @return long value
+     */
     public Long orderSize() {
 
         return ordersDao.size();
     }
 
+    /**
+     * Returns goods related to order and quantity bought
+     *
+     * @param orderId id of order
+     * @return map of goods to quantity
+     */
     public Map<Good, Integer> getRelatedGoods(Long orderId) {
 
         if (orderId == null || orderId < 1)
@@ -59,9 +90,8 @@ public class OrdersService extends GenericService {
 
         List<OrderDetail> orderDetails = orderDetailsDao.getOrderDetailsById(orderId);
 
-        if (orderDetails == null || orderDetails.size() == 0)
+        if (orderDetails == null || orderDetails.isEmpty())
             throw new ItemNotFoundException("Order " + orderId + " does not have related items");
-
 
         Map<Good, Integer> resultMap = new HashMap<>();
 
@@ -73,6 +103,12 @@ public class OrdersService extends GenericService {
         return resultMap;
     }
 
+    /**
+     * Finds order by id
+     *
+     * @param id order id
+     * @return Order object
+     */
     public Order getOrder(Long id) {
 
         if (id == null || id < 1)
@@ -84,6 +120,11 @@ public class OrdersService extends GenericService {
         else return order;
     }
 
+    /**
+     * Returns list of current user's orders
+     *
+     * @return list of orders objects
+     */
     public List<Order> getMyOrders() {
 
         List<Order> orders = ordersDao.getOrdersOfUser(getCurrentUser().getClientId());
@@ -92,27 +133,49 @@ public class OrdersService extends GenericService {
         else return orders;
     }
 
+    /**
+     * Returns stricted list of orders on submitted page
+     *
+     * @param page               number of page
+     * @param quantityOfElements number of elements per page
+     * @return list of Orders objects
+     */
     @Secured("ROLE_ADMIN")
     public List<Order> getAdminPagedOrders(Integer page, Integer quantityOfElements) {
 
-        if (page == null || quantityOfElements == null || page < 1 || quantityOfElements < 1)
+        Integer localPage = page;
+
+        if (localPage == null || quantityOfElements == null || localPage < 1 || quantityOfElements < 1)
             throw new IllegalArgumentException();
 
         Long size = ordersDao.size();
 
-        page = page - 1;
-        if (page * quantityOfElements > size || page < 0)
+        localPage = localPage - 1;
+        if (localPage * quantityOfElements > size || localPage < 0)
             return new ArrayList<>();
 
 
-        return ordersDao.getPagedOrders(page * quantityOfElements, quantityOfElements);
+        return ordersDao.getPagedOrders(localPage * quantityOfElements, quantityOfElements);
     }
 
+    /**
+     * Creates order
+     *
+     * @param cart           map with orders ids and quantity bought
+     * @param paymentMethod  payment method
+     * @param deliveryMethod delivery method
+     * @param clientAddress  to which address client is going to buy products
+     * @return boolean value if order created
+     */
     public boolean createOrder(Map<Integer, Integer> cart, PaymentMethod paymentMethod,
                                DeliveryMethod deliveryMethod, ClientAddress clientAddress) {
 
-        if (cart == null || paymentMethod == null || deliveryMethod == null || clientAddress == null
-                || cart.isEmpty())
+        ClientAddress localClientAddress = clientAddress;
+
+        boolean condition = cart == null || cart.isEmpty();
+        boolean conditionTwo = deliveryMethod == null || clientAddress == null || paymentMethod == null;
+
+        if (condition || conditionTwo)
             throw new IllegalArgumentException();
 
         Order order = new Order();
@@ -123,12 +186,12 @@ public class OrdersService extends GenericService {
         order.setPaymentStatus(PaymentStatus.NOT_PAID);
         order.setOrderStatus(OrderStatus.NOT_PAID);
 
-        Long checkClientId = clientAddress.getClientAddressId();
+        Long checkClientId = localClientAddress.getClientAddressId();
         if (verificateRequestedAddress(checkClientId)) {
-            clientAddress = clientAddressDao.findOne(checkClientId);
+            localClientAddress = clientAddressDao.findOne(checkClientId);
         } else return false;
 
-        order.setClientAddressId(clientAddress);
+        order.setClientAddressId(localClientAddress);
         ordersDao.create(order);
 
         Map<Good, Integer> orderDetails = showCartItems(cart);
@@ -138,6 +201,11 @@ public class OrdersService extends GenericService {
         return true;
     }
 
+    /**
+     * Reserve goods by submitted map id to quantity
+     *
+     * @param goods map represents cart
+     */
     private synchronized void reserveGoods(Map<Good, Integer> goods) {
 
         for (Map.Entry<Good, Integer> entry : goods.entrySet()) {
@@ -150,7 +218,7 @@ public class OrdersService extends GenericService {
                 count = count - quantityBought;
             else
                 throw new OutOfStockException("We cannot reserve more than " + good.getCount() + " but required was " +
-                        + quantityBought + " for item " + good.getTitle());
+                        +quantityBought + " for item " + good.getTitle());
 
             good.setCount(count);
             goodsDao.update(good);
@@ -158,6 +226,14 @@ public class OrdersService extends GenericService {
         }
     }
 
+    /**
+     * Updates order status due admin's interface.
+     * Should be protected by security.
+     *
+     * @param orderStatus order's status
+     * @param orderId     order's id
+     * @return boolean value if order updated
+     */
     @Secured("ROLE_ADMIN")
     public boolean updateOrderStatus(OrderStatus orderStatus, Long orderId) {
 
@@ -168,11 +244,11 @@ public class OrdersService extends GenericService {
 
         if (orderStatus != OrderStatus.NOT_PAID && order.getOrderStatus() == OrderStatus.NOT_PAID) {
             reserveGoods(getRelatedGoods(orderId));
-            statisticsService.forceUpdate();
         }
 
         order.setOrderStatus(orderStatus);
         ordersDao.update(order);
+        statisticsService.forceUpdate();
 
         return true;
     }
@@ -194,6 +270,12 @@ public class OrdersService extends GenericService {
         log.info("Order with id " + order.getOrderId() + " has been created");
     }
 
+    /**
+     * Returns address of order
+     *
+     * @param orderId id of order
+     * @return ClientAddress entity
+     */
     public ClientAddress getAddressByOrderId(Long orderId) {
 
         if (orderId == null || orderId < 1)

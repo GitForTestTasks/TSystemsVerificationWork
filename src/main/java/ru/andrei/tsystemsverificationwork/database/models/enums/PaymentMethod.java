@@ -1,6 +1,8 @@
 package ru.andrei.tsystemsverificationwork.database.models.enums;
 
-
+/**
+ * Enum of payment method
+ */
 public enum PaymentMethod {
     CARD,
     CASH;

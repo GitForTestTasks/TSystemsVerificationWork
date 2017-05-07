@@ -10,33 +10,62 @@ import ru.andrei.tsystemsverificationwork.web.exceptions.GenericException;
 
 import java.nio.file.AccessDeniedException;
 
-
+/**
+ * Handler advices all exceptions
+ */
 @ControllerAdvice
 public class ErrorHandler {
 
+    /**
+     * Slf4j factory
+     */
     private static final Logger log = LoggerFactory.getLogger(ErrorHandler.class);
 
+    /**
+     * Method advices and logs database related exceptions
+     *
+     * @param ex DataAccessException
+     * @return jsp error view
+     */
     @ExceptionHandler(DataAccessException.class)
     public String databaseExceptionHandler(DataAccessException ex) {
 
-        log.error(ex.getMessage());
+        log.error(ex.getMessage(), ex);
         return "error";
     }
 
+    /**
+     * Method advices and logs access exceptions
+     *
+     * @param ex AccessDeniedException
+     * @return jsp error view
+     */
     @ExceptionHandler(AccessDeniedException.class)
-    public String AccessDeniedHandler(AccessDeniedException ex) {
+    public String accessDeniedHandler(AccessDeniedException ex) {
 
-        log.info(ex.getMessage());
+        log.info(ex.getMessage(), ex);
         return "denied";
     }
 
+    /**
+     * Method advices and logs all exceptions
+     *
+     * @param ex Exception
+     * @return jsp error view
+     */
     @ExceptionHandler(Exception.class)
-    public String AccessDeniedHandler(Exception ex) {
+    public String allExceptions(Exception ex) {
 
-        log.error(ex.getMessage());
+        log.error(ex.getMessage(), ex);
         return "unexpectederror";
     }
 
+    /**
+     * Method advices and logs custom exceptions
+     *
+     * @param ex GenericException
+     * @return jsp error view
+     */
     @ExceptionHandler(GenericException.class)
     public String verificationFailed(GenericException ex, Model model) {
 
@@ -45,7 +74,7 @@ public class ErrorHandler {
         errorStr.append(": ");
         errorStr.append(ex.getErrMsg());
 
-        log.info(errorStr.toString());
+        log.info(errorStr.toString(), ex);
         model.addAttribute("errCode", ex.getErrCode());
         model.addAttribute("errMsg", ex.getErrMsg());
 

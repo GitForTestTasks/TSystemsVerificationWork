@@ -1,6 +1,8 @@
 package ru.andrei.tsystemsverificationwork.database.models.enums;
 
-
+/**
+ * Enum of payment status
+ */
 public enum PaymentStatus {
     NOT_PAID,
     PAID;

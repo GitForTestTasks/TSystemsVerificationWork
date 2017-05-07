@@ -3,11 +3,15 @@ package ru.andrei.tsystemsverificationwork.database.models;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Entity of categories table
+ */
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
     private long categoryId;
     private String name;
     private List<Good> good;
@@ -45,15 +49,16 @@ public class Category {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Category category = (Category) o;
 
-        if (categoryId != category.categoryId) return false;
-        if (name != null ? !name.equals(category.name) : category.name != null) return false;
-
-        return true;
+        return categoryId == category.categoryId &&
+                (name != null ? name.equals(category.name) : category.name == null);
     }
 
     @Override

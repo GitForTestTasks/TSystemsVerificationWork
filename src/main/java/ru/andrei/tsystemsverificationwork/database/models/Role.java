@@ -1,14 +1,20 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
-
+/**
+ * Entity of roles table
+ */
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements Serializable {
     private long roleId;
     private String name;
+
+    public Role() { //No argument constructor required for hibernate framework
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,18 +53,16 @@ public class Role {
         this.name = name;
     }
 
-    public Role() {
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Role role = (Role) o;
 
-        if (roleId != role.roleId) return false;
-        return name.equals(role.name);
+        return roleId == role.roleId && name.equals(role.name);
     }
 
     @Override

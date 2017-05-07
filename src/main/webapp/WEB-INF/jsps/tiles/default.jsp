@@ -2,53 +2,54 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 
 <html>
-    <head>
-        <title><tiles:insertAttribute name="title"/></title>
-        <tiles:insertAttribute name="includes"/>
+<head>
+    <title><tiles:insertAttribute name="title"/></title>
+    <tiles:insertAttribute name="includes"/>
 
-        <meta charset='UTF-8'/>
-        <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/bootstrap.min.css'/>
-        <script src='${pageContext.request.contextPath}/static/script/jquery-3.2.0.min.js'></script>
-        <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/index.css'/>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/<tiles:getAsString name="includecss"/>"/>
-        <script>
+    <meta charset='UTF-8'/>
+    <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/bootstrap.min.css'/>
+    <script src='${pageContext.request.contextPath}/static/script/jquery-3.2.0.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/index.css'/>
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/<tiles:getAsString name="includecss"/>"/>
+    <script>
 
-            $(document).ready(function () {
-                setTimeout(function () {
-                    $('.loading').hide()
-                    $('.loading').remove()
-                }, 500)
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('.loading').hide()
+                $('.loading').remove()
+            }, 500)
 
-                setInterval(function () {
+            setInterval(function () {
 
-                    $.ajax({
-                        url: '${pageContext.request.contextPath}/renewcart',
-                        data: {},
-                        type: 'GET',
-                        success: function (msg) {
-                            $('.cart-size').html(msg)
-                        }
-                    })
+                $.ajax({
+                    url: '${pageContext.request.contextPath}/renewcart',
+                    data: {},
+                    type: 'GET',
+                    success: function (msg) {
+                        $('.cart-size').html(msg)
+                    }
+                })
 
-                }, 1000)
+            }, 1000)
 
-            })
-        </script>
+        })
+    </script>
 
-    </head>
-    <body>
-        <div class='loading'></div>
-        <header>
-            <tiles:insertAttribute name="header"/>
-        </header>
+</head>
+<body>
+<div class='loading'></div>
+<header>
+    <tiles:insertAttribute name="header"/>
+</header>
 
-        <article class='main-contetn'>
-            <tiles:insertAttribute name="content"/>
-        </article>
+<article class='main-contetn'>
+    <tiles:insertAttribute name="content"/>
+</article>
 
-        <footer>
+<footer>
 
 
-        </footer>
-    </body>
+</footer>
+</body>
 </html>

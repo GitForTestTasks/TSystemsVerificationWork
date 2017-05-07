@@ -1,6 +1,8 @@
 package ru.andrei.tsystemsverificationwork.database.models.enums;
 
-
+/**
+ * Enum of delivery method
+ */
 public enum DeliveryMethod {
     STANDART,
     NEXT_DAY_DELIVERY,

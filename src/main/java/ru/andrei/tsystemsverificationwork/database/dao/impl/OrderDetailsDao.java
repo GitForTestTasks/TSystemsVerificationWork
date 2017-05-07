@@ -19,6 +19,7 @@ public class OrderDetailsDao extends GenericDao<OrderDetail> {
     /**
      * Gets order details by submitted order id
      * Order details basically map order id to good id with quantity bought
+     *
      * @param orderId order id to find details
      * @return list of orderdetails objects
      */

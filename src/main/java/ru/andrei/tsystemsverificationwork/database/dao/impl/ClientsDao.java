@@ -25,9 +25,14 @@ public class ClientsDao extends GenericDao<Client> {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public ClientsDao() {
+        setClazz(Client.class);
+    }
+
     /**
      * Creates client with encrypted password
      * This method should be used to initially create of Client object
+     *
      * @param entity Client object to add to the database
      */
     @Override
@@ -38,6 +43,7 @@ public class ClientsDao extends GenericDao<Client> {
 
     /**
      * Updates Client object in database
+     *
      * @param entity new version of Client object to update
      */
     @Override
@@ -48,23 +54,21 @@ public class ClientsDao extends GenericDao<Client> {
         transactionManager.merge(entity);
     }
 
-    public ClientsDao() {
-        setClazz(Client.class);
-    }
-
     /**
      * Returns if client with submitted e-mail address exists
+     *
      * @param emailSubmitted string value of e-mail to find
      * @return true if client exists
      */
     public boolean emailExists(String emailSubmitted) {
 
-        return transactionManager.createQuery("FROM Client AS r WHERE r.email = :emailSubmitted", Client.class).
-                setParameter("emailSubmitted", emailSubmitted).getResultList().size() > 0;
+        return !transactionManager.createQuery("FROM Client AS r WHERE r.email = :emailSubmitted", Client.class).
+                setParameter("emailSubmitted", emailSubmitted).getResultList().isEmpty();
     }
 
     /**
      * Finds client object by e-mail address
+     *
      * @param email string value of e-mail to find
      * @return Client object found or null if not
      */
@@ -77,6 +81,7 @@ public class ClientsDao extends GenericDao<Client> {
     /**
      * Returns list of StatisticsClients objects which represents
      * statistics of top ten clients
+     *
      * @return list of top ten clients
      */
     @SuppressWarnings("unchecked")
@@ -98,7 +103,7 @@ public class ClientsDao extends GenericDao<Client> {
 
         ArrayList<StatisticsClients> statisticsClientss = new ArrayList<>();
 
-        results.forEach((record) -> {
+        results.forEach(record -> {
 
             StatisticsClients statisticsClients = new StatisticsClients();
             statisticsClients.setEmail((String) record[0]);

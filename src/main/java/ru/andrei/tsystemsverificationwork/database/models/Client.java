@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Entity of clients table
+ */
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
@@ -25,6 +28,12 @@ public class Client implements Serializable {
     private List<Role> roles;
     private List<Order> orders;
     private Set<ClientAddress> clientAddresses;
+
+    /**
+     * No argument constructor required for hibernate framework
+     */
+    public Client() {
+    }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "clientId", cascade = CascadeType.MERGE)
     public Set<ClientAddress> getClientAddresses() {
@@ -139,53 +148,24 @@ public class Client implements Serializable {
         this.orders = orders;
     }
 
-    public Client(String firstName, String lastName, Date birthDate, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Client(String firstName, String lastName, Date birthDate, String email, String password, boolean isEnabled) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.email = email;
-        this.password = password;
-        this.isEnabled = isEnabled;
-    }
-
-    public Client() {
-    }
-
-    public Client(long clientId, String firstName, String lastName, Date birthDate,
-                  String email, String password, List<Role> roles, List<Order> orders) {
-        this.clientId = clientId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.orders = orders;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Client client = (Client) o;
 
-        if (clientId != client.clientId) return false;
-        if (firstName != null ? !firstName.equals(client.firstName) : client.firstName != null) return false;
-        if (lastName != null ? !lastName.equals(client.lastName) : client.lastName != null) return false;
-        if (birthDate != null ? !birthDate.equals(client.birthDate) : client.birthDate != null) return false;
-        if (email != null ? !email.equals(client.email) : client.email != null) return false;
-        if (password != null ? !password.equals(client.password) : client.password != null) return false;
-
-        return true;
+        if (clientId != client.clientId)
+            return false;
+        if (firstName != null ? !firstName.equals(client.firstName) : client.firstName != null)
+            return false;
+        if (lastName != null ? !lastName.equals(client.lastName) : client.lastName != null)
+            return false;
+        return (birthDate != null ? birthDate.equals(client.birthDate) : client.birthDate == null)
+                && (email != null ? email.equals(client.email) : client.email == null)
+                && (password != null ? password.equals(client.password) : client.password == null);
     }
 
     @Override
@@ -197,18 +177,5 @@ public class Client implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "clientId=" + clientId +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", birthDate=" + birthDate +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", isEnabled=" + isEnabled +
-                '}';
     }
 }

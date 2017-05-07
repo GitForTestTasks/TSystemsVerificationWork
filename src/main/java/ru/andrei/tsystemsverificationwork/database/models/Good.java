@@ -1,19 +1,21 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Entity of goods table
+ */
 @Entity
 @Table(name = "goods")
-@SQLDelete(sql="UPDATE goods SET IsGoodDeleted = '1' WHERE GoodId = ?")
-public class Good {
+@SQLDelete(sql = "UPDATE goods SET IsGoodDeleted = '1' WHERE GoodId = ?")
+public class Good implements Serializable {
     private long goodId;
     private String title;
     private BigDecimal price;
@@ -25,6 +27,10 @@ public class Good {
     private int count;
     private Category category;
     private char isGoodDeleted;
+
+
+    public Good() { //No argument constructor required for hibernate framework
+    }
 
     @Basic
     @Column(name = "IsGoodDeleted")
@@ -73,13 +79,6 @@ public class Good {
     }
 
     public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public Good(String title, BigDecimal price, String brand, String colour) {
-        this.title = title;
-        this.price = price;
-        this.brand = brand;
         this.colour = colour;
     }
 
@@ -146,18 +145,16 @@ public class Good {
         this.count = count;
     }
 
-    public Good() {
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Good good = (Good) o;
 
-        if (goodId != good.goodId) return false;
-        return title.equals(good.title);
+        return goodId == good.goodId && title.equals(good.title);
     }
 
     @Override

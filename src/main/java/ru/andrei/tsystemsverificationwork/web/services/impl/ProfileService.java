@@ -6,22 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientAddressDao;
-import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
-import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
+import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 
-import java.util.Set;
-
-
+/**
+ * Business logic of profile
+ */
 @Service("profileService")
 @Transactional
 public class ProfileService extends GenericService {
 
-
+    /**
+     * Client addresses dao
+     */
     private ClientAddressDao clientAddressDao;
+    /**
+     * Dao of users
+     */
     private ClientsDao clientsDao;
+    /**
+     * Slf4j logger
+     */
     private static final Logger log = LoggerFactory.getLogger(ProfileService.class);
 
     @Autowired
@@ -30,7 +37,12 @@ public class ProfileService extends GenericService {
         this.clientsDao = clientsDao;
     }
 
-
+    /**
+     * Updates profile information
+     *
+     * @param client client entity is going to be updated
+     * @return boolean if there is no exceptions happen
+     */
     public boolean updateInformation(Client client) {
 
         if (client == null) {
@@ -48,16 +60,13 @@ public class ProfileService extends GenericService {
         return true;
     }
 
-    public Set<ClientAddress> getClientAddresses() {
-
-        Set<ClientAddress> clientAddress = getCurrentUser().getClientAddresses();
-
-        if (clientAddress == null) {
-            throw new ItemNotFoundException("Address is not found");
-        } else return clientAddress;
-
-    }
-
+    /**
+     * Returns user's address by id.
+     * Id should be verificated.
+     *
+     * @param clientAddressId id of address
+     * @return address entity
+     */
     public ClientAddress getCalledClientAddress(Long clientAddressId) {
 
         if (clientAddressId == null || clientAddressId < 1)
@@ -69,6 +78,11 @@ public class ProfileService extends GenericService {
             return new ClientAddress();
     }
 
+    /**
+     * Updates address
+     *
+     * @param clientAddress address entity is going to be updated
+     */
     public void updateCliendAddress(ClientAddress clientAddress) {
 
         if (clientAddress == null)

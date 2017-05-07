@@ -1,11 +1,15 @@
 package ru.andrei.tsystemsverificationwork.database.models.keys;
 
-import ru.andrei.tsystemsverificationwork.database.models.Order;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
+import ru.andrei.tsystemsverificationwork.database.models.Order;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
+/**
+ * Embedded primary key of OrderDetail entity
+ */
 @Embeddable
 public class OrderDetailPk implements Serializable {
 
@@ -33,13 +37,14 @@ public class OrderDetailPk implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         OrderDetailPk that = (OrderDetailPk) o;
 
-        if (!order.equals(that.order)) return false;
-        return good.equals(that.good);
+        return order.equals(that.order) && good.equals(that.good);
     }
 
     @Override

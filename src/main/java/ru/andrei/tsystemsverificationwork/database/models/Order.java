@@ -1,16 +1,18 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
 import ru.andrei.tsystemsverificationwork.database.models.enums.DeliveryMethod;
-import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentStatus;
 import ru.andrei.tsystemsverificationwork.database.models.enums.OrderStatus;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
+import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-
+/**
+ * Entity of orders table
+ */
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
@@ -24,6 +26,9 @@ public class Order implements Serializable {
     private Client clientId;
     private ClientAddress clientAddressId;
     private List<OrderDetail> orderDetails;
+
+    public Order() { //No argument constructor required for hibernate framework
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,8 +142,10 @@ public class Order implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         Order order = (Order) o;
 

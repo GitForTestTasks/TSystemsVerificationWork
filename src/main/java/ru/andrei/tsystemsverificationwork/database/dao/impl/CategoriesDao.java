@@ -17,17 +17,19 @@ public class CategoriesDao extends GenericDao<Category> {
 
     /**
      * Returns boolean value if category exists
+     *
      * @param category name of category
      * @return true if category exists
      */
     public boolean categoryExists(String category) {
 
-        return transactionManager.createQuery("FROM Category AS r WHERE r.name = :category", Category.class).
-                setParameter("category", category).getResultList().size() > 0;
+        return !transactionManager.createQuery("FROM Category AS r WHERE r.name = :category", Category.class).
+                setParameter("category", category).getResultList().isEmpty();
     }
 
     /**
      * Finds category by name column
+     *
      * @param name string name
      * @return Category object found by name
      */
@@ -38,8 +40,10 @@ public class CategoriesDao extends GenericDao<Category> {
 
     /**
      * Deleting category
+     *
      * @param category category to delete
      */
+    @Override
     public void delete(Category category) {
         transactionManager.remove(transactionManager.contains(category) ? category :
                 transactionManager.merge(category));
@@ -47,8 +51,10 @@ public class CategoriesDao extends GenericDao<Category> {
 
     /**
      * Updates category with new attributes
+     *
      * @param category category to update
      */
+    @Override
     public void update(Category category) {
 
         if (transactionManager.contains(category))

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,12 +13,11 @@
 <h2>Results</h2>
 
 <c:forEach var="row" items="${clientList}">
-        ID ${row.clientId}<br/>
-        firstName ${row.firstName}<br/>
-        lastName ${row.lastName}<br/>
-        email ${row.email}<br/>
+    ID ${row.clientId}<br/>
+    firstName ${row.firstName}<br/>
+    lastName ${row.lastName}<br/>
+    email ${row.email}<br/>
 </c:forEach>
-
 
 
 </body>

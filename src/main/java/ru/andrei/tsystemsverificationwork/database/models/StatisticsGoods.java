@@ -1,9 +1,12 @@
 package ru.andrei.tsystemsverificationwork.database.models;
 
-
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class StatisticsGoods {
+/**
+ * DTO of goods statistics
+ */
+public class StatisticsGoods implements Serializable {
 
     private String title;
     private Long quantitySum;
@@ -18,9 +21,6 @@ public class StatisticsGoods {
                 ", quantitySum=" + quantitySum +
                 ", count=" + count +
                 '}';
-    }
-
-    public StatisticsGoods() {
     }
 
     public Long getGoodId() {

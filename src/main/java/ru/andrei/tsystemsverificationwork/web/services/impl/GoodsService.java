@@ -14,21 +14,43 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Business logic of goods
+ */
 @Service("goodsService")
 @Transactional
 public class GoodsService {
 
+    /**
+     * Jms service
+     */
+    private StatisticsService statisticsService;
+    /**
+     * Dao of goods
+     */
     private GoodsDao goodsDao;
+    /**
+     * Dao of categories
+     */
     private CategoriesDao categoriesDao;
+    /**
+     * Slf4j logger
+     */
     private static final Logger log = LoggerFactory.getLogger(GoodsService.class);
 
     @Autowired
-    public GoodsService(GoodsDao goodsDao, CategoriesDao categoriesDao) {
+    public GoodsService(StatisticsService statisticsService, GoodsDao goodsDao, CategoriesDao categoriesDao) {
+        this.statisticsService = statisticsService;
         this.goodsDao = goodsDao;
         this.categoriesDao = categoriesDao;
     }
 
+    /**
+     * Finds good entity by id
+     *
+     * @param goodId id to be found
+     * @return good found
+     */
     public Good getGoodById(Long goodId) {
 
         if (goodId == null || goodId < 1)
@@ -37,6 +59,11 @@ public class GoodsService {
         return goodsDao.findOne(goodId);
     }
 
+    /**
+     * Deletes row in goods table by id
+     *
+     * @param goodId id to be deleted
+     */
     @Secured("ROLE_ADMIN")
     public void deleteGood(Long goodId) {
 
@@ -45,9 +72,15 @@ public class GoodsService {
 
         Good good = goodsDao.findOne(goodId);
         goodsDao.delete(good);
+        statisticsService.checkIfUpdateNeeded(goodId);
         log.info("Good id " + good.getGoodId() + " " + good.getTitle() + " has been marked as deleted");
     }
 
+    /**
+     * Adds row in goods table
+     *
+     * @param good entity to be added
+     */
     @Secured("ROLE_ADMIN")
     public void createGood(Good good) {
 
@@ -59,23 +92,47 @@ public class GoodsService {
         }
 
         log.info("Changes for good " + good.getTitle() + " submitted");
+
+        if (good.getGoodId() != 0)
+            statisticsService.checkIfUpdateNeeded(good.getGoodId());
+
         goodsDao.create(good);
     }
 
+    /**
+     * Returns list of goods should be showed on current page
+     *
+     * @param page               number of page
+     * @param quantityOfElements lements per page
+     * @return list of goods objects
+     */
     public List<Good> getGoodsPage(int page, int quantityOfElements) {
 
-        if (page <= 0 || quantityOfElements <= 0)
+        int localPage = page;
+
+        if (localPage <= 0 || quantityOfElements <= 0)
             throw new IllegalArgumentException();
 
         Long size = goodsDao.size();
 
-        page = page - 1;
-        if (page * quantityOfElements > size || page < 0)
+        localPage = localPage - 1;
+        if (localPage * quantityOfElements > size || localPage < 0)
             return new ArrayList<>();
 
-        return goodsDao.getStrictedGoodsList(page * quantityOfElements, quantityOfElements);
+        return goodsDao.getStrictedGoodsList(localPage * quantityOfElements, quantityOfElements);
     }
 
+    /**
+     * Returns list of found goods by submitted parameters
+     *
+     * @param brand    brand of good
+     * @param colour   colour of good
+     * @param title    title of good
+     * @param minPrice minimal price
+     * @param maxPrice maximal price
+     * @param category category of good
+     * @return list of goods objects
+     */
     public List<Good> search(String brand, String colour, String title, Long minPrice,
                              Long maxPrice, String category) {
 
@@ -87,6 +144,11 @@ public class GoodsService {
                 new BigDecimal(minPrice), new BigDecimal(maxPrice), category);
     }
 
+    /**
+     * Returns number of products in market
+     *
+     * @return long value
+     */
     public Long goodsSize() {
         return goodsDao.size();
     }

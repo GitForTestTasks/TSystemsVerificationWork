@@ -26,11 +26,11 @@
                 <td>${row.clientId.email}</td>
 
                 <td>
-                    ${row.clientAddressId.country}
-                    ${row.clientAddressId.city}
-                    ${row.clientAddressId.street}
-                    ${row.clientAddressId.houseNumber}
-                    ${row.clientAddressId.apartment}
+                        ${row.clientAddressId.country}
+                        ${row.clientAddressId.city}
+                        ${row.clientAddressId.street}
+                        ${row.clientAddressId.houseNumber}
+                        ${row.clientAddressId.apartment}
                 </td>
 
                 <td>${row.deliveryMethod}</td>
