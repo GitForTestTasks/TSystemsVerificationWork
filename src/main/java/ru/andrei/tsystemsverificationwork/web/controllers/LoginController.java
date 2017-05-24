@@ -64,7 +64,7 @@ public class LoginController {
     public String createAccount(Model model) {
 
 
-        model.addAttribute("Client", new Client());
+        model.addAttribute("client", new Client());
 
         return CREATE_ACCOUNT;
     }

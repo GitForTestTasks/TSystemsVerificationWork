@@ -28,7 +28,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="country"/>
+                        <form:errors cssClass="text-danger" path="country"/>
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="city"/>
+                        <form:errors cssClass="text-danger" path="city"/>
                     </div>
                 </div>
 
@@ -63,7 +63,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="postIndex"/>
+                        <form:errors cssClass="text-danger" path="postIndex"/>
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="street"/>
+                        <form:errors cssClass="text-danger" path="street"/>
                     </div>
                 </div>
 
@@ -98,7 +98,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="houseNumber"/>
+                        <form:errors cssClass="text-danger" path="houseNumber"/>
                     </div>
                 </div>
 
@@ -116,7 +116,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="apartment"/>
+                        <form:errors cssClass="text-danger" path="apartment"/>
                     </div>
                 </div>
 

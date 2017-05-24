@@ -18,9 +18,9 @@ public class TopGoodsWs {
     private StatisticsService statisticsService;
 
     @WebMethod(exclude = true)
-    public void setStatisticsService(StatisticsService helloWorldBo) {
+    public void setStatisticsService(StatisticsService statisticsService) {
 
-        this.statisticsService = helloWorldBo;
+        this.statisticsService = statisticsService;
     }
 
     /**

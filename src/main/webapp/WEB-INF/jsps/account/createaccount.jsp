@@ -9,7 +9,7 @@
 
             <fieldset>
                 <legend>
-                    Profie
+                    Profile
                 </legend>
 
                 <div class='form-group'>
@@ -27,7 +27,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="email"/>
+                        <form:errors cssClass="text-danger" path="email"/>
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
                 <div class='form-group'>
                     <label class='col-lg-2 control-label'></label>
                     <div class='col-lg-10'>
-                        <form:errors path="password"/>
+                        <form:errors cssClass="text-danger" path="password"/>
                     </div>
                 </div>
 
@@ -77,7 +77,7 @@
                 <div class='form-group'>
                     <label class='col-lg-2 control-label'></label>
                     <div class='col-lg-10'>
-                        <form:errors path="firstName"/>
+                        <form:errors cssClass="text-danger" path="firstName"/>
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
                 <div class='form-group'>
                     <label class='col-lg-2 control-label'></label>
                     <div class='col-lg-10'>
-                        <form:errors path="lastName"/>
+                        <form:errors cssClass="text-danger" path="lastName"/>
                     </div>
                 </div>
 
@@ -110,7 +110,7 @@
                 <div class='form-group'>
                     <label class='col-lg-2 control-label'></label>
                     <div class='col-lg-10'>
-                        <form:errors path="birthDate"/>
+                        <form:errors cssClass="text-danger" path="birthDate"/>
                     </div>
                 </div>
 

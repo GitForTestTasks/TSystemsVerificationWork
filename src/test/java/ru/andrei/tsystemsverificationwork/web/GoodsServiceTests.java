@@ -1,63 +1,34 @@
 package ru.andrei.tsystemsverificationwork.web;
 
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
+import ru.andrei.tsystemsverificationwork.database.models.Category;
+import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.web.services.impl.GoodsService;
 
-import static junit.framework.TestCase.assertNotNull;
+import java.math.BigDecimal;
 
 
 @ContextConfiguration(locations = {"classpath:/datasource.xml",
         "classpath:/security-context.xml",
         "classpath:/service-context.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
+@Rollback
+@Transactional
 public class GoodsServiceTests {
 
     @Autowired
     private GoodsService goodsService;
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetGoodsPageOne() {
-
-        goodsService.getGoodsPage(0, 1);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetGoodsPageTwo() {
-
-        goodsService.getGoodsPage(1,0);
-    }
-
-    @Test
-    public void testGetGoodsPageThree() {
-
-        assertNotNull(goodsService.getGoodsPage(10, 1000));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetGoodsPageFour() {
-
-        goodsService.getGoodsPage(Integer.MAX_VALUE, Integer.MIN_VALUE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetGoodsPageFive() {
-
-        goodsService.getGoodsPage(Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
-
-    @Test
-    public void testGetGoodsPageSix() {
-
-        assertNotNull(goodsService.getGoodsPage(Integer.MAX_VALUE, Integer.MAX_VALUE));
-    }
 
     @Test(expected = AuthenticationCredentialsNotFoundException.class)
     public void testCreateGoodNull() {
@@ -79,4 +50,50 @@ public class GoodsServiceTests {
         goodsService.createGood(null);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetGoodByIdNull() {
+
+        goodsService.getGoodById(0L);
+    }
+
+    @Test
+    public void testGetGoodByIdOne() {
+
+        Good good = goodsService.getGoodById(1L);
+        Assert.assertEquals(good.getGoodId(), 1L);
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
+    public void testDeleteGoodNotValid() {
+
+        Good good = new Good();
+        BigDecimal bigDecimal = new BigDecimal(123);
+        Category category = new Category();
+        category.setName("Test");
+        good.setCount(20);
+        good.setTitle("Test");
+        good.setCategory(category);
+        good.setPrice(bigDecimal);
+
+        goodsService.createGood(good);
+    }
+
+    @Test
+    public void testGoodsSize() {
+
+        Assert.assertNotNull(goodsService.goodsSize());
+    }
+
+    @Test
+    public void testSearch() {
+
+        Assert.assertNotNull(goodsService.search("", "", "", 0L, 0L, ""));
+    }
+
+    @Test
+    public void testSearchTwo() {
+
+        Assert.assertNotNull(goodsService.search("", "", "", 0L, 0L, "Boots"));
+    }
 }

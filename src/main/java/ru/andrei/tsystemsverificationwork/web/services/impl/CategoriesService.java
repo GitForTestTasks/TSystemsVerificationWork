@@ -103,6 +103,6 @@ public class CategoriesService {
     public void categoryDelete(Long categoryId) {
 
         categoriesDao.delete(categoriesDao.findOne(categoryId));
-        log.info("Categody with id " + categoryId + " has been deleted");
+        log.info("Categody with id {} has been deleted", categoryId);
     }
 }

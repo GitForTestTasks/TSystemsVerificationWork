@@ -11,7 +11,6 @@ import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,29 +96,6 @@ public class GoodsService {
             statisticsService.checkIfUpdateNeeded(good.getGoodId());
 
         goodsDao.create(good);
-    }
-
-    /**
-     * Returns list of goods should be showed on current page
-     *
-     * @param page               number of page
-     * @param quantityOfElements lements per page
-     * @return list of goods objects
-     */
-    public List<Good> getGoodsPage(int page, int quantityOfElements) {
-
-        int localPage = page;
-
-        if (localPage <= 0 || quantityOfElements <= 0)
-            throw new IllegalArgumentException();
-
-        Long size = goodsDao.size();
-
-        localPage = localPage - 1;
-        if (localPage * quantityOfElements > size || localPage < 0)
-            return new ArrayList<>();
-
-        return goodsDao.getStrictedGoodsList(localPage * quantityOfElements, quantityOfElements);
     }
 
     /**

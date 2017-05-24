@@ -45,7 +45,7 @@ public class LoginService implements UserDetailsService {
      * @throws UsernameNotFoundException exception if not found
      */
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
 
         Client user = clientsDao.getUserByEmail(email);
         if (user == null) {

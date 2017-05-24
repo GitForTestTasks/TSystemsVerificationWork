@@ -24,7 +24,7 @@
                     </label>
                     <div class='col-lg-10'>
                         <core:if test="${fail}">
-                            <h1>That category already exists</h1>
+                            <h1 class="text-danger">That category already exists</h1>
                         </core:if>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <label class='col-lg-2 control-label'>
                     </label>
                     <div class='col-lg-10'>
-                        <form:errors path="name"/>
+                        <form:errors cssClass="text-danger" path="name"/>
                     </div>
                 </div>
 

@@ -25,7 +25,10 @@ $(document).ready(function () {
     $('.spinner').on('keyup', onlyDigit)
     $('.spinner').on('keydown', function (e) {
         var key = e.keyCode
-        if (48 <= key && key <= 57 || 93 <= key && key <= 105 || 37 <= key && key <= 40 || key == 8 || key == 46) {
+        var conditionOne = 48 <= key && key <= 57 || 93 <= key;
+        var conditionTwo = key <= 105 || 37 <= key && key <= 40;
+        var conditionThree = key == 8 || key == 46;
+        if (conditionOne && conditionTwo || conditionThree) {
             return true
         }
         return false
@@ -42,10 +45,7 @@ $(document).ready(function () {
                 goodId: product_id,
                 quantity: count
             },
-            type: 'POST',
-            success: function (msg) {
-            }
+            type: 'POST'
         })
     })
-
 })

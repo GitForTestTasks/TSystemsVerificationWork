@@ -69,7 +69,7 @@ public class ShoppingCartController {
 
     private void verifyQuantityAndLog(Integer goodId, Integer quantity) {
         shoppingCartService.verifyQuantity(goodId, quantity);
-        log.info("Item id " + goodId + " is added to cart, quantity: " + quantity);
+        log.info("Item id {} is added to cart, quantity: {}", goodId, quantity);
     }
 
     /**
@@ -87,14 +87,14 @@ public class ShoppingCartController {
 
         if (session.getAttribute(CART) == null) {
 
-            Map<Integer, Integer> cart = new HashMap<>();
+            HashMap<Integer, Integer> cart = new HashMap<>();
             verifyQuantityAndLog(goodId, quantity);
             cart.put(goodId, quantity);
             session.setAttribute(CART, cart);
             session.setAttribute(CART_SIZE, 1);
         } else {
 
-            Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute(CART);
+            HashMap<Integer, Integer> cart = (HashMap<Integer, Integer>) session.getAttribute(CART);
             verifyQuantityAndLog(goodId, quantity);
             cart.put(goodId, quantity);
             session.setAttribute(CART, cart);
@@ -118,7 +118,7 @@ public class ShoppingCartController {
                                @RequestParam(required = false) Integer deleteItemFromCart) {
 
         if (deleteItemFromCart != null && session.getAttribute(CART) != null) {
-            Map<Integer, Integer> cart = (Map<Integer, Integer>) session.getAttribute(CART);
+            HashMap<Integer, Integer> cart = (HashMap<Integer, Integer>) session.getAttribute(CART);
             cart.remove(deleteItemFromCart);
             session.setAttribute(CART, cart);
             session.setAttribute(CART_SIZE, cart.size());

@@ -31,36 +31,6 @@
         </tbody>
     </table>
 
-    <form:form name="order" method="post"
-               action="${pageContext.request.contextPath}/admin/editorder"
-               commandName="order"
-               cssClass="form-horizontal">
-        <fieldset>
-            <legend>
-                <core:if test="${success}">
-                    <h1 class="text-success">Success</h1>
-                </core:if>
-            </legend>
-            <form:input path="orderId" type="hidden"/>
-            <div class="form-group">
-                <label class="col-lg-2 control-label">Selects</label>
-                <div class="col-lg-10">
-                    <form:select path="orderStatus" multiple="false" cssClass="form-control">
-                        <form:option value="AWAITING_SHIPMENT"/>
-                        <form:option value="DELIVERED"/>
-                        <form:option value="SHIPPING"/>
-                    </form:select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </fieldset>
-    </form:form>
-
-
     <h4>Address</h4>
     <table class="table table-striped table-hover ">
         <thead>
@@ -118,10 +88,40 @@
         </core:forEach>
         <tr class="active">
             <td></td>
-            <td></td>
+            <td>Total:</td>
             <td><core:out value="${total}"/></td>
         </tr>
         </tbody>
     </table>
+
+
+    <form:form name="order" method="post"
+               action="${pageContext.request.contextPath}/admin/editorder"
+               commandName="order"
+               cssClass="form-horizontal">
+        <fieldset>
+            <legend>
+                <core:if test="${success}">
+                    <h1 class="text-success">Success</h1>
+                </core:if>
+            </legend>
+            <form:input path="orderId" type="hidden"/>
+            <div class="form-group">
+                <label class="col-lg-2 control-label">Change order status</label>
+                <div class="col-lg-10">
+                    <form:select path="orderStatus" multiple="false" cssClass="form-control">
+                        <form:option value="AWAITING_SHIPMENT"/>
+                        <form:option value="DELIVERED"/>
+                        <form:option value="SHIPPING"/>
+                    </form:select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form:form>
 
 </div>

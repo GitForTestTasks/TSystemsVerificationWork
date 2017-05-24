@@ -1,6 +1,5 @@
 package ru.andrei.tsystemsverificationwork.web.controllers;
 
-
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
@@ -20,6 +19,7 @@ import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.web.editors.CategoryEditor;
 import ru.andrei.tsystemsverificationwork.web.services.impl.CategoriesService;
 import ru.andrei.tsystemsverificationwork.web.services.impl.GoodsService;
+import ru.andrei.tsystemsverificationwork.web.services.impl.PaginationService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -62,11 +62,17 @@ public class GoodsController {
      * Business logic of good's categories
      */
     private CategoriesService categoriesService;
+    /**
+     * Service responsible for pagination
+     */
+    private PaginationService paginationService;
 
     @Autowired
-    public GoodsController(GoodsService goodsService, CategoriesService categoriesService) {
+    public GoodsController(GoodsService goodsService, CategoriesService categoriesService,
+                           PaginationService paginationService) {
         this.goodsService = goodsService;
         this.categoriesService = categoriesService;
+        this.paginationService = paginationService;
     }
 
     /**
@@ -148,9 +154,8 @@ public class GoodsController {
             File serverFile = new File(dir.getAbsolutePath()
                     + File.separator + fileName);
 
-
             try (FileOutputStream fileOutputStream = new FileOutputStream(serverFile);
-                 BufferedOutputStream stream = new BufferedOutputStream(fileOutputStream);) {
+                 BufferedOutputStream stream = new BufferedOutputStream(fileOutputStream)) {
                 byte[] bytes = file.getBytes();
 
                 good.setFilePath(fileName);
@@ -196,9 +201,10 @@ public class GoodsController {
         model.addAttribute("categories", categoriesService.getAllCategories());
         Long localMinPrice = minPrice;
         Long localMaxPrice = maxPrice;
+        boolean condition = brand != null || colour != null || title != null;
+        boolean conditionTwo = localMinPrice != null || localMaxPrice != null || category != null;
 
-        if (brand != null || colour != null || title != null || localMinPrice != null ||
-                localMaxPrice != null || category != null) {
+        if (condition || conditionTwo) {
 
             if (localMinPrice == null)
                 localMinPrice = 0L;
@@ -222,7 +228,7 @@ public class GoodsController {
 
     private void prepareModel(Model model, Integer pageId) {
         List<Good> goods;
-        goods = goodsService.getGoodsPage(pageId, (int) GOODS_PER_PAGE);
+        goods = paginationService.getGoodsPage(pageId, (int) GOODS_PER_PAGE);
         int numberOfPages = (int) Math.ceil(goodsService.goodsSize() / GOODS_PER_PAGE);
 
         model.addAttribute(GOODS_ATTRIBUTE, goods);

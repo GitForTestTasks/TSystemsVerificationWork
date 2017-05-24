@@ -4,10 +4,10 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     position: fixed;
     z-index: 999;
 }
@@ -38,4 +38,18 @@
     width: 1024px;
     float: none;
     margin: 0 auto;
+}
+
+.btn-bs-file {
+    position: relative;
+}
+
+.btn-bs-file input[type="file"] {
+    position: absolute;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    width: 0;
+    height: 0;
+    outline: none;
+    cursor: inherit;
 }

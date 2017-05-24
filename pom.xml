@@ -5,7 +5,7 @@
     <groupId>ru.andrei</groupId>
     <artifactId>TSystemsVerificationWork</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-Release</version>
     <name>TSystemsVerificationWork</name>
 
     <properties>
@@ -23,6 +23,11 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/target/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.exclusions>**ru/andrei/tsystemsverificationwork/database/models/**/*</sonar.exclusions>
+        <sonar.coverage.exclusions>**ru/andrei/tsystemsverificationwork/web/controllers/*,
+            **webapp/WEB-INF/resources/script/*,
+            **ru/andrei/tsystemsverificationwork/web/validators/**/*,
+            **ru/andrei/tsystemsverificationwork/web/editors/*
+        </sonar.coverage.exclusions>
         <version.jboss.bom>10.1.0.Final</version.jboss.bom>
     </properties>
 
@@ -170,7 +175,6 @@
             <version>${junit.version}</version>
         </dependency>
 
-
         <!-- ORM -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -184,7 +188,6 @@
             <version>${hibernate-validator.version}</version>
         </dependency>
 
-
         <!-- Connector Mysql -->
         <dependency>
             <groupId>mysql</groupId>
@@ -196,7 +199,6 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
-
 
         <!-- Spring  -->
         <dependency>

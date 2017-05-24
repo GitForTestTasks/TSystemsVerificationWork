@@ -47,7 +47,7 @@
                             <label class='col-lg-2 control-label'>
                             </label>
                             <div class='col-lg-10'>
-                                <form:errors path="paymentMethod"/>
+                                <form:errors cssClass="text-danger" path="paymentMethod"/>
                             </div>
                         </div>
 
@@ -67,7 +67,7 @@
                             <label class='col-lg-2 control-label'>
                             </label>
                             <div class='col-lg-10'>
-                                <form:errors path="deliveryMethod"/>
+                                <form:errors cssClass="text-danger" path="deliveryMethod"/>
                             </div>
                         </div>
 
@@ -90,7 +90,7 @@
                             <label class='col-lg-2 control-label'>
                             </label>
                             <div class='col-lg-10'>
-                                <form:errors path="clientAddressId"/>
+                                <form:errors cssClass="text-danger" path="clientAddressId"/>
                             </div>
                         </div>
 

@@ -1,20 +1,17 @@
 $(document).ready(function () {
     $('#BirthDate').datepicker({dateFormat: 'dd.mm.yy'})
 
+    var Password = $('#Password')
+    var Comfirm = $('#Comfirm')
+
+    Password.on('change', validatePassword)
+    Comfirm.on('keyup', validatePassword)
+
     function validatePassword() {
-        var pas = Password.val()
-        var conf = Comfirm.val()
-        if (pas != conf) {
+        if (Password.val() != Comfirm.val()) {
             Comfirm.get(0).setCustomValidity('Passwords do not match')
         } else {
             Comfirm.get(0).setCustomValidity('')
         }
     }
-
-    var Password = $('#Password')
-    Password.on('change', validatePassword)
-
-    var Comfirm = $('#Comfirm')
-    Comfirm.on('keyup', validatePassword)
-
 })

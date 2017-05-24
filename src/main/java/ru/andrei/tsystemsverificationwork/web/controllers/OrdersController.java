@@ -13,6 +13,8 @@ import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 import ru.andrei.tsystemsverificationwork.database.models.Order;
 import ru.andrei.tsystemsverificationwork.web.editors.ClientAddressEditor;
 import ru.andrei.tsystemsverificationwork.web.services.impl.OrdersService;
+import ru.andrei.tsystemsverificationwork.web.services.impl.PaginationService;
+import ru.andrei.tsystemsverificationwork.web.services.impl.ResolverService;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -36,10 +38,21 @@ public class OrdersController {
      * Business logic of orders
      */
     private OrdersService ordersService;
+    /**
+     * Pagination logic service
+     */
+    private PaginationService paginationService;
+    /**
+     * Resolver logic service
+     */
+    private ResolverService resolverService;
 
     @Autowired
-    public OrdersController(OrdersService ordersService) {
+    public OrdersController(OrdersService ordersService, PaginationService paginationService,
+                            ResolverService resolverService) {
         this.ordersService = ordersService;
+        this.paginationService = paginationService;
+        this.resolverService = resolverService;
     }
 
     /**
@@ -126,12 +139,12 @@ public class OrdersController {
         int numberOfPages = (int) Math.ceil(ordersService.orderSize() / ORDERS_PER_PAGE);
 
         if (pageNumber == null) {
-            model.addAttribute(ORDERS, ordersService.getAdminPagedOrders(1, (int) ORDERS_PER_PAGE));
+            model.addAttribute(ORDERS, paginationService.getAdminPagedOrders(1, (int) ORDERS_PER_PAGE));
             model.addAttribute("numberOfPages", numberOfPages);
             return "admin/orders";
         }
 
-        model.addAttribute(ORDERS, ordersService.getAdminPagedOrders(pageNumber, (int) ORDERS_PER_PAGE));
+        model.addAttribute(ORDERS, paginationService.getAdminPagedOrders(pageNumber, (int) ORDERS_PER_PAGE));
         model.addAttribute("numberOfPages", numberOfPages);
 
         return "admin/orders";
@@ -172,7 +185,7 @@ public class OrdersController {
     private void returnEditOrderView(Model model, Long orderId) {
 
         model.addAttribute("order", ordersService.getOrder(orderId));
-        model.addAttribute("goods", ordersService.getRelatedGoods(orderId));
+        model.addAttribute("goods", resolverService.getRelatedGoods(orderId));
         model.addAttribute("address", ordersService.getAddressByOrderId(orderId));
     }
 }

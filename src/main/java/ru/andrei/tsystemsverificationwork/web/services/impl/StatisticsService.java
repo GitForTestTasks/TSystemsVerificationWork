@@ -11,7 +11,6 @@ import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
 import ru.andrei.tsystemsverificationwork.database.models.StatisticsClients;
 import ru.andrei.tsystemsverificationwork.database.models.StatisticsGoods;
 import ru.andrei.tsystemsverificationwork.database.models.enums.TimeValues;
-import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 
 import javax.jms.JMSException;
 import java.math.BigDecimal;
@@ -23,7 +22,7 @@ import java.util.List;
  */
 @Service("statisticsService")
 @Transactional
-public class StatisticsService extends GenericService {
+public class StatisticsService {
 
     /**
      * SLF4J logger

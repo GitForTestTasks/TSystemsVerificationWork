@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientsDao;
 import ru.andrei.tsystemsverificationwork.database.models.Client;
-import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 
 /**
  * Service responsible for users
  */
 @Service("clientsService")
 @Transactional
-public class ClientsService extends GenericService {
+public class ClientsService {
 
     /**
      * Slf4j logger

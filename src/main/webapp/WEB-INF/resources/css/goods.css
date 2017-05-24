@@ -18,11 +18,11 @@
 }
 
 .product-title {
-    color: #0677B9;
+    color: #0677b9;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
-    margin: 5px 0px;
+    margin: 5px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -30,7 +30,7 @@
 
 .product-description {
     font-size: 14px;
-    padding: 0px 10px;
+    padding: 0 10px;
     height: 95px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -49,18 +49,8 @@
     text-align: center;
 }
 
-.product-quantity-s {
-}
-
-.quantity-s {
-}
-
 .product-btn {
     margin-top: 10px;
-}
-
-.product-btn-add {
-
 }
 
 .product-btn-detail {

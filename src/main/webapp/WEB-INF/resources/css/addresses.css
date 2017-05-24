@@ -1,7 +1,3 @@
-.wraper-addresses {
-
-}
-
 .wraper-table-addresses {
     width: 1024px;
     float: none;
@@ -10,38 +6,4 @@
 
 .table-addresses {
     border-bottom: 1px solid lightgray;
-}
-
-.header-addresses {
-}
-
-.addresses {
-}
-
-.address {
-}
-
-.address-num {
-}
-
-.address-Country {
-}
-
-.address-City {
-}
-
-.address-PostIndex {
-}
-
-.address-btn-wraper {
-}
-
-.address-btn {
-
-}
-
-.address-btn-del {
-}
-
-.address-btn-edt {
 }

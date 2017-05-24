@@ -53,8 +53,8 @@ public class ErrorHandler {
      * @param ex Exception
      * @return jsp error view
      */
-    @ExceptionHandler(Exception.class)
-    public String allExceptions(Exception ex) {
+    @ExceptionHandler(Throwable.class)
+    public String allExceptions(Throwable ex) {
 
         log.error(ex.getMessage(), ex);
         return "unexpectederror";
@@ -69,12 +69,7 @@ public class ErrorHandler {
     @ExceptionHandler(GenericException.class)
     public String verificationFailed(GenericException ex, Model model) {
 
-        StringBuilder errorStr = new StringBuilder();
-        errorStr.append(ex.getErrCode());
-        errorStr.append(": ");
-        errorStr.append(ex.getErrMsg());
-
-        log.info(errorStr.toString(), ex);
+        log.info("{}: {}", ex.getErrCode(), ex.getErrMsg(), ex);
         model.addAttribute("errCode", ex.getErrCode());
         model.addAttribute("errMsg", ex.getErrMsg());
 

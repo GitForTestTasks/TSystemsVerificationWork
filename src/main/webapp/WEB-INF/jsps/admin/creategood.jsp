@@ -55,11 +55,6 @@
                         <form:input cssClass="form-control input-sm" required="true" path="category" type="text"
                                     placeholder='Category'
                                     name="category"/>
-                        <!--
-                        <select class="form-control" id="select" name="Category">
-                            <option value='{{c.CategoryId}}'>{{c.Name}}</option>
-                        </select>
-                        -->
                     </div>
                 </div>
                 <div class='form-group'>
@@ -164,7 +159,10 @@
                         Select img
                     </label>
                     <div class='col-lg-10'>
-                        <input type="file" name="file" class="btn-file btn btn-default btn-sm"/>
+                        <label class="btn-bs-file btn btn-primary">
+                            Browse
+                            <input type="file" name="file"/>
+                        </label>
                     </div>
                 </div>
                 <div class='form-group'>
@@ -187,5 +185,5 @@
         </form:form>
 
     </div>
-    <%--<link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/creategood.css'/>--%>
 </div>
+

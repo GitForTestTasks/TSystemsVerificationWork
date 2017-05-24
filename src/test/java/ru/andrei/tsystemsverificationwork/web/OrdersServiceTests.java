@@ -18,8 +18,6 @@ import ru.andrei.tsystemsverificationwork.web.services.impl.OrdersService;
 
 import java.util.HashMap;
 
-import static junit.framework.TestCase.assertNotNull;
-
 @ContextConfiguration(locations = {"classpath:/datasource.xml",
         "classpath:/security-context.xml",
         "classpath:/service-context.xml"})
@@ -28,30 +26,6 @@ public class OrdersServiceTests {
 
     @Autowired
     private OrdersService ordersService;
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetRelatedGoodsNull() {
-
-        ordersService.getRelatedGoods(null);
-    }
-
-    @Test(expected = ItemNotFoundException.class)
-    public void testGetRelatedGoods() {
-
-        ordersService.getRelatedGoods(Long.MAX_VALUE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetRelatedGoodsMax() {
-
-        ordersService.getRelatedGoods(Long.MIN_VALUE);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetRelatedGoodsZero() {
-
-        ordersService.getRelatedGoods(0L);
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetOrderZero() {
@@ -71,45 +45,10 @@ public class OrdersServiceTests {
         ordersService.getOrder(Long.MAX_VALUE);
     }
 
-
-    @Test(expected = AuthenticationCredentialsNotFoundException.class)
-    public void testGetAdminPagedOrdersNotAuth() {
-
-        ordersService.getAdminPagedOrders(null, null);
-    }
-
-    @Test(expected = AccessDeniedException.class)
-    @WithMockUser
-    public void testGetAdminPagedOrdersAuth() {
-
-        ordersService.getAdminPagedOrders(null, null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
-    public void testGetAdminPagedOrdersAuthAdmin() {
-
-        ordersService.getAdminPagedOrders(null, null);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
-    public void testGetAdminPagedOrdersMinValue() {
-
-        ordersService.getAdminPagedOrders(Integer.MIN_VALUE, Integer.MIN_VALUE);
-    }
-
-    @Test
-    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
-    public void testGetAdminPagedOrdersMaxValue() {
-
-        assertNotNull(ordersService.getAdminPagedOrders(Integer.MAX_VALUE, Integer.MAX_VALUE));
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void testCreateOrderNull() {
 
-        ordersService.createOrder(null, null, null, null );
+        ordersService.createOrder(null, null, null, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -132,13 +71,6 @@ public class OrdersServiceTests {
         ordersService.updateOrderStatus(OrderStatus.AWAITING_SHIPMENT, null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    @WithMockUser(username = "admin", roles = {"USER", "ADMIN"})
-    public void testUpdateOrderAuthAdmin() {
-
-        ordersService.getAdminPagedOrders(null, null);
-    }
-
     @Test(expected = ItemNotFoundException.class)
     public void testGetAddressByOrderId() {
 
@@ -156,6 +88,4 @@ public class OrdersServiceTests {
 
         ordersService.getAddressByOrderId(0L);
     }
-
-
 }

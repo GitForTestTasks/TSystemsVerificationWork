@@ -29,7 +29,7 @@ public class GoodsDao extends GenericDao<Good> {
      */
     public List<Good> getStrictedGoodsList(int startingValue, int quantityResults) {
 
-        return transactionManager.createQuery("FROM Good AS r WHERE r.isGoodDeleted LIKE '0'", Good.class)
+        return transactionManager.createQuery("FROM Good AS r WHERE r.isGoodDeleted NOT LIKE '1'", Good.class)
                 .setFirstResult(startingValue).setMaxResults(quantityResults).getResultList();
     }
 
@@ -52,7 +52,7 @@ public class GoodsDao extends GenericDao<Good> {
      */
     public Long size() {
         return (Long) transactionManager.createQuery("select count(GoodId) from Good" +
-                " AS r WHERE r.isGoodDeleted LIKE '0'").getSingleResult();
+                " AS r WHERE r.isGoodDeleted NOT LIKE '1'").getSingleResult();
     }
 
     /**
@@ -76,7 +76,7 @@ public class GoodsDao extends GenericDao<Good> {
                 " AND r.title LIKE :title " +
                 " AND r.price >= :minPrice " +
                 " AND r.price <= :maxPrice " +
-                " AND r.isGoodDeleted LIKE '0'", Good.class)
+                " AND r.isGoodDeleted NOT LIKE '1'", Good.class)
                 .setParameter("category", category)
                 .setParameter("brand", "%" + brand + "%")
                 .setParameter("colour", "%" + colour + "%")
@@ -135,12 +135,13 @@ public class GoodsDao extends GenericDao<Good> {
      */
     public BigDecimal getIncome(String time) {
 
-        return (BigDecimal) transactionManager.createNativeQuery("SELECT SUM(`goods`.`Price`) AS `total` " +
+        return (BigDecimal) transactionManager.createNativeQuery("SELECT SUM(`goods`.`Price`) " +
                 "FROM `orders` " +
                 "LEFT JOIN `orderdetails` ON `orderdetails`.`OrderId` = `orders`.`OrderId` " +
                 "LEFT JOIN `goods` ON `goods`.`GoodId` = `orderdetails`.`GoodId` " +
                 "WHERE `orders`.`OrderStatus` != 'NOT_PAID' " +
-                "AND `orders`.`DateOfSale`  >= NOW() - INTERVAL 1 " + time).getSingleResult();
+                "AND `orders`.`DateOfSale`  >= NOW() - INTERVAL :days DAY")
+                .setParameter("days", time).getSingleResult();
     }
 
     /**
@@ -162,7 +163,7 @@ public class GoodsDao extends GenericDao<Good> {
                 " AND r.title LIKE :title " +
                 " AND r.price >= :minPrice " +
                 " AND r.price <= :maxPrice " +
-                " AND r.isGoodDeleted LIKE '0'", Good.class)
+                " AND r.isGoodDeleted NOT LIKE '1'", Good.class)
                 .setParameter("brand", "%" + brand + "%")
                 .setParameter("colour", "%" + colour + "%")
                 .setParameter("title", "%" + title + "%")

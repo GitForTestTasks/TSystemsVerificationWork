@@ -33,16 +33,22 @@
                         ${row.clientAddressId.apartment}
                 </td>
 
-                <td>${row.deliveryMethod}</td>
-                <td>${row.paymentMethod}</td>
+                <td>
+                    <core:out value="${row.deliveryMethod}"/>
+                </td>
+                <td>
+                    <core:out value="${row.paymentMethod}"/>
+                </td>
 
                 <td class="${row.paymentStatus}">
-                        ${row.paymentStatus}
+                    <core:out value="${row.paymentStatus}"/>
                 </td>
                 <td class="${row.orderStatus}">
-                        ${row.orderStatus}
+                    <core:out value="${row.orderStatus}"/>
                 </td>
-                <td>${row.dateOfCreation}</td>
+                <td>
+                    <core:out value="${row.dateOfCreation}"/>
+                </td>
                 <td>
 
                     <a href='${pageContext.request.contextPath}/admin/editorder?orderId=${row.orderId}'
@@ -59,7 +65,7 @@
     <ul class="pagination">
         <core:forEach begin="1" end="${numberOfPages}" var="val">
             <li>
-                <a href="${pageContext.request.contextPath}/admin/orders?pageid=${val}">
+                <a href="${pageContext.request.contextPath}/admin/orders?pageNumber=${val}">
                         ${val}
                 </a>
             </li>

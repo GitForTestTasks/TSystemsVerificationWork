@@ -1,29 +1,26 @@
 package ru.andrei.tsystemsverificationwork.web.services.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.ClientAddressDao;
-import ru.andrei.tsystemsverificationwork.database.dao.impl.GoodsDao;
-import ru.andrei.tsystemsverificationwork.database.dao.impl.OrderDetailsDao;
 import ru.andrei.tsystemsverificationwork.database.dao.impl.OrdersDao;
 import ru.andrei.tsystemsverificationwork.database.models.ClientAddress;
 import ru.andrei.tsystemsverificationwork.database.models.Good;
 import ru.andrei.tsystemsverificationwork.database.models.Order;
-import ru.andrei.tsystemsverificationwork.database.models.OrderDetail;
 import ru.andrei.tsystemsverificationwork.database.models.enums.DeliveryMethod;
 import ru.andrei.tsystemsverificationwork.database.models.enums.OrderStatus;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentMethod;
 import ru.andrei.tsystemsverificationwork.database.models.enums.PaymentStatus;
 import ru.andrei.tsystemsverificationwork.web.exceptions.impl.ItemNotFoundException;
-import ru.andrei.tsystemsverificationwork.web.exceptions.impl.OutOfStockException;
 import ru.andrei.tsystemsverificationwork.web.services.GenericService;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Orders business logic
@@ -33,10 +30,6 @@ import java.util.*;
 public class OrdersService extends GenericService {
 
     /**
-     * Dao of OrderDetails entity
-     */
-    private OrderDetailsDao orderDetailsDao;
-    /**
      * Order's Dao
      */
     private OrdersDao ordersDao;
@@ -45,26 +38,34 @@ public class OrdersService extends GenericService {
      */
     private ClientAddressDao clientAddressDao;
     /**
-     * Good's Dao
-     */
-    private GoodsDao goodsDao;
-    /**
      * Business logic of statistics
      */
     private StatisticsService statisticsService;
     /**
-     * Slf4j logger
+     * Business logic of order details
      */
-    private static final Logger log = LoggerFactory.getLogger(OrdersService.class);
+    private OrdersDetailsService ordersDetailsService;
+    /**
+     * Business logic of reserving products
+     */
+    private ReserveService reserveService;
+    /**
+     * Resolver class
+     */
+    private ResolverService resolverService;
 
     @Autowired
-    public OrdersService(OrderDetailsDao orderDetailsDao, OrdersDao ordersDao, ClientAddressDao clientAddressDao,
-                         GoodsDao goodsDao, StatisticsService statisticsService) {
-        this.orderDetailsDao = orderDetailsDao;
+    public OrdersService(OrdersDao ordersDao, ClientAddressDao clientAddressDao,
+                         StatisticsService statisticsService,
+                         OrdersDetailsService ordersDetailsService,
+                         ReserveService reserveService,
+                         ResolverService resolverService) {
         this.ordersDao = ordersDao;
         this.clientAddressDao = clientAddressDao;
-        this.goodsDao = goodsDao;
         this.statisticsService = statisticsService;
+        this.ordersDetailsService = ordersDetailsService;
+        this.reserveService = reserveService;
+        this.resolverService = resolverService;
     }
 
     /**
@@ -75,32 +76,6 @@ public class OrdersService extends GenericService {
     public Long orderSize() {
 
         return ordersDao.size();
-    }
-
-    /**
-     * Returns goods related to order and quantity bought
-     *
-     * @param orderId id of order
-     * @return map of goods to quantity
-     */
-    public Map<Good, Integer> getRelatedGoods(Long orderId) {
-
-        if (orderId == null || orderId < 1)
-            throw new IllegalArgumentException();
-
-        List<OrderDetail> orderDetails = orderDetailsDao.getOrderDetailsById(orderId);
-
-        if (orderDetails == null || orderDetails.isEmpty())
-            throw new ItemNotFoundException("Order " + orderId + " does not have related items");
-
-        Map<Good, Integer> resultMap = new HashMap<>();
-
-        for (OrderDetail orderDetail : orderDetails) {
-            Good good = orderDetail.getGood();
-            resultMap.put(good, orderDetail.getQuantity());
-        }
-
-        return resultMap;
     }
 
     /**
@@ -131,31 +106,6 @@ public class OrdersService extends GenericService {
         if (orders == null)
             return new ArrayList<>();
         else return orders;
-    }
-
-    /**
-     * Returns stricted list of orders on submitted page
-     *
-     * @param page               number of page
-     * @param quantityOfElements number of elements per page
-     * @return list of Orders objects
-     */
-    @Secured("ROLE_ADMIN")
-    public List<Order> getAdminPagedOrders(Integer page, Integer quantityOfElements) {
-
-        Integer localPage = page;
-
-        if (localPage == null || quantityOfElements == null || localPage < 1 || quantityOfElements < 1)
-            throw new IllegalArgumentException();
-
-        Long size = ordersDao.size();
-
-        localPage = localPage - 1;
-        if (localPage * quantityOfElements > size || localPage < 0)
-            return new ArrayList<>();
-
-
-        return ordersDao.getPagedOrders(localPage * quantityOfElements, quantityOfElements);
     }
 
     /**
@@ -196,34 +146,9 @@ public class OrdersService extends GenericService {
 
         Map<Good, Integer> orderDetails = showCartItems(cart);
 
-        createOrderDetails(orderDetails);
+        ordersDetailsService.createOrderDetails(orderDetails);
 
         return true;
-    }
-
-    /**
-     * Reserve goods by submitted map id to quantity
-     *
-     * @param goods map represents cart
-     */
-    private synchronized void reserveGoods(Map<Good, Integer> goods) {
-
-        for (Map.Entry<Good, Integer> entry : goods.entrySet()) {
-
-            Good good = entry.getKey();
-            int count = good.getCount();
-            int quantityBought = entry.getValue();
-
-            if (count >= quantityBought)
-                count = count - quantityBought;
-            else
-                throw new OutOfStockException("We cannot reserve more than " + good.getCount() + " but required was " +
-                        +quantityBought + " for item " + good.getTitle());
-
-            good.setCount(count);
-            goodsDao.update(good);
-            log.info(quantityBought + " of " + good.getTitle() + " have been reserved, " + good.getCount() + " left");
-        }
     }
 
     /**
@@ -243,7 +168,8 @@ public class OrdersService extends GenericService {
         Order order = ordersDao.findOne(orderId);
 
         if (orderStatus != OrderStatus.NOT_PAID && order.getOrderStatus() == OrderStatus.NOT_PAID) {
-            reserveGoods(getRelatedGoods(orderId));
+            reserveService.reserveGoods(resolverService.getRelatedGoods(orderId));
+            order.setDateOfSale(new Timestamp(Calendar.getInstance().getTime().getTime()));
         }
 
         order.setOrderStatus(orderStatus);
@@ -251,23 +177,6 @@ public class OrdersService extends GenericService {
         statisticsService.forceUpdate();
 
         return true;
-    }
-
-    private void createOrderDetails(Map<Good, Integer> orderDetails) {
-
-        Order order = ordersDao.findOrder(getCurrentUser().getClientId());
-
-        for (Map.Entry<Good, Integer> iterated : orderDetails.entrySet()) {
-
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setOrder(order);
-            orderDetail.setGood(iterated.getKey());
-            orderDetail.setQuantity(iterated.getValue());
-            log.info("Customer ordered " + iterated.getKey().getTitle() + " to order " + order.getOrderId());
-            orderDetailsDao.create(orderDetail);
-        }
-
-        log.info("Order with id " + order.getOrderId() + " has been created");
     }
 
     /**

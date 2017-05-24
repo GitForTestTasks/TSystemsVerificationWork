@@ -9,6 +9,10 @@ import org.junit.runners.Suite;
         GoodsServiceTests.class,
         OrdersServiceTests.class,
         ProfileServiceTests.class,
-        ShoppingCartServiceTests.class})
+        ShoppingCartServiceTests.class,
+        PaginationServiceTests.class,
+        ResolverServiceTests.class,
+        LoginServiceTests.class,
+        ReserveGoodsTests.class})
 public class SuiteTests {
 }

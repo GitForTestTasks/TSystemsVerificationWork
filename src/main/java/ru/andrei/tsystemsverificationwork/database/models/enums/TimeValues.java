@@ -5,6 +5,18 @@ package ru.andrei.tsystemsverificationwork.database.models.enums;
  */
 public enum TimeValues {
     MONTH,
-    WEEK
+    WEEK;
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case MONTH:
+                return "31";
+            case WEEK:
+                return "7";
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
 }
 
