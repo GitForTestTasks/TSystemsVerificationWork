@@ -53,10 +53,10 @@ public class OrdersDetailsService extends GenericService {
             orderDetail.setOrder(order);
             orderDetail.setGood(iterated.getKey());
             orderDetail.setQuantity(iterated.getValue());
-            log.info("Customer ordered " + iterated.getKey().getTitle() + " to order " + order.getOrderId());
+            log.info("Customer ordered " + iterated.getKey().getTitle() + " to order " + order.getOrderId() + " id.");
             orderDetailsDao.create(orderDetail);
         }
 
-        log.info("Order with id {} has been created", order.getClientId());
+        log.info("Order with id {} has been created.", order.getClientId());
     }
 }

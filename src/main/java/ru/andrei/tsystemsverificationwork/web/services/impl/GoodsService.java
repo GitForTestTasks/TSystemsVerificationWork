@@ -72,7 +72,7 @@ public class GoodsService {
         Good good = goodsDao.findOne(goodId);
         goodsDao.delete(good);
         statisticsService.checkIfUpdateNeeded(goodId);
-        log.info("Good id " + good.getGoodId() + " " + good.getTitle() + " has been marked as deleted");
+        log.info("Good id " + good.getGoodId() + " " + good.getTitle() + " has been marked as deleted.");
     }
 
     /**
@@ -90,7 +90,7 @@ public class GoodsService {
             good.setCategory(categoriesDao.findByName(good.getCategory().getName()));
         }
 
-        log.info("Changes for good " + good.getTitle() + " submitted");
+        log.info("Changes for good " + good.getTitle() + " submitted.");
 
         if (good.getGoodId() != 0)
             statisticsService.checkIfUpdateNeeded(good.getGoodId());

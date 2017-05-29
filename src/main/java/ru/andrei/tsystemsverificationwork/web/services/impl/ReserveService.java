@@ -46,12 +46,13 @@ public class ReserveService {
             if (count >= quantityBought)
                 count = count - quantityBought;
             else
-                throw new OutOfStockException("We cannot reserve more than " + good.getCount() + " but required was " +
-                        +quantityBought + " for item " + good.getTitle());
+                throw new OutOfStockException("We cannot reserve more than " + good.getCount() +
+                        " items but required was " +
+                        +quantityBought + " for item " + good.getTitle() + ".");
 
             good.setCount(count);
             goodsDao.update(good);
-            log.info("{} of {} have been reserved, {} left", quantityBought, good.getTitle(), good.getCount());
+            log.info("{} of {} have been reserved, {} left.", quantityBought, good.getTitle(), good.getCount());
         }
     }
 }

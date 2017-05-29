@@ -10,6 +10,7 @@
     <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/bootstrap.min.css'/>
     <script src='${pageContext.request.contextPath}/static/script/jquery-3.2.0.min.js'></script>
     <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/index.css'/>
+    <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/animate.css'/>
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/<tiles:getAsString name="includecss"/>"/>
     <script>
@@ -18,6 +19,8 @@
             setTimeout(function () {
                 $('.loading').hide()
                 $('.loading').remove()
+                $('.products').addClass('animated')
+                $('.products').addClass('fadeIn')
             }, 500)
 
             setInterval(function () {

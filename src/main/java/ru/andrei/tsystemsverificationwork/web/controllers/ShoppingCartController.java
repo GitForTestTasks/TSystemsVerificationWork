@@ -69,7 +69,7 @@ public class ShoppingCartController {
 
     private void verifyQuantityAndLog(Integer goodId, Integer quantity) {
         shoppingCartService.verifyQuantity(goodId, quantity);
-        log.info("Item id {} is added to cart, quantity: {}", goodId, quantity);
+        log.info("Item id {} is added to cart, quantity: {}.", goodId, quantity);
     }
 
     /**

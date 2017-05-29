@@ -45,7 +45,9 @@
                     <div class='form-group'>
                         <label class='col-lg-2 control-label'>
                         </label>
-                        <div class='col-lg-10 modal-login-erro'>${SPRING_SECURITY_LAST_EXCEPTION.message}</div>
+                        <div class='col-lg-10 modal-login-erro text-danger'>
+                            ${SPRING_SECURITY_LAST_EXCEPTION.message}
+                        </div>
                     </div>
                 </div>
 

@@ -53,8 +53,8 @@ public class ErrorHandler {
      * @param ex Exception
      * @return jsp error view
      */
-    @ExceptionHandler(Throwable.class)
-    public String allExceptions(Throwable ex) {
+    @ExceptionHandler(Exception.class)
+    public String allExceptions(Exception ex) {
 
         log.error(ex.getMessage(), ex);
         return "unexpectederror";

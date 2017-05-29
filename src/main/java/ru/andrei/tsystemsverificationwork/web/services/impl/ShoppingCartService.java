@@ -44,7 +44,7 @@ public class ShoppingCartService extends GenericService {
         }
 
         if (check.getCount() < quantity)
-            throw new OutOfStockException("We do not have quantity " + quantity + " of product " + goodId + " id");
+            throw new OutOfStockException("We do not have quantity " + quantity + " of product " + goodId + " id.");
         else return true;
     }
 }

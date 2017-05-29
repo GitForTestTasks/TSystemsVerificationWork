@@ -62,7 +62,7 @@
     background-position: 3px 5px;
     background-repeat: no-repeat;
     position: fixed;
-    z-index: 500;
+    z-index: 99;
     width: 25px;
     padding-left: 10px;
     padding-top: 35px;

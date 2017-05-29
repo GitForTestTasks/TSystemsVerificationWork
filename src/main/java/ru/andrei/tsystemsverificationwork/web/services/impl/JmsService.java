@@ -56,7 +56,7 @@ public class JmsService {
         TextMessage message = session.createTextMessage(text);
 
         messageProducer.send(message);
-        log.info("Webservice update has been forced");
+        log.info("Webservice update has been forced.");
 
         connection.close();
 

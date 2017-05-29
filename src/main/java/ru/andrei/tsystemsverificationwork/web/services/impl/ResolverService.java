@@ -38,7 +38,7 @@ public class ResolverService {
         List<OrderDetail> orderDetails = orderDetailsDao.getOrderDetailsById(orderId);
 
         if (orderDetails == null || orderDetails.isEmpty())
-            throw new ItemNotFoundException("Order " + orderId + " does not have related items");
+            throw new ItemNotFoundException("Order " + orderId + " does not have related items.");
 
         Map<Good, Integer> resultMap = new HashMap<>();
 

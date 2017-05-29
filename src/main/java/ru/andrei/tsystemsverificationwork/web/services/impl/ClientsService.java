@@ -40,7 +40,7 @@ public class ClientsService {
         if (client == null)
             throw new IllegalArgumentException();
 
-        log.info("Account " + client.getEmail() + " has been created");
+        log.info("Account " + client.getEmail() + " has been created.");
         clientsDao.create(client);
     }
 

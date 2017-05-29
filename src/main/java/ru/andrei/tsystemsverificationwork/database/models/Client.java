@@ -116,7 +116,6 @@ public class Client implements Serializable {
 
     @Basic
     @Column(name = "Password")
-    @NotBlank
     @Size(min = 6, max = 80)
     @Pattern(regexp = "^\\S+$")
     public String getPassword() {

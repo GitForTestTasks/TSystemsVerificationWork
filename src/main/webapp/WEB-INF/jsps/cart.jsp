@@ -3,6 +3,11 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+<div id="myModal" class="modal">
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <img class="modal-content" id="img01">
+</div>
+
 <core:if test="${cartSize < 1}">
     <h1 class="text-center text-warning">Cart is empty, please add some products to your cart</h1>
     <a href="${pageContext.request.contextPath}/goods">
@@ -182,6 +187,7 @@
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/goods.css'/>
         <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/cart.css'/>
         <script src='${pageContext.request.contextPath}/static/script/cart.js'></script>
+        <script src='${pageContext.request.contextPath}/static/script/orders.js'></script>
 
     </div>
 </core:if>

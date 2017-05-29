@@ -55,7 +55,7 @@ public class ProfileService extends GenericService {
         client.setClientId(comparingClient.getClientId());
         client.setOrders(comparingClient.getOrders());
         clientsDao.update(client);
-        log.info("Client " + getCurrentUser().getEmail() + " updated his information");
+        log.info("Client " + getCurrentUser().getEmail() + " updated his information.");
 
         return true;
     }
@@ -100,6 +100,6 @@ public class ProfileService extends GenericService {
             }
         }
 
-        log.info("User " + getCurrentUser().getEmail() + " updated his address");
+        log.info("User " + getCurrentUser().getEmail() + " updated his address.");
     }
 }

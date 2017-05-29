@@ -14,15 +14,21 @@
         <tbody>
         <tr class="active">
             <td>Payment method</td>
-            <td>${order.paymentMethod}</td>
+            <td>
+                <core:out value="${order.paymentMethod}"/>
+            </td>
         </tr>
         <tr class="active">
             <td>Delivery method</td>
-            <td>${order.deliveryMethod}</td>
+            <td>
+                <core:out value="${order.deliveryMethod}"/>
+            </td>
         </tr>
         <tr class="active">
             <td>Payment status</td>
-            <td>${order.paymentStatus}</td>
+            <td>
+                <core:out value="${order.paymentStatus}"/>
+            </td>
         </tr>
         <tr class="active">
             <td>Date Of Creation</td>

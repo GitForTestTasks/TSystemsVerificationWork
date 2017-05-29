@@ -96,7 +96,9 @@ public class ClientsDao extends GenericDao<Client> {
                 " LEFT JOIN `goods` ON `goods`.`GoodId` = `orderdetails`.`GoodId` " +
                 " WHERE `orders`.`OrderStatus` != 'NOT_PAID' " +
                 "GROUP BY `clients`.`ClientId` " +
-                "HAVING `total` is not null limit 10;").getResultList();
+                "HAVING `total` is not null " +
+                "ORDER BY `total` DESC " +
+                "limit 10;").getResultList();
 
         if (results == null)
             return new ArrayList<>();

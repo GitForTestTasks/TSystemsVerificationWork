@@ -52,7 +52,7 @@ public class Good implements Serializable {
         this.filePath = filePath;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "CategoryId")
     public Category getCategory() {
         return category;

@@ -48,4 +48,15 @@ $(document).ready(function () {
             type: 'POST'
         })
     })
+
+    var modal = document.getElementById('myModal');
+    var modalImg = document.getElementById("img01");
+    $('.product-img').click(function(){
+        modal.style.display = "block"
+        modalImg.src = $(this).attr('src')
+    })
+
+    $('.close').click(function(){
+        modal.style.display = "none";
+    })
 })

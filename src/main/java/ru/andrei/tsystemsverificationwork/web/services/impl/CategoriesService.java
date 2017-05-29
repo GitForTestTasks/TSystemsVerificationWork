@@ -62,7 +62,7 @@ public class CategoriesService {
 
         Category categoryCheck = categoriesDao.findOne(categoryId);
         if (categoryCheck == null) {
-            throw new ItemNotFoundException("Category with " + categoryId + " id does not exist");
+            throw new ItemNotFoundException("Category with " + categoryId + " id does not exist.");
         } else return categoryCheck;
     }
 
@@ -77,7 +77,7 @@ public class CategoriesService {
         if (category == null)
             throw new IllegalArgumentException();
 
-        log.info("Changes for category " + category.getName() + " submitted");
+        log.info("Changes for category " + category.getName() + " submitted.");
         categoriesDao.update(category);
     }
 

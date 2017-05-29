@@ -52,7 +52,7 @@ public class LoginService implements UserDetailsService {
             return null;
         }
 
-        log.info("User " + user.getEmail() + " has logged in");
+        log.info("User " + user.getEmail() + " has logged in.");
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = buildSimpleGrantedAuthorities(user);
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
                 user.getPassword(), true, true

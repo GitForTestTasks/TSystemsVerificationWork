@@ -23,6 +23,7 @@
                     </label>
                     <div class='col-lg-10'>
                         <form:input id="email" path="email" type="hidden" name="email"/>
+                        <form:errors type="hidden" path="email"/>
                     </div>
                 </div>
 

@@ -4,6 +4,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div class='search-form-open-btn'>S e a r c h</div>
+
+<div id="myModal" class="modal">
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <img class="modal-content" id="img01">
+</div>
+
 <div class='wraper-home'>
     <h1 class="text-center text-primary">Catalogue</h1>
 
@@ -128,5 +134,6 @@
           type='text/css'/>
     <script src='${pageContext.request.contextPath}/static/script/jquery-ui-1.12.1.custom.min.js'></script>
     <link rel='stylesheet' type='text/css' href='${pageContext.request.contextPath}/static/css/goods.css'/>
+
     <script src='${pageContext.request.contextPath}/static/script/orders.js'></script>
 </div>

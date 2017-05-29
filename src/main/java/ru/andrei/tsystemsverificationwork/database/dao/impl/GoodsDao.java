@@ -102,8 +102,8 @@ public class GoodsDao extends GenericDao<Good> {
                 "LEFT JOIN `orderdetails` ON `goods`.`GoodId` = `orderdetails`.`GoodId` " +
                 "LEFT JOIN `orders` ON `orders`.`OrderId` = `orderdetails`.`OrderId` " +
                 "WHERE `orders`.`OrderStatus` != 'NOT_PAID' " +
-                "AND `goods`.`IsGoodDeleted` = '0' " +
-                "GROUP BY `orderdetails`.`GoodId` " +
+                "AND `goods`.`IsGoodDeleted` != '1' " +
+                "GROUP BY `goods`.`Price` " +
                 "ORDER BY `QuantitySum` DESC LIMIT 10;").getResultList();
 
         if (results == null)

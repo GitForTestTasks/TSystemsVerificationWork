@@ -24,6 +24,14 @@ public class ProfileController {
      */
     private ProfileService profileService;
 
+    /**
+     * Name of the profile view
+     */
+    private static final String ACCOUNT_PROFILE = "account/profile";
+
+    /**
+     * Name of the client address view
+     */
     private static final String CLIENT_ADDRESS = "account/clientaddress";
 
     @Autowired
@@ -43,7 +51,7 @@ public class ProfileController {
         Client client = profileService.getCurrentUser();
         model.addAttribute("client", client);
 
-        return "account/profile";
+        return ACCOUNT_PROFILE;
     }
 
     /**
@@ -53,11 +61,15 @@ public class ProfileController {
      * @return jsp view with profile form
      */
     @RequestMapping(value = "/account/profile", method = RequestMethod.POST)
-    public String editProfile(@Valid Client client) {
+    public String editProfile(@Valid Client client, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return ACCOUNT_PROFILE;
+        }
 
         profileService.updateInformation(client);
 
-        return "account/profile";
+        return ACCOUNT_PROFILE;
     }
 
     /**

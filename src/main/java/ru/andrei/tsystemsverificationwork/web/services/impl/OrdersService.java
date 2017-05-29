@@ -91,7 +91,7 @@ public class OrdersService extends GenericService {
 
         Order order = ordersDao.findOne(id);
         if (order == null)
-            throw new ItemNotFoundException("Order not found");
+            throw new ItemNotFoundException("Order not found.");
         else return order;
     }
 
@@ -192,7 +192,7 @@ public class OrdersService extends GenericService {
 
         Order order = ordersDao.findOne(orderId);
         if (order == null)
-            throw new ItemNotFoundException("Address does not exist");
+            throw new ItemNotFoundException("Address does not exist.");
         else return order.getClientAddressId();
     }
 }
